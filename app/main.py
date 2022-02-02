@@ -50,11 +50,7 @@ def move_file(command: str):
         return None
 
     if len(command_with_slash) < 2:
-        try:
-            os.rename(command_split[1], command_split[2])
-        except FileNotFoundError:
-            print(f'File not found {command_split[1]}')
-            return
+        os.rename(command_split[1], command_split[2])
 
     elif len(command_with_slash) > 2:
         create_directory(command_with_slash)
@@ -64,5 +60,5 @@ def move_file(command: str):
 
 if __name__ == "__main__":
     '''Tests for this task'''
-    move_file("mv new_file.txt some_dir1/some_dir2/some_dir3/new_file.txt")
+    # move_file("mv new_file.txt some_dir1/some_dir2/some_dir3/new_file.txt")
     move_file("mv file.txt new_file.txt")
