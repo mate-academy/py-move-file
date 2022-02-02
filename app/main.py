@@ -22,13 +22,10 @@ def delete_current_file(file_name):
 
 
 def copy_file(old_name, new_name):
-    try:
-        with open(old_name, mode='r') as file_in:
-            with open(new_name, mode='w') as file_out:
-                for line in file_in:
-                    file_out.write(line)
-    except FileNotFoundError:
-        raise
+    with open(old_name, mode='r') as file_in:
+        with open(new_name, mode='w') as file_out:
+            for line in file_in:
+                file_out.write(line)
 
 
 def move_file(command: str):
