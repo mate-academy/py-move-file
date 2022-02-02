@@ -52,7 +52,7 @@ def move_file(command: str):
     if len(command_with_slash) < 2:
         os.rename(command_split[1], command_split[2])
 
-    elif len(command_with_slash) > 2:
+    elif len(command_with_slash) >= 2:
         create_directory(command_with_slash)
         copy_file(command_split[1], result_directory)
         delete_current_file(command_split[1])
