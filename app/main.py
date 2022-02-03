@@ -8,10 +8,17 @@ def move_file(command):
 
     if len(path) != 0:
         chek_path = True
+        build_path = ""
         for dir in path:
-            chek_path = os.path.exists(dir)
-            if not chek_path:
-                os.mkdir(dir)
+            if len(build_path) == 0:
+                chek_path = os.path.exists(dir)
+                if not chek_path:
+                    os.mkdir(dir)
+            else:
+                chek_path = os.path.exists(build_path + dir)
+                if not chek_path:
+                    os.mkdir(build_path + dir)
+            build_path += dir + "/"
 
     if not command.endswith("/") or len(path) == 0:
         file_destination = split_command[2]
