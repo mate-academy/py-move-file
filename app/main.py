@@ -23,10 +23,12 @@ def move_file(command: str):
         with open(sourcefile) as f:
             lines = f.readlines()
         if len(destination[-1]) != 0:
-            with open(f"{'/'.join(directory)}/{copyfile}", "a") as f1:
+            with open(os.path.join(*directory, copyfile), "a") as f1:
                 f1.writelines(lines)
         else:
-            with open(f"{'/'.join(directory)}/{sourcefile}", "a") as f1:
+            with open(os.path.join(*directory, sourcefile), "a") as f1:
                 f1.writelines(lines)
 
     os.remove(sourcefile)
+
+move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
