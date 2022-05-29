@@ -8,7 +8,7 @@ def move_file(command: str):
     name_of_file = command_ls[1]
     name_and_way_new_file = command_ls[2]
 
-    assert name_of_command != "mw", f"Command:{name_of_command} is not defined"
+    assert name_of_command == "mw", f"Command:{name_of_command} is not defined"
 
     if "/" not in command:
         original = rf'{os.getcwd()}\{name_of_file}'
