@@ -9,7 +9,7 @@ def move_file(command):
         target_split = target.split("/")
         target_path = os.path.join(*target_split)
 
-        os.makedirs(target_path)
+        os.makedirs("/".join(target.split("/")[:-1]))
 
         with open(target_path, "w") as f:
             f.write(open(sourse, "r").read())
