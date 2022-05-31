@@ -12,6 +12,3 @@ def move_file(command: str):
     new_dir = "/".join(new.split("/")[:-1])
     os.makedirs(new_dir)
     os.rename(old, new)
-
-
-move_file('mv file.txt files/siska/file2.txt')
