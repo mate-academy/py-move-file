@@ -4,6 +4,9 @@ import os
 def move_file(command):
     list_command = command.split(" ")
     fist_file_name = list_command[1]
+    with open(fist_file_name, "r") as file_in, \
+            open("new_file.txt", "w") as file_out:
+        file_out.write(f"{file_in.read()}")
     if "/" not in command:
         os.rename(fist_file_name, list_command[2])
     else:
@@ -15,7 +18,7 @@ def move_file(command):
         for directory in list_path:
             directories += f"{directory}/"
             os.mkdir(directories)
-        with open(fist_file_name, "r") as file_in, \
+        with open("new_file.txt", "r") as file_in, \
                 open(second_file_name, "w") as file_out:
             file_out.write(f"{file_in.read()}")
-        os.remove(fist_file_name)
+        os.remove("new_file.txt")
