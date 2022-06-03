@@ -14,8 +14,6 @@ def move_file(command):
     else:
         path = "".join(list_command[2])
         list_path = path.split('/')
-        second_file_name = "".join(list_path[-1])
-        list_path.pop(-1)
 
         directories = ""
         for directory in list_path:
@@ -23,7 +21,7 @@ def move_file(command):
             os.mkdir(directories)
 
         with open(fist_file_name, "r") as file_in, \
-                open(second_file_name, "w") as file_out:
+                open(list_command[2], "w") as file_out:
             file_out.write(f"{file_in.read()}")
 
     os.remove(fist_file_name)
