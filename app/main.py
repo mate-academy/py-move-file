@@ -14,6 +14,7 @@ def move_file(command):
     else:
         path = "".join(list_command[2])
         list_path = path.split('/')
+        list_path.pop(-1)
 
         directories = ""
         for directory in list_path:
