@@ -2,19 +2,19 @@ import os
 
 
 def move_file(command: str):
-    parsed = command.split()
+    command_mv, current_file_name, new_file_name = command.split()
 
-    if parsed[0] == "mv" and parsed[1] != parsed[2]:
-        if os.path.isfile(parsed[2]):
+    if command_mv == "mv" and current_file_name != new_file_name:
+        if os.path.isfile(new_file_name):
             return
 
-        if parsed[2][-1] == os.path.sep:
-            parsed[2] += parsed[1]
+        if new_file_name[-1] == os.path.sep:
+            new_file_name += current_file_name
 
-        path = ""
-        for d in parsed[2].split(os.path.sep)[:-1]:
-            if not os.path.isdir(path + d):
-                os.mkdir(path + d)
-                path += d + os.path.sep
+        full_path = ""
+        for directory_name in new_file_name.split(os.path.sep)[:-1]:
+            if not os.path.isdir(full_path + directory_name):
+                os.mkdir(full_path + directory_name)
+                full_path += directory_name + os.path.sep
 
-        os.rename(parsed[1], parsed[2])
+        os.rename(current_file_name, new_file_name)
