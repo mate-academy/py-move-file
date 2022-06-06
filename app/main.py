@@ -24,4 +24,3 @@ def move_file(command_line: str):
         os.makedirs(path)
 
         create_file(file_name, new_file)
-
