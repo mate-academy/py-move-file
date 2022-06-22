@@ -2,14 +2,14 @@ import os
 
 
 def move_file(command):
-    origin = command.split(" ")[1]  # source file_name
-    if "/" not in command:  # check if we need just rename file
+    origin = command.split(" ")[1]
+    if "/" not in command:
         os.rename(origin, command.split(" ")[2])
     else:
-        dirs_copy = command.split(" ")[2]  # list with dirs and copy_file
-        copy = dirs_copy.split["/"][-1]  # copy_file name
-        dirs = dirs_copy.split("/")[:-1]  # list of dirs
-        if len(dirs) == 1:  # check how many dirs we have to created
+        dirs_copy = command.split(" ")[2]
+        copy = dirs_copy.split["/"][-1]
+        dirs = dirs_copy.split("/")[:-1]
+        if len(dirs) == 1:
             os.mkdir(dirs)
             with open(origin, "r") as file_in, \
                     open(dirs + "/" + copy, "w") as file_out:
