@@ -18,5 +18,3 @@ def move_file(command: str):
         except FileNotFoundError:
             os.mkdir(new_direct)
             new_direct += "\\"
-
-
