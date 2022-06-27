@@ -12,7 +12,6 @@ def move_file(command: str):
     for path_part in direct_ls:
         new_direct += f"{path_part}"
         try:
-            print(new_direct)
             with open(direct, "w") as file:
                 file.write(file_info)
         except FileNotFoundError:
