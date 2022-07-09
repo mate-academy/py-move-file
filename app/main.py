@@ -2,18 +2,13 @@ import os
 
 
 def move_file(command):
-    sourse = command.split()[1]
-    target = command.split()[2]
-
-    if "/" in target:
-        target_split = target.split("/")
-        target_path = os.path.join(*target_split)
-
-        os.makedirs("/".join(target.split("/")[:-1]))
-
-        with open(target_path, "w") as f:
-            f.write(open(sourse, "r").read())
-
-        os.remove(sourse)
-    else:
-        os.rename(sourse, target)
+    file_name = command.split()[1]
+    file_move = command.split()[2]
+    try:
+        os.makedirs("/".join(file_move.split("/")[:-1]))
+    except FileExistsError:
+        pass
+    try:
+        os.rename(file_name, file_move)
+    except FileNotFoundError:
+        print("File is not exist, enter correct command, and try again")
