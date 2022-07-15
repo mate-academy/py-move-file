@@ -6,8 +6,8 @@ def move_file(command: str):
     file_first = commands[1]
     file_second = command[2]
 
-    with open(file_first, "r") as f:
-        file = f.read()
+    with open(file_first, "r") as first_file:
+        file = first_file.read()
 
     path_to_folder = ""
     path = file_second.split("/")[:-1]
@@ -15,7 +15,7 @@ def move_file(command: str):
         path_to_folder = f"{name}/"
         os.mkdir(path_to_folder)
 
-    with open(file_second, "w") as file_2:
-        file_2.write(file)
+    with open(file_second, "w") as second_file:
+        second_file.write(file)
 
     os.remove(file_first)
