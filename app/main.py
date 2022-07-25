@@ -12,8 +12,8 @@ def move_file(command):
             path += dir_path
             os.mkdir(path)
             path += "/"
-    with open(file_first_name, "r") as first, \
-            open(file_second_pathname, "w") as second:
-        context = first.read()
-        second.write(context)
+    with open(file_first_name, "r") as read_file, \
+            open(file_second_pathname, "w") as write_file:
+        context = read_file.read()
+        write_file.write(context)
     os.remove(file_first_name)
