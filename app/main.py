@@ -8,12 +8,13 @@ def move_file(command: str):
     if len(catalog) > 1:
         catalog_ = catalog[:-1]
         os.makedirs(catalog_)
-        with open("s[1]", "r") as f, open("s[2]", "w") as f_:
-            information = f.read()
-            f_.write(information)
 
-        os.remove("s[1]")
+    with open("s[1]", "r") as f, open("s[2]", "w") as f_:
+        information = f.read()
+        f_.write(information)
+
+    os.remove("s[1]")
 
 
 if __name__ == "__main__":
-    move_file()
+    move_file("mv read1.txt test/test1/read2.txt")
