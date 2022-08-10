@@ -14,9 +14,6 @@ def move_file(command: str):
     if not os.path.exists(file_name_src):
         raise Exception(f"Source file '{file_name_src}' not exists")
 
-    # if os.path.exists(file_name_dst):
-    #     raise Exception(f"Target file '{file_name_dst}' already exists")
-
     dir_name_src = get_dir_name(file_name_src)
     dir_name_dst = get_dir_name(file_name_dst)
 
