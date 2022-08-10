@@ -21,4 +21,3 @@ def move_file(command: str):
             new_file.write(data)
 
         os.remove(arr[1])
-    pass
