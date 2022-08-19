@@ -8,7 +8,7 @@ def move_file(command):
     file_curr_move = command.split("/")[-1]
 
     if command[0] != "mv":
-        print("Command entered incorrectly!")
+        raise Exception("Command entered incorrectly!")
 
     with open(file_curr, "r") as curr_file:
 
