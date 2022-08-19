@@ -3,8 +3,12 @@ import os
 
 def move_file(command):
 
+    command = command.split()
     file_curr = command.split()[1]
     file_curr_move = command.split("/")[-1]
+
+    if command[0] != "mv":
+        print("Command entered incorrectly!")
 
     with open(file_curr, "r") as curr_file:
 
