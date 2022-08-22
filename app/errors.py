@@ -3,7 +3,7 @@ class CommandError(Exception):
         self.command = command
 
     def __str__(self):
-        return f'No such command: {self.command}'
+        return f"No such command: {self.command}"
 
 
 class MoveFileExistsError(Exception):
@@ -11,4 +11,4 @@ class MoveFileExistsError(Exception):
         self.file_name = file_name
 
     def __str__(self):
-        return f'File {self.file_name} already exists'
+        return f"File {self.file_name} already exists"
