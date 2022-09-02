@@ -2,7 +2,6 @@ from os import makedirs, remove, path
 
 
 def move_file(command: str):
-
     current_file_name, directory_and_new_name = command.split(" ")[1:]
 
     if "/" in directory_and_new_name:
