@@ -2,10 +2,15 @@ import os
 
 
 def move_file(command: str):
-    command_list = command.split()
-    last_sl_ind = command_list[2].rfind("/")
-    path_first = command_list[1]
-    full_new_path = command_list[2]
-    path_to_file = command_list[2][:last_sl_ind]
-    os.makedirs(path_to_file)
-    os.replace(path_first, full_new_path)
+    command_split = command.split()
+    main_file = command_split[1]
+    copy_way = command_split[2]
+    copy_way_split = copy_way.split("/")
+    copy_file = copy_way_split[-1]
+    with open(main_file, "r") as file_in:
+        text = file_in.read()
+        os.remove(main_file)
+        for directory in copy_way_split[0:len(copy_way_split) - 2]:
+            os.mkdir(directory)
+        with open(copy_file, "w") as file_out:
+            file_out.write(text)
