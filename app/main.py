@@ -1,16 +1,16 @@
-import os
+from os import mkdir, remove
 
 
-def move_file(command: str):
-    command_split = command.split()
-    main_file = command_split[1]
-    copy_way = command_split[2]
-    copy_way_split = copy_way.split("/")
-    copy_file = copy_way_split[-1]
-    with open(main_file, "r") as file_in:
-        text = file_in.read()
-        os.remove(main_file)
-        for directory in copy_way_split[0:len(copy_way_split) - 2]:
-            os.mkdir(directory)
-        with open(copy_file, "w") as file_out:
-            file_out.write(text)
+def move_file(command):
+    files_way = command.split(" ")[1:]
+    first_file = files_way[0]
+    second_file = files_way[1]
+    file_path = second_file.split("/")[:-1]
+    file_path_s = ""
+    for directory in file_path:
+        file_path_s += f"{directory}/"
+        mkdir(file_path_s)
+    with open(first_file, "r") as old_file:
+        with open(second_file, "w") as new_file:
+            new_file.write(old_file.read())
+    remove(first_file)
