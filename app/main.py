@@ -3,14 +3,13 @@ from os import mkdir, remove
 
 def move_file(command: str):
     command_new = command.split()
-    main_file = command_new[1]
-    copy_way = command_new[2]
-    copy_way_split = copy_way.split('/')
-    copy_file = copy_way_split[-1]
-    with open(main_file, "r") as file_in:
-        text = file_in.read()
-        remove(main_file)
-        for directory in copy_way_split[:-1]:
-            mkdir(directory)
-        with open(copy_file, "w") as file_out:
-            file_out.write(text)
+    if command_new[0] != "mv":
+        print("Incorrect command!")
+    if "/" in command_new[-1]:
+        path = command_new[-1].split("/")
+        for i in range(len(path) - 1):
+            mkdir("/".join(path[:i]))
+    with open(command_new[1], "r") as file_init, \
+            open(command_new[2], "w") as file_out:
+        file_out.write(file_init.read())
+    remove(command_new[1])
