@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     command = command.split()[1:]
 
     if "/" not in command[1]:
