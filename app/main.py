@@ -9,7 +9,8 @@ def move_file(command: str):
     for i, name in enumerate(path_list):
         if i < path_len - 1:
             parent_dir = os.path.join(parent_dir, name)
-            os.mkdir(parent_dir)
+            if not os.path.exists(parent_dir):
+                os.mkdir(parent_dir)
     with open(file1, "r") as file_in, open(path, "w") as file_out:
         file_out.write(file_in.read())
     os.remove(file1)
