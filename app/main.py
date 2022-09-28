@@ -14,6 +14,6 @@ def move_file(command: str) -> None:
             true_path += "/"
         with open(command[0], "r") as file_in, \
                 open(command[1], "w") as file_out:
-            for line in file_in.read()
+            for line in file_in.read():
                 file_out.write(line)
     os.remove(command[0])
