@@ -3,7 +3,7 @@ from os import mkdir, remove, rename
 
 def move_file(command: str):
     command = command.split(" ")
-    if "/" in command[2]:
+    if command[0] == "mv" and "/" in command[2]:
         lenght = 0
         for path in command[2].split("/")[:-1]:
             lenght += len(path) + 1
@@ -14,5 +14,5 @@ def move_file(command: str):
             text = source.read()
             target.write(text)
         remove(command[1])
-    else:
+    elif command[0] == "mv":
         rename(command[1], command[2])
