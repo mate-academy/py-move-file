@@ -3,11 +3,12 @@ import os
 
 def move_file(command: str) -> None:
     command = command.split()
-
-    if len(os.path.dirname(command[2])) > 0:
+    first_file = command[1]
+    second_file = command[2]
+    if len(os.path.dirname(second_file)) > 0:
         os.makedirs(os.path.dirname(command[2]), exist_ok=True)
-        with open(command[2], "w") as f:
+        with open(second_file, "w") as f:
             f.write("")
-        os.remove(os.path.dirname(command[2]) + "\\" + command[1])
+        os.remove(os.path.dirname(second_file) + "\\" + first_file)
     else:
-        os.rename(command[1], command[2])
+        os.rename(first_file, second_file)
