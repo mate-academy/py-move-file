@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command):
+def move_file(command: str):
     split_file = command.split(" ")
     first_file = split_file[1]
     with open(first_file, "r") as file_out:
