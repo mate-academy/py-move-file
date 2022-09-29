@@ -1,4 +1,5 @@
-import os, stat
+import os
+import stat
 
 
 def move_file(command):
@@ -8,7 +9,7 @@ def move_file(command):
         with open(com[1], "r") as old_file:
             info = old_file.read()
 
-    except(PermissionError):
+    except PermissionError:
         print("Permission ok")
         if "/" in com[2]:
             dirc = com[2].split("/")
