@@ -7,7 +7,7 @@ def move_file(command: str) -> None:
         if '/' in file_name_2:
             path = file_name_2[:file_name_2.rfind('/')]
             os.makedirs(path)
-        with open(file_name_1, "r") as file_out, \
-                open(file_name_2, "w") as file_in:
+        with (open(file_name_1, "r") as file_out,
+              open(file_name_2, "w") as file_in):
             file_in.write(file_out.read())
         os.remove(file_name_1)
