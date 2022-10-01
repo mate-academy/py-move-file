@@ -6,7 +6,7 @@ def move_file(command: str):
     source_file = command_parts[1]
     second_file_path = command_parts[2]
     destination_folder = second_file_path.rsplit("/", 1)[0]
-    makedirs(destination_folder)
+    makedirs(destination_folder, exist_ok=True)
 
     with open(source_file, "r") as file:
         source_data = file.read()
