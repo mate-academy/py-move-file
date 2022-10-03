@@ -1,16 +1,15 @@
 import os
 import shutil
-from os import path
 
 
 def move_file(command: str) -> None:
     try:
         source_path = command.split()[1]
-        if not path.exists(source_path):
+        if not os.path.exists(source_path):
             raise FileNotFoundError(f"No such file or directory:"
                                     f"'{source_path}'")
         destination_path = command.split()[2]
-        if path.exists(destination_path):
+        if os.path.exists(destination_path):
             new_location = shutil.move(source_path, destination_path)
         else:
             destination_path_dir = '/'.join(destination_path.split("/")[0:-1])
