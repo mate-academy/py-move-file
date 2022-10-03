@@ -1,7 +1,7 @@
 from os import remove, mkdir
 
 
-def move_file(command):
+def move_file(command: str):
     command, file1, file2 = command.split()
     if command != "mv":
         return "Incorrect command"
