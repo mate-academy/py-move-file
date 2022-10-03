@@ -18,6 +18,3 @@ def move_file(command_line: str) -> None:
         file_out.write(file_in.read())
 
     os.remove(old_file)
-
-
-move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
