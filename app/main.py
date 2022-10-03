@@ -17,4 +17,3 @@ def move_file(command: str) -> None:
             with open(new_path + "/" + new_file_name, "w") as new_file:
                 new_file.write(data)
         os.remove(old_path)
-
