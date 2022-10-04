@@ -16,6 +16,6 @@ def movie_file(command: str):
     else:
         os.makedirs("/".join(path))
     with open(file1, "r") as file_in:
-        with open(f"{"/".join(path)}/{file2}", "w") as file_out:
+        with open(f"{'/'.join(path)}/{file2}", "w") as file_out:
             file_out.writelines(file_in.readlines())
     os.remove(file1)
