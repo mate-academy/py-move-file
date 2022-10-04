@@ -9,7 +9,7 @@ def move_file(command: str) -> None:
     new_file_name = command[2].split("/")[-1]
 
     if cmd != "mv" or old_path == new_path:
-        return print("Wrong data")
+        return
 
     with open(old_path, "r") as source_file:
         data = source_file.read()
