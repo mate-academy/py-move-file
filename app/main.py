@@ -1,15 +1,20 @@
 import os
+import typing
 
 
 class ReadAndDelete:
     def __init__(self, file_name: str) -> None:
         self.filename = file_name
 
-    def __enter__(self):
+    def __enter__(self) -> typing.IO:
         self.file = open(self.filename, "r")
+        print(type(self.file))
         return self.file
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self,
+                 exc_type: Exception,
+                 exc_val: Exception,
+                 exc_tb: Exception) -> None:
         self.file.close()
         os.remove(self.filename)
 
