@@ -2,23 +2,28 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    if command[0] == "mv" and command[2][-1] != "/":
+    old_file = command.split()[1]
+    new_file = command.split()[2]
+    command = command.split()[0]
 
-        with open(command[1]) as source:
-            data = source.read()
+    if command != "mv" or new_file[-1] == "/":
+        print("Incorrect command")
+        return
 
-        path = command[2].split("/")
-        directory = ""
+    with open(old_file) as source:
+        data = source.read()
 
-        for folder in path[:-1]:
-            directory = os.path.join(directory, folder)
-            if not os.path.isdir(directory):
-                os.mkdir(directory)
+    path = new_file.split("/")
+    directory = ""
 
-        new_file = os.path.join(directory, path[-1])
+    for folder in path[:-1]:
+        directory = os.path.join(directory, folder)
+        if not os.path.isdir(directory):
+            os.mkdir(directory)
 
-        with open(new_file, "w") as copy:
-            copy.write(data)
+    new_file = os.path.join(directory, path[-1])
 
-        os.remove(command[1])
+    with open(new_file, "w") as copy:
+        copy.write(data)
+
+    os.remove(old_file)
