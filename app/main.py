@@ -12,10 +12,10 @@ def move_file(command: str) -> None:
         directory = ""
 
         for folder in path[:-1]:
-            new_path = os.path.join(directory, folder)
-            if not os.path.isdir(new_path):
-                os.mkdir(new_path)
-            directory = new_path
+            directory = os.path.join(directory, folder)
+            if not os.path.isdir(directory):
+                os.mkdir(directory)
+
         new_file = os.path.join(directory, path[-1])
 
         with open(new_file, "w") as copy:
