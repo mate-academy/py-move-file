@@ -10,8 +10,8 @@ class ReadAndDelete:
         return self.file
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if os.path.exists(self.filename):
-            os.remove(self.filename)
+        self.file.close()
+        os.remove(self.filename)
 
 
 def create_directories(path: str) -> str:
@@ -21,17 +21,17 @@ def create_directories(path: str) -> str:
         full_dir += directories[i] + "/"
         if not os.path.exists(full_dir):
             os.mkdir(full_dir)
-    full_dir += directories[len(directories) - 1]
+    full_dir += directories[-1]
     return full_dir
 
 
 def move_file(command: str) -> None:
-    file_to_move = command.split(" ")[1]
+    file_to_move = command.split()[1]
     if not os.path.exists(file_to_move):
         print(f"File '{file_to_move}' does not exist")
         return
 
-    full_path = create_directories(command.split(" ")[2])
+    full_path = create_directories(command.split()[2])
 
     with (ReadAndDelete(file_to_move) as f_read,
           open(full_path, "w") as f_write):
