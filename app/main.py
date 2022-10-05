@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     string = command.split(" ")
     if string[0] == "mv":
         file1 = string[1]
