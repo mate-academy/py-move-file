@@ -15,6 +15,6 @@ def move_file(command: str) -> None:
             pass
 
     if "mv" in command:
-        with open(old_file, "r") as f, open(new_file, "w") as nf:
-            nf.write(f.read())
+        with open(old_file, "r") as file, open(new_file, "w") as new_file:
+            new_file.write(file.read())
         os.remove(old_file)
