@@ -1,17 +1,19 @@
 import os
 
 
-def move_file(command):
-    if command.split()[0] == "mv":
-        file = command.split()[1]
-        path = command.split()[2]
-        new_file = path.split("/")[-1]
-        path = path.replace(new_file, "")
-        new_path = os.path.join(path)
+def move_file(command: str) -> None:
+    command_splitted = command.split()
+    cmd = command_splitted[0]
+    old_path = command_splitted[1]
+    new_path = "/".join(command_splitted[2].split("/")[:-1])
+    new_file_name = command_splitted[2].split("/")[-1]
+
+    if cmd != "mv" or old_path == new_path:
+        return
+
+    with open(old_path, "r") as source_file:
+        data = source_file.read()
         os.makedirs(new_path)
-        with open(file, "r") as source_file:
-            file_copy = source_file.read()
-        os.remove(file)
-        os.chdir(new_path)
-        with open(new_file, "w") as new_file:
-            new_file.write(file_copy)
+        with open(new_path + "/" + new_file_name, "w") as destination_file:
+            destination_file.write(data)
+    os.remove(old_path)
