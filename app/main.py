@@ -14,6 +14,7 @@ def move_file(command: str) -> None:
         except FileExistsError:
             pass
 
-    with open(old_file, "r") as f, open(new_file, "w") as nf:
-        nf.write(f.read())
-    os.remove(old_file)
+    if "mv" in command:
+        with open(old_file, "r") as f, open(new_file, "w") as nf:
+            nf.write(f.read())
+        os.remove(old_file)
