@@ -1,9 +1,11 @@
 import os
 
 
+BUFFER_SIZE = 2048
+
+
 def move_file(user_command: str) -> None:
     character_separator = "/"
-    buffer_size = 2048
 
     class FileInfo:
         def __init__(self, file_name: str) -> None:
@@ -54,7 +56,7 @@ def move_file(user_command: str) -> None:
         full_filename2 = fileinfo2.path_add_filename(fileinfo1.filename)
         with open(fileinfo1.full_filename, "rb") as src_obj, \
                 open(full_filename2, "wb") as dest_obj:
-            buffer = src_obj.read(buffer_size)
+            buffer = src_obj.read(BUFFER_SIZE)
             while buffer:
                 dest_obj.write(buffer)
                 buffer = src_obj.read()
