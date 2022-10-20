@@ -2,12 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
-    linux_mv = command.split()[0]
-    first_file_name = command.split()[1]
-    directory_file = command.split()[2]
-    if linux_mv == "mv":
-        if "/" in directory_file:
-            os.makedirs(directory_file)
+    file_name = command.split()
+    if file_name[0] == "mv":
+        if "/" in file_name[2]:
+            os.makedirs(file_name[2])
         else:
-            os.makedirs(first_file_name)
-            os.rename(first_file_name, directory_file)
+            os.makedirs(file_name[1])
+            os.rename(file_name[1], file_name[2])
+
+
+move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
