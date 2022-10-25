@@ -1,4 +1,3 @@
-import shutil
 import os
 
 
@@ -21,4 +20,5 @@ def move_file(command: str) -> None:
     if os.path.exists(dest_new_file):
         raise Exception("Incorrect path")
     os.makedirs(dest_new_file)
-    os.replace(old_file, dest_new_file+"/"+new_file)
+
+    os.replace(old_file, dest_new_file + "/" + new_file)
