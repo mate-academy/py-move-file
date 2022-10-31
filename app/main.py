@@ -21,6 +21,3 @@ def move_file(command: str) -> None:
           open(command_list[2], "w") as moved_file):
         moved_file.write(source_file.read())
     os.remove(command_list[1])
-
-
-move_file("mv file.txt first_dir/second_dir/file2.txt")
