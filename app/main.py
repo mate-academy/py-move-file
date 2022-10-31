@@ -25,5 +25,3 @@ def move_file(command: str) -> None:
 
         if len(path1) != 0:
             os.remove(second_filename)
-
-    print(f"{list_command}\n{first_file}\n{second_filename}\n{mv_file_path}")
