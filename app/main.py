@@ -13,10 +13,8 @@ def move_file(command: str) -> None:
     path = ""
     for i in range(len(path_list) - 1):
         path = os.path.join(path, path_list[i])
-        try:
+        if not os.path.exists(path):
             os.mkdir(path)
-        except FileExistsError:
-            pass
     with (open(command_list[1], "r") as source_file,
           open(command_list[2], "w") as moved_file):
         moved_file.write(source_file.read())
