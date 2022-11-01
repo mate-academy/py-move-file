@@ -20,6 +20,3 @@ def move_file(command: str) -> None:
         f_out.write(f_in.read())
     if os.path.exists(file_in):
         os.remove(file_in)
-
-
-move_file("mv file.txt first_dir/second_dir/file2.txt")
