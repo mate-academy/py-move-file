@@ -13,6 +13,7 @@ def move_file(command: str) -> None:
             file_out.write(save_data)
         remove(source_data[1])
     else:
-        with open(source_data[1], "w+") as file_in:
-            pass
-        rename(source_data[1], paths[-1])
+        try:
+            rename(source_data[1], paths[-1])
+        except FileNotFoundError:
+            raise
