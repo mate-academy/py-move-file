@@ -8,7 +8,6 @@ def move_file(command: str) -> None:
     if count_of_dir == 0:
         new_file_name = path_new_file
         os.rename(file_name, new_file_name)
-
     if count_of_dir > 0:
         folders = path_new_file.split("/")
         new_file_name = folders.pop()
