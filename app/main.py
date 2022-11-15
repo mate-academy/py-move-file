@@ -18,4 +18,3 @@ def move_file(command: str) -> None:
                 open(os.path.join(path_file, new_file_name), "w") as file_out:
             file_out.write(file_in.read())
         os.remove(file_name)
-
