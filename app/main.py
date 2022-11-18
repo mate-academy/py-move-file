@@ -3,8 +3,9 @@ import os
 
 def move_file(command: str) -> None:
     command_mv, file_name, path_new_file = command.split(" ")
+    if os.path.exists(file_name) is False:
+        return None
     count_of_dir = path_new_file.count("/")
-
     if count_of_dir == 0:
         os.rename(file_name, path_new_file)
     if count_of_dir > 0:
