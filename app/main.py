@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     command_mv, file_name, path_new_file = command.split(" ")
-    if os.path.exists(file_name) is False:
+    if command_mv != "mv":
         return None
     count_of_dir = path_new_file.count("/")
     if count_of_dir == 0:
