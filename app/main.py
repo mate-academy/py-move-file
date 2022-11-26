@@ -25,6 +25,3 @@ def move_file(command: str) -> None:
                 file_in.writelines(file_out.readlines())
 
             os.remove(file_to_remove)
-
-
-
