@@ -13,15 +13,13 @@ def move_file(command: str) -> None:
             os.rename(file_to_remove, new_file)
 
         else:
-            new_file_path = command_list[2].split("/")[:-1]
-            creating_path = ""
-
-            for directory in new_file_path:
-                os.mkdir(f"{creating_path}{str(directory)}")
-                creating_path += str(directory) + "/"
+            new_file_directories = command_list[2].split("/")[:-1]
+            creating_path = "/".join(new_file_directories)
+            os.makedirs(creating_path)
+            new_file_path = "/".join(command_list[2].split("/"))
 
             with open(file_to_remove, "r") as file_out,\
-                    open(new_file, "w") as file_in:
+                    open(new_file_path, "w") as file_in:
                 file_in.writelines(file_out.readlines())
 
             os.remove(file_to_remove)
