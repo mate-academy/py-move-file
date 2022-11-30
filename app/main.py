@@ -9,7 +9,7 @@ def move_file(command: str) -> None:
     if "/" not in command:
         os.rename(old_file, new_file)
 
-    new_file_path = '/'.join(new_file.split('/')[:-1])
+    new_file_path = "/".join(new_file.split("/")[:-1])
     if not os.path.exists(new_file_path):
         os.makedirs(new_file_path)
 
