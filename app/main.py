@@ -2,7 +2,7 @@ import os
 
 
 def move_file(command: str) -> None:
-    tokens = command.split("")
+    tokens = command.split()
 
     if len(tokens) != 3:
         return
