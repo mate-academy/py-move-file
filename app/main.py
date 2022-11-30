@@ -4,12 +4,16 @@ from os import makedirs, remove
 def move_file(command: str) -> None:
     list_with_info = command.split(" ")
     file_in_name = list_with_info[1]
-    dirs = list_with_info[2].split("/")
+    dirs_name = ""
 
     if list_with_info[0] != "mv":
         return
     try:
-        makedirs(f"{dirs[0]}/{dirs[1]}/{dirs[2]}")
+        for string in list_with_info[2].split("/"):
+            if "txt" in string:
+                break
+            dirs_name += string + "/"
+        makedirs(dirs_name)
     except OSError:
         pass
 
