@@ -2,9 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    new_list = command.split()
-    file_name = new_list[1]
-    copy_name = new_list[2]
+    command_name, file_name, copy_name = command.split()
+
+    if command_name != "mv":
+        return
 
     try:
         copy_name.index("/")
