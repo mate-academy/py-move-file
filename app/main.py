@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
         command, initial_file, new_file = command.split()
         path, new_file_name = os.path.split(new_file)
 
-        if path != "" and not os.path.exists(path):
+        if path and not os.path.exists(path):
             os.makedirs(path)
 
         with open(initial_file, "r") as file_in, \
