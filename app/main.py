@@ -13,6 +13,5 @@ def move_file(command: str) -> None:
         if direct_name.endswith("_dir"):
             os.mkdir(direct_name)
             os.chdir(f"{os.getcwd()}/{direct_name}")
-            continue
     with open(new_filename, "w") as new_file:
         new_file.write(reader)
