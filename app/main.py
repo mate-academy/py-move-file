@@ -1,18 +1,18 @@
 from os import makedirs, remove, path
 
 
-def move_file(command: str) -> None:
-    command = command.split()
-    if command[0] != "mv":
+def move_file(full_command: str) -> None:
+    command, file_name, directory = full_command.split()
+    if command != "mv":
         return
 
-    filename_in = command[1]
-    dirs_with_namefile = path.split(command[-1])
-    makedirs(dirs_with_namefile[0])
+    new_directory, file_name_out = path.split(directory)
+    makedirs(new_directory)
+    full_directory_with_name = new_directory + "/" + file_name_out
 
     with (
-        open(filename_in, "r") as file_in,
-        open(command[-1], "w") as file_out
+        open(file_name, "r") as file_in,
+        open(full_directory_with_name, "w") as file_out
     ):
         file_out.write(file_in.read())
-        remove(filename_in)
+        remove(file_name)
