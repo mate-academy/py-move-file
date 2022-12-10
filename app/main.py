@@ -2,10 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    split_command_list = command.split()
+    command, old_file, list_of_names = command.split()
 
-    old_file = split_command_list[1]
-    list_of_names = split_command_list[2].split("/")
+    list_of_names = list_of_names.split("/")
     new_dir = "/".join(list_of_names[:-1])
     os.makedirs(new_dir)
     new_file = "/".join(list_of_names)
