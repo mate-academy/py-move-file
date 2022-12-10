@@ -14,4 +14,3 @@ def move_file(command: str) -> None:
         with open(new_file, "a") as new_file:
             new_file.writelines(old_file.readlines())
     os.remove(old_file)
-    
