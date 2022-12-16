@@ -8,7 +8,7 @@ class CommandError(Exception):
 def move_file(command: str) -> None:
     action, old_file, road_to_new_file = command.split()
     if action != "mv":
-        raise CommandError("Wrong command!")
+        raise CommandError('Command have to start with "mv"!')
 
     start_dir = os.getcwd()
 
