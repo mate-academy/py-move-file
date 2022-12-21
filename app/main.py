@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     operation, filename, dir_file = command.split()
     dir_file_split = dir_file.split("/")
     if operation != "mv":
@@ -13,6 +13,7 @@ def move_file(command: str):
         file_path = os.path.join(file_path, path)
     # file_path = os.path.relpath("\\".join(dir_file_split[:-1]))
     os.mkdir(file_path)
-    with open(filename, "r") as source, open(dir_file_split[-1], "w") as outcome:
+    with open(filename, "r") as source,\
+            open(dir_file_split[-1], "w") as outcome:
         outcome.write(source.read())
         os.remove(filename)
