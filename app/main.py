@@ -7,15 +7,16 @@ def move_file(command: str) -> None:
     if mv_command != "mv":
         raise Exception('Command should start with "mv"!')
 
-    *directories, to_file = destination_location.split("/")
-    directory_path = ""
+    directory_path, to_file = os.path.split(destination_location)
+    original_path = os.getcwd()
 
-    for directory in directories:
-        directory_path = os.path.join(directory_path, directory)
-        os.mkdir(directory_path)
+    if len(directory_path) != 0:
+        os.makedirs(directory_path)
+        os.chdir(directory_path)
 
-    with open(from_file, "r") as original, \
-            open(os.path.join(directory_path, to_file), "w") as destination:
+    with open(os.path.join(original_path, from_file), "r") as original, \
+            open(to_file, "w") as destination:
         destination.writelines(original)
 
-    os.remove(os.path.join(from_file))
+    os.chdir(original_path)
+    os.remove(from_file)
