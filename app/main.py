@@ -1,30 +1,18 @@
 import os
-from app.functions_for_processing import (
-    create_path,
-    processing_files
-)
 
 
 def move_file(command: str) -> None:
-    file_to_move, new_directory = command[3:len(command)].split(" ")
-    path_list = new_directory.split("/")
-    if path_list[-1] == "":
-        create_path(path_list)
-        os.remove(f"{file_to_move}")
-        return
-    with open(f"{file_to_move}", "r") as source:
-        if len(path_list) == 1:
-            processing_files(
-                f"{path_list[0]}",
-                "w",
-                file_to_move,
-                source
-            )
-        if len(path_list) > 1:
-            create_path(path_list)
-            processing_files(
-                f"{os.path.join(*path_list[:len(path_list)])}",
-                "w",
-                file_to_move,
-                source
-            )
+    command = command.split()
+
+    if command[0] != "mv":
+        raise NameError("The command does not exists")
+
+    file_to_read = command[1]
+    list_to_join = command[2].split("/")
+    new_dir = "/".join(list_to_join[:-1])
+    os.makedirs(new_dir)
+    path_to_file = "/".join(list_to_join)
+
+    with open(file_to_read, "r") as source, open(path_to_file, "a") as reciever:
+        reciever.write(source.read())
+    os.remove(file_to_read)
