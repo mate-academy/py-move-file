@@ -13,6 +13,7 @@ def move_file(command: str) -> None:
     os.makedirs(new_dir)
     path_to_file = "/".join(list_to_join)
 
-    with open(file_to_read, "r") as source, open(path_to_file, "a") as reciever:
-        reciever.write(source.read())
+    with (open(file_to_read, "r") as source,
+          open(path_to_file, "a") as receiver):
+        receiver.write(source.read())
     os.remove(file_to_read)
