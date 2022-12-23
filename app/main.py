@@ -15,16 +15,16 @@ def move_file(command: str) -> None:
     with open(f"{file_to_move}", "r") as source:
         if len(path_list) == 1:
             processing_files(
-                    f"{path_list[0]}",
-                    "w",
-                    file_to_move,
-                    source
+                f"{path_list[0]}",
+                "w",
+                file_to_move,
+                source
             )
         if len(path_list) > 1:
             create_path(path_list)
             processing_files(
-                    f"{os.path.join(*path_list[:len(path_list)])}",
-                    "w",
-                    file_to_move,
-                    source
+                f"{os.path.join(*path_list[:len(path_list)])}",
+                "w",
+                file_to_move,
+                source
             )
