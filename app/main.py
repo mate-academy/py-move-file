@@ -14,19 +14,17 @@ def move_file(command: str) -> None:
         return
     with open(f"{file_to_move}", "r") as source:
         if len(path_list) == 1:
-            with processing_files(
+            processing_files(
                     f"{path_list[0]}",
                     "w",
                     file_to_move,
                     source
-            ):
-                pass
+            )
         if len(path_list) > 1:
             create_path(path_list)
-            with processing_files(
+            processing_files(
                     f"{os.path.join(*path_list[:len(path_list)])}",
                     "w",
                     file_to_move,
                     source
-            ):
-                pass
+            )
