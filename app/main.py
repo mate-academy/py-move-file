@@ -2,19 +2,17 @@ import os
 
 
 def move_file(command: str) -> None:
+    mv_command, source, destination = command.split()
 
-    source, destination = command.split()[1], command.split()[2]
+    if mv_command == "mv":
+        name_file = destination.split("/")[-1]
 
-    if source.endswith("/") or destination.endswith("/"):
-        return
-    files = destination.split("/")[:-1]
-    os.makedirs("/".join(files))
+        quotes = ""
+        for direct in destination.split("/")[:-1]:
+            os.mkdir(os.path.join(quotes, direct))
+            quotes += direct + "/"
 
-    with open(source, "r") as file_in, \
-            open(destination, "w") as file_out:
-        file_out.write(file_in.read())
-
-    os.remove(source)
-
-
-move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
+        with open(source, "r") as file_in, \
+                open(os.path.join(quotes, name_file), "w") as file_out:
+            file_out.write(file_in.read())
+        os.remove(source)
