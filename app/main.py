@@ -2,8 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    todo, file_from, file_to, *_ = command.split() + [None] * 2
-    if todo != "mv" or any([file_from, file_to]) is None:
+    todo, file_from, file_to, *_ = command.split() + [None] * 3
+    print(file_from, file_to)
+    if todo != "mv" or None in (file_from, file_to):
         print("Usage: mv SOURCE DEST")
         return
 
