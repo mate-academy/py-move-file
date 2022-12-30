@@ -24,7 +24,7 @@ def move_file(command: str) -> None:
         os.rename(file_from, file_to)
         return
 
-    with open(file_from, "r") as fs_file_from:
-        with open(file_to, "w") as fs_file_to:
-            fs_file_to.write(fs_file_from.read())
+    with open(file_from, "r") as file_stream_file_from:
+        with open(file_to, "w") as file_stream_file_to:
+            file_stream_file_to.write(file_stream_file_from.read())
             os.remove(file_from)
