@@ -1,8 +1,8 @@
 import os
 
 
-def movie_file(command: str) -> None:
-    _, old_file, new_file = command.split()
-    os.mkdir(os.path.dirname(new_file))
-    with open(old_file, "r") as old_file, open(new_file, "w") as new_file:
-        new_file.write(old_file.read())
+def move_file(command: str) -> None:
+    mv, old_file_path, new_file_path = command.split()
+    if mv == "mv" and not os.path.exists(new_file_path):
+        os.renames(old_file_path, new_file_path)
+        
