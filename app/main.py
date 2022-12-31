@@ -2,7 +2,7 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_list = command.split(" ")
+    command_list = command.split()
     directory_list = command_list[2].split("/")
     if len(directory_list) != 1:
         if ".txt" in directory_list[-1]:
