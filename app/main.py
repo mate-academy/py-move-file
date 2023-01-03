@@ -3,10 +3,7 @@ import os
 
 def move_file(command: str) -> None:
 
-    command_name, file_to_remove, new_file = \
-        command.split()[0], \
-        command.split()[1], \
-        command.split()[2]
+    command_name, file_to_remove, new_file = command.split()
 
     if command_name == "mv":
 
