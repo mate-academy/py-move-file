@@ -3,10 +3,10 @@ import os
 
 def move_file(command: str) -> None:
     action, old_file, road_to_new_file = command.split()
-    if action == "mv":
+    if action != "mv":
         raise Exception("Wrong command")
 
-    start_directory = os.getcwd()
+    root_directory = os.getcwd()
 
     to_file, new_file = road_to_new_file.split("/")
     new_path = ""
