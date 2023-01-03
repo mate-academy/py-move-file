@@ -20,5 +20,5 @@ def move_file(command: str) -> None:
             open(new_file, "a") as file_to_add:
         for line in file_to_remove:
             file_to_add.write(line)
-        os.chdir(start_directory)
+        os.chdir(root_directory)
         os.remove(old_file)
