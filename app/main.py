@@ -16,6 +16,7 @@ def move_file(command: str) -> None:
     os.makedirs(new_dir)
     path_to_file = "/".join(list_to_join)
 
-    with open(our_file, "r") as source_file, open(path_to_file, "a") as result_file:
+    with open(our_file, "r") as source_file, \
+            open(path_to_file, "a") as result_file:
         result_file.writelines(source_file.readlines())
     os.remove(our_file)
