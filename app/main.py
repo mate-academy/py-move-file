@@ -2,8 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
+    short_command = command.split()[0]
     source = command.split()[1]
     path = command.split()[2]
+    if short_command != "mv":
+        return
     if "/" not in path:
         os.rename(source, path)
         return
