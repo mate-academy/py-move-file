@@ -1,5 +1,4 @@
 import os
-from os.path import isdir
 
 
 def move_file(command: str) -> None:
@@ -8,14 +7,14 @@ def move_file(command: str) -> None:
     if command != "mv":
         return
 
-    path_to_destination_dir = destination.split(os.sep)
+    path_to_destination_dir, destination_file = os.path.split(destination)
 
-    for dir_index in range(1, len(path_to_destination_dir)):
-        if isdir(os.sep.join(path_to_destination_dir[:dir_index])):
-            continue
-        os.mkdir(os.sep.join(path_to_destination_dir[:dir_index]))
+    try:
+        os.makedirs(path_to_destination_dir)
+    except FileExistsError:
+        pass
 
-    with open(source) as s, open(destination, "w") as t:
-        t.write(s.read())
+    with open(source) as source_file, open(destination, "w") as target_file:
+        target_file.write(source_file.read())
 
     os.remove(source)
