@@ -18,8 +18,10 @@ def move_clear_file(command: str, file_path1: str, file_path2: str) -> None:
     if command == "mv":
         try:
             with ClearFile(file_path1):
-                with open(file_path1, "r") as file_in,\
-                        open(file_path2, "w") as file_out:
+                with (
+                    open(file_path1, "r") as file_in,
+                    open(file_path2, "w") as file_out
+                ):
                     file_out.write(file_in.read())
         except FileNotFoundError:
             print(f"FileNotFoundError:"
