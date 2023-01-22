@@ -6,7 +6,12 @@ def move_file(command: str) -> None:
         command_name, file_name, destination_path = command.split()
 
         if "/" in destination_path:
-            os.makedirs(os.path.dirname(destination_path))
+            destination_path = destination_path.split("/")
+            new_file_name = destination_path[-1]
+            destination_path = destination_path[:-1]
+            for path in destination_path:
+                os.makedirs(path)
+                new_file_name = os.path.join(path, new_file_name)
 
         with (
             open(f"{file_name}", "r") as file_in,
