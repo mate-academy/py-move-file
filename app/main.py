@@ -10,8 +10,6 @@ def move_file(command: str) -> None:
         raise ValueError("Command is incorrect")
     copied_file_info = copied_file_path.split("/")
     if len(copied_file_info) > 1:
-        path = ""
-        for folder_name in copied_file_info[:-1]:
-            path = os.path.join(path, folder_name)
-            os.mkdir(path)
+        path = ("/".join(copied_file_info[:-1]))
+        os.makedirs(path)
     os.rename(current_file, copied_file_path)
