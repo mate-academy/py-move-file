@@ -12,6 +12,6 @@ def move_file(command: str) -> None:
             open(os.path.join(new_dirs, new_file_name), "w+") as new_path:
         read_current_file = source.read()
         new_path.write(read_current_file)
-        os.remove(current_file_name)
     if len(new_dirs) == 1:
         os.rename(current_file_name, new_file_name)
+    os.remove(current_file_name)
