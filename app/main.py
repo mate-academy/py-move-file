@@ -22,8 +22,7 @@ def move_file(command: str) -> None:
             f' The correct one is: "mv"'
         )
 
-    path = os.path.join(target_file)
-    head_path, tail_path = os.path.split(path)
+    head_path, tail_path = os.path.split(target_file)
 
     if head_path and tail_path:
         os.makedirs(head_path)
