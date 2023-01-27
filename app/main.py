@@ -29,9 +29,5 @@ def move_file(command: str) -> None:
         move_clear_file(source_file, target_file)
 
     if head_path and tail_path:
-        current_path = ""
-        for current_dir in head_path.split("/"):
-            current_path = os.path.join(current_path, current_dir)
-            if not os.path.isdir(current_path):
-                os.mkdir(current_path)
+        os.makedirs(head_path)
         move_clear_file(source_file, target_file)
