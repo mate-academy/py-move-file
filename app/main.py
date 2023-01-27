@@ -8,8 +8,8 @@ def move_clear_file(source_file: str, target_file: str) -> None:
         open(target_file, "w") as file_out
     ):
         file_out.write(file_in.read())
-        file_in.close()
-        os.remove(source_file)
+
+    os.remove(source_file)
 
 
 def move_file(command: str) -> None:
