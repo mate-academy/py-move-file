@@ -25,9 +25,8 @@ def move_file(command: str) -> None:
     path = os.path.join(target_file)
     head_path, tail_path = os.path.split(path)
 
-    if not head_path and tail_path:
-        move_clear_file(source_file, target_file)
-
     if head_path and tail_path:
         os.makedirs(head_path)
+
+    if tail_path:
         move_clear_file(source_file, target_file)
