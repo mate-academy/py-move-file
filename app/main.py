@@ -21,5 +21,3 @@ def move_file(command: str) -> None:
                 with open(os.path.join(path, new_file), "w") as file_write:
                     file_write.write(context)
             os.remove(old_file)
-
-move_file("mv test.txt taras/test.txt")
