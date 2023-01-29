@@ -5,9 +5,8 @@ def move_file(command: str) -> None:
     mv, original_file, new_file = command.split()
     if mv == "mv":
         if "/" in new_file:
-            dir_list = new_file.split("/")
-            dir_list.remove(dir_list[-1])
-            dir_path = "/".join(dir_list)
+            dir_tuple = os.path.split(new_file)
+            dir_path = dir_tuple[1]
             os.makedirs(dir_path)
             new_file = os.path.join(dir_path, new_file)
         with open(original_file, "r") as file_in, \
