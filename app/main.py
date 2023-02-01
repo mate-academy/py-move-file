@@ -3,16 +3,15 @@ import os
 
 
 def move_file(command: str) -> None:
-    comm_list = command.split(" ")
+    command, old_file, new_file = command.split()
 
-    if comm_list[0] == "mv":
+    if command == "mv":
         created_dir = ""
-        new_file_path = list(Path(comm_list[2]).parts)
-        orig_file = comm_list[1]
-        n_f_name = orig_file
+        new_file_path = list(Path(new_file).parts)
+        new_file_name = old_file
 
         if "." in new_file_path[-1].strip():
-            n_f_name = new_file_path[-1]
+            new_file_name = new_file_path[-1]
             new_file_path.pop()
 
         if len(new_file_path) > 1:
@@ -21,10 +20,12 @@ def move_file(command: str) -> None:
                 if not os.path.isdir(created_dir):
                     os.mkdir(created_dir)
 
-        with open(orig_file, "r") as f_orig, \
-                open(os.path.join(created_dir, n_f_name), "w") as f_copy:
-            f_copy.write(f_orig.read())
+        with open(old_file, "r") as file_old, open(
+                os.path.join(created_dir, new_file_name),
+                "w"
+        ) as file_copy:
+            file_copy.write(file_old.read())
 
-        os.remove(orig_file)
+        os.remove(old_file)
 
     return
