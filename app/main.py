@@ -5,9 +5,7 @@ def move_file(command: str) -> None:
     try:
         mv_command, source_file, destination = command.split()
     except ValueError:
-        raise ValueError(
-            "Command must have format: mv source_file destination/file_name"
-        )
+        print("Command must have format: mv source_file destination/file_name")
 
     if mv_command != "mv":
         raise ValueError("Command must begging with 'mv' without flags")
