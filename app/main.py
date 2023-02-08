@@ -6,7 +6,9 @@ def move_file(command: str) -> None:
     splitted_all = command.split("/")
     splitted_first_str = str(splitted_all[0]).split()
     if len(splitted_all) == 1:
-        with open(splitted_first_str[1], "w") as source_f, \
+        if len(splitted_first_str) <= 2 or len(splitted_first_str) > 3:
+            raise ValueError("no 'cp' command present or command syntax error")
+        with open(splitted_first_str[1], "r") as source_f, \
                 open(splitted_first_str[2], "w") as target_f:
             for line in source_f:
                 target_f.write(line)
