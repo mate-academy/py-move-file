@@ -19,8 +19,10 @@ def move_file(command: str) -> None:
         dir_path = Path(path)
         target_file = dir_path / filename_2
         os.makedirs(path)
-        with open(target_file, "w") as target_f,\
-                open(splitted_first_str[1], "r") as source_f:
+        with (
+            open(target_file, "w") as target_f,
+            open(splitted_first_str[1], "r") as source_f
+        ):
             for line in source_f:
                 target_f.write(line)
             os.remove(splitted_first_str[1])
