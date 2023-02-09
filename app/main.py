@@ -2,6 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
+    if not command:
+        return
+
     splitted = command.split()
 
     if splitted[0] == "mv" and len(splitted) == 3:
