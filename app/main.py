@@ -10,8 +10,8 @@ def move_file(command: str) -> None:
         path += "/" + directory[index]
         os.mkdir(path)
 
-    with open(copied_file, "r") as file_in, \
-            open(file_to_copy, "w") as file_out:
+    with (open(copied_file, "r") as file_in,
+          open(file_to_copy, "w") as file_out):
         file_out.write(file_in.read())
 
     os.remove(copied_file)
