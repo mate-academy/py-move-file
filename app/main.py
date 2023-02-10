@@ -2,11 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) != 3:
+    command = command.split()
+    if len(command) != 3:
         raise ValueError("Input should consist of 3 parts: "
                          "command, source file, target file")
     else:
-        command, source_file, target_file = command.split()
+        command, source_file, target_file = command
 
     if source_file == target_file:
         raise ValueError("Source file and target file must be difference")
