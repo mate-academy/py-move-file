@@ -16,7 +16,7 @@ def move_file(command: str) -> None:
         raise ValueError("Command must be 'mv'")
 
     folders, file = os.path.split(target_file)
-    if len(folders) != 0:
+    if folders != 0:
         os.makedirs(folders, exist_ok=True)
 
     with (
