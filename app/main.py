@@ -6,8 +6,8 @@ def move_file(command: str) -> None:
     if len(command) != 3:
         raise ValueError("Input should consist of 3 parts: "
                          "command, source file, target file")
-    else:
-        command, source_file, target_file = command
+
+    command, source_file, target_file = command
 
     if source_file == target_file:
         raise ValueError("Source file and target file must be difference")
@@ -16,7 +16,7 @@ def move_file(command: str) -> None:
         raise ValueError("Command must be 'mv'")
 
     folders, file = os.path.split(target_file)
-    if folders != 0:
+    if folders:
         os.makedirs(folders, exist_ok=True)
 
     with (
