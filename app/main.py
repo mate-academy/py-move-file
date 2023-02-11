@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     if len(command.split()) != 3:
-        raise ValueError("no 'cp' command present or command syntax error")
+        raise ValueError("no 'mv' command present or command syntax error")
     command, source_path, destination_path = command.split()
     if "/" not in destination_path:
         os.rename(source_path, destination_path)
