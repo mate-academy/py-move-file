@@ -13,9 +13,8 @@ def move_file(command: str) -> None:
     os.makedirs(os.path.dirname(road_to_new_file))
 
     with (
-        open(old_file, "r") as file_to_remove,
-        open(road_to_new_file, "a") as file_to_add
+        open(old_file, "r") as file_out,
+        open(road_to_new_file, "a") as file_in
     ):
-        for line in file_to_remove:
-            file_to_add.write(line)
+        file_out.write(file_in.read())
         os.remove(old_file)
