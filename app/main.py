@@ -10,21 +10,12 @@ def move_file(command: str) -> None:
     if action != "mv":
         raise CommandError('Command have to start with "mv"!')
 
-    start_dir = os.getcwd()
-
-    *to_file, new_file_name = road_to_new_file.split("/")
-    new_path = ""
-
-    for direct in to_file:
-        new_path = os.path.join(new_path, direct)
-        os.mkdir(new_path)
-    os.chdir(new_path)
+    os.makedirs(os.path.dirname(road_to_new_file))
 
     with (
         open(old_file, "r") as file_to_remove,
-        open(new_file_name, "a") as file_to_add
+        open(road_to_new_file, "a") as file_to_add
     ):
         for line in file_to_remove:
             file_to_add.write(line)
-        os.chdir(start_dir)
         os.remove(old_file)
