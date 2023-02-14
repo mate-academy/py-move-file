@@ -16,4 +16,4 @@ def move_file(command: str) -> None:
     os.mkdir(new_path)
     with open(file, "r") as file_in, open(dir_file_split[-1]) as file_out:
         file_out.write(file_in.read())
-        os.remove(file)
+    os.remove(file)
