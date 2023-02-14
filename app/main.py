@@ -2,6 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        raise ValueError("Invalid command")
     name, source, destination = command.split()
 
     if destination.endswith("/") or name != "mv":
