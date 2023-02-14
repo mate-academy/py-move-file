@@ -3,17 +3,17 @@ import os
 
 
 def move_file(command: str) -> None:
-    mv, file, dir_file = command.split()
-    dir_file_split = dir_file.split("/")
+    input_command, source_file_path, destination_file_path = command.split()
 
-    if mv != "mv":
-        return
-    if file == dir_file:
-        return
-    new_path = ""
-    for path in dir_file_split[:-1]:
-        new_path = os.path.join(new_path, path)
-    os.mkdir(new_path)
-    with open(file, "r") as file_in, open(dir_file_split[-1]) as file_out:
-        file_out.write(file_in.read())
-    os.remove(file)
+    if input_command != "mv":
+        raise NameError("You`ve entered wrong command")
+
+    if input_command == "mv" and len(command.split()) == 3:
+        if "/" in destination_file_path:
+            os.makedirs(os.path.dirname(destination_file_path))
+            with open(f"{source_file_path}", "r") as file_in, \
+                    open(f"{destination_file_path}", "w") as file_out:
+                file_out.write(file_in.read())
+            os.remove(source_file_path)
+        else:
+            os.rename(source_file_path, destination_file_path)
