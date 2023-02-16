@@ -1,6 +1,10 @@
 import os
 
 
+class UnrecognizedException(BaseException):
+    pass
+
+
 def move_file(exec_string: str) -> None:
     commands = ["mv"]
     command, old_file, new_file = exec_string.split()
@@ -15,4 +19,8 @@ def move_file(exec_string: str) -> None:
             if os.path.isfile(new_file):
                 raise FileExistsError(f"{new_file} already exists, "
                                       f"process terminated")
-    os.renames(old_file, new_file)
+    try:
+        os.renames(old_file, new_file)
+    except BaseException as unknown:
+        raise UnrecognizedException(f"All should be fine, but huge error "
+                                    f"named {unknown} occurred")
