@@ -9,8 +9,8 @@ def move_file(command: str) -> None:
             for direc in command_ls[:-1]:
                 os.mkdir(f"{directory[: directory.index(direc)]}{direc}")
 
-            with open(file, "r") as source, open(directory, "w") as copy:
-                copy.write(source.read())
+            with open(file, "r") as first_file, open(directory, "w") as copy:
+                copy.write(first_file.read())
 
             os.remove(file)
         else:
