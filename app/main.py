@@ -17,6 +17,6 @@ def move_file(command: str) -> None:
                 open(f"{destination_file_path}", "w") as file_out
             ):
                 file_out.write(file_in.read())
-                os.remove(source_file_path)
+            os.remove(source_file_path)
         else:
             os.rename(source_file_path, destination_file_path)
