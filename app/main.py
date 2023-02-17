@@ -11,7 +11,7 @@ class DirectoryExistError(Exception):
 
 
 def move_file(command: str) -> None:
-    input_command, path_file_in, path_file_out = command.split(" ")
+    input_command, path_file_in, path_file_out = command.split()
 
     if input_command != "mv":
         exit()
