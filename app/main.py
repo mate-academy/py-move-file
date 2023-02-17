@@ -8,8 +8,7 @@ def move_file(command: str) -> None:
     if command == "mv":
 
         try:
-            if not os.path.exists(directories):
-                os.makedirs(directories)
+            os.makedirs(directories)
 
             with (open(first_file, "r") as file_content,
                   open(second_file, "w") as file_out):
