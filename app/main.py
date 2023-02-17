@@ -6,11 +6,16 @@ def move_file(command: str) -> None:
     directories = os.path.split(second_file)[0]
 
     if command == "mv":
-        if not os.path.exists(directories):
-            os.makedirs(directories)
 
-        with (open(first_file, "r") as file_content,
-              open(second_file, "w") as file_out):
-            file_out.write(file_content.read())
+        try:
+            if not os.path.exists(directories):
+                os.makedirs(directories)
 
-        os.remove(first_file)
+            with (open(first_file, "r") as file_content,
+                  open(second_file, "w") as file_out):
+                file_out.write(file_content.read())
+
+            os.remove(first_file)
+
+        except FileNotFoundError:
+            os.rename(first_file, second_file)
