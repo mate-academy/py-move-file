@@ -10,7 +10,7 @@ def crossplatfrom_speculation(file_path: str) -> str:
 
 
 def move_file(exec_string: str) -> None:
-    commands = ["mv"]
+    commands = {"mv"}
     command, old_file, new_file = exec_string.split()
     if command not in commands:
         raise AttributeError(f"Allowed commands: {commands},"
