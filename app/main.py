@@ -3,7 +3,7 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    command, file_to_opening, path = command.split(" ")
+    command, file_to_opening, path = command.split()
     if command == "mv":
         if path.count("/"):
             path_to_writing = path.split("/")
