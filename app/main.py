@@ -14,6 +14,3 @@ def move_file(command: str) -> None:
             file_out.write(file_content.read())
 
         os.remove(first_file)
-
-
-move_file("mv text.txt dir1/dir2/dir3/text.txt")
