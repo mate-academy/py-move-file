@@ -14,11 +14,11 @@ def move_file(command: str) -> None:
     input_command, path_file_in, path_file_out = command.split(" ")
 
     if input_command != "mv":
-        return
+        exit()
 
     if ("/" or "\\") not in path_file_out:
         os.rename(path_file_in, path_file_out)
-        return
+        return None
 
     absolute_file_in = os.path.join(os.getcwd(), path_file_in)
     output_directory_path = os.path.join(
@@ -38,7 +38,6 @@ def move_file(command: str) -> None:
         open(absolute_file_in, "r") as file_in,
         open(output_directory_file_path, "w") as file_out,
     ):
-        read_content = file_in.read()
-        file_out.write(read_content)
+        file_out.write(file_in.read())
 
     os.remove(absolute_file_in)
