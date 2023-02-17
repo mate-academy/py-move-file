@@ -8,12 +8,11 @@ def move_file(command: str) -> None:
     if command == "mv":
         if not dirs:
             rename(file1, file2)
-            return
+        else:
+            for index in range(len(dirs)):
+                mkdir("/".join(dirs[:index + 1]))
 
-        for index in range(len(dirs)):
-            mkdir("/".join(dirs[:index + 1]))
+            with open(file1, "r") as source, open(file2_path, "w") as copy:
+                copy.write(source.read())
 
-        with open(file1, "r") as source, open(file2_path, "w") as copy:
-            copy.write(source.read())
-
-        remove(file1)
+            remove(file1)
