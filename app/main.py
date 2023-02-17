@@ -12,9 +12,7 @@ def move_file(exec_string: str) -> None:
         raise AttributeError(f"Allowed commands: {commands},"
                              f" {command} is not allowed!")
     path1, path2 = os.path.split(old_file)[0], os.path.split(new_file)[0]
-
-    path1 = os.path.join(path1)
-    path2 = os.path.join(path2)
+    path1, path2 = os.path.join(path1), os.path.join(path2)
 
     if path1 == path2:
         if old_file == new_file:
