@@ -5,12 +5,16 @@ def move_file(command: str) -> None:
     input_command, path_file_in, path_file_out = command.split()
 
     if input_command != "mv":
-        return
+        raise Exception(
+            f"You can use only 'mv' command!"
+            f" But you have typed {input_command} instead!"
+        )
+
     if ("/" or "\\") not in path_file_out:
         os.rename(path_file_in, path_file_out)
         return
 
-    output_directory_file_path = os.path.join(os.getcwd(), path_file_out)
+    output_directory_file_path = os.path.abspath(path_file_out)
     output_directory_path = os.path.split(output_directory_file_path)[0]
     try:
         if os.path.exists(output_directory_path):
@@ -21,7 +25,7 @@ def move_file(command: str) -> None:
         os.makedirs(output_directory_path)
 
     with (
-        open(path_file_in, "r") as file_in,
+        open(path_file_in) as file_in,
         open(output_directory_file_path, "w") as file_out,
     ):
         file_out.write(file_in.read())
