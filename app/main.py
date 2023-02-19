@@ -15,10 +15,13 @@ def _check_path(new_path: str) -> None:
 def move_file(command: str) -> None:
     try:
         operation, old_file_loc, new_file_loc = command.split()
+        if not os.path.exists(old_file_loc) or os.path.isdir(old_file_loc):
+            raise ValueError
     except ValueError:
         print(
             "Please check the input, "
-            "it should be like 'mv file.txt some_dir/new_file.txt'"
+            "it should be like 'mv file some_dir/new_file'. "
+            "The file to move cannot be directory!"
         )
         return
     if operation == "mv" and old_file_loc != new_file_loc:
