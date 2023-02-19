@@ -13,7 +13,14 @@ def _check_path(new_path: str) -> None:
 
 
 def move_file(command: str) -> None:
-    operation, old_file_loc, new_file_loc = command.split()
+    try:
+        operation, old_file_loc, new_file_loc = command.split()
+    except ValueError:
+        print(
+            "Please check the input, "
+            "it should be like 'mv file.txt some_dir/new_file.txt'"
+        )
+        return
     if operation == "mv" and old_file_loc != new_file_loc:
         # checking if there is any intermediate directory in new file location
         if "/" in new_file_loc:
