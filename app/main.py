@@ -6,18 +6,14 @@ def move_file(command: str) -> None:
         command, file_to_move, path = command.split()
         folders = path.split("/")
         new_file_name = folders.pop(-1)
-        source_folder = ""
+        current_folder = os.getcwd()
 
         if command != "mv":
             raise ValueError("Incorrect command")
 
-        for folder in folders:
-            destination_path = os.path.join(source_folder, folder)
-            source_folder = destination_path
-            if not os.path.exists(destination_path):
-                os.mkdir(destination_path)
-
-        destination_path = os.path.join(source_folder, new_file_name)
+        destination_path = os.path.join(current_folder, *folders)
+        os.makedirs(destination_path, exist_ok=True)
+        destination_path = os.path.join(destination_path, new_file_name)
         with (
             open(file_to_move, "r") as file_to_move,
             open(destination_path, "w") as new_file
