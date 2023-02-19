@@ -5,19 +5,17 @@ def _check_path(new_path: str) -> None:
     # helper function to traverse and check path to new file
     # new directory is created if one was not found
 
-    directories = new_path.split("/")
-    path = ""
-    for directory in directories:
-        path += directory
-        if not os.path.exists(path):
-            os.mkdir(path)
-        path += "/"
+    cur_path = ""
+    for directory in new_path.split("/"):
+        cur_path = os.path.join(cur_path, directory)
+        if not os.path.exists(cur_path):
+            os.mkdir(cur_path)
 
 
 def move_file(command: str) -> None:
     operation, old_file_loc, new_file_loc = command.split()
     if operation == "mv" and old_file_loc != new_file_loc:
-        # checking if there is any intermediate directories in newfile location
+        # checking if there is any intermediate directory in new file location
         if "/" in new_file_loc:
             # separating path from actual file name
             new_path, *_ = new_file_loc.rsplit("/", 1)
@@ -33,7 +31,7 @@ def move_file(command: str) -> None:
                 else:
                     new_file_loc = new_path + "/" + old_file_loc
 
-            # using helper function to check the path to new file
+            # helper function to check the path to new file
             _check_path(new_path)
 
         with open(old_file_loc) as reader, open(new_file_loc, "w") as writer:
