@@ -14,12 +14,12 @@ def move_file(command: str) -> None:
         folders = new_file.split("/")[:-1]
         file_path = [folders[0]]
         for i in range(1, len(folders)):
-            file_path.append(f"{file_path[i - 1]}/{folders[i]}")
+            file_path.append(os.path.join(file_path[i - 1], folders[i]))
         for directory in file_path:
             if not os.path.exists(directory):
                 os.mkdir(directory)
 
-    with open(copied_file, "r") as old, open(new_file, "w") as new:
-        new.write(old.read())
+    with open(copied_file, "r") as old_file, open(new_file, "w") as new_file:
+        new_file.write(old_file.read())
 
     os.remove(copied_file)
