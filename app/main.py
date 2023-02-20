@@ -11,13 +11,8 @@ def move_file(command: str) -> None:
         raise IncorrectCommand("Function supports only mv command")
 
     if "/" in new_file:
-        folders = new_file.split("/")[:-1]
-        file_path = [folders[0]]
-        for i in range(1, len(folders)):
-            file_path.append(os.path.join(file_path[i - 1], folders[i]))
-        for directory in file_path:
-            if not os.path.exists(directory):
-                os.mkdir(directory)
+        folders = os.path.split(new_file)[0]
+        os.makedirs(os.path.join(folders), exist_ok=True)
 
     with open(copied_file, "r") as old_file, open(new_file, "w") as new_file:
         new_file.write(old_file.read())
