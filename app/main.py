@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
 
     if "/" in new_file:
         folders = os.path.split(new_file)[0]
-        os.makedirs(os.path.join(folders), exist_ok=True)
+        os.makedirs(folders, exist_ok=True)
 
     with open(copied_file, "r") as old_file, open(new_file, "w") as new_file:
         new_file.write(old_file.read())
