@@ -22,17 +22,17 @@ def move_file(command: str) -> None:
         )
         return
     if operation == "mv" and old_file_loc != new_file_loc:
-        if "/" in new_file_loc:
-            new_path, *_ = new_file_loc.rsplit("/", 1)
-            if new_file_loc.endswith("/"):
-                if "/" in old_file_loc:
-                    _, old_file_name = old_file_loc.rsplit("/", 1)
-                    new_file_loc = new_path + "/" + old_file_name
-                else:
-                    new_file_loc = new_path + "/" + old_file_loc
+        if os.path.isdir(new_file_loc):
+            new_path, new_file_name = new_file_loc, None
+        else:
+            new_path, new_file_name = os.path.split(new_file_loc)
+            if new_path:
+                _check_path(new_path)
+        if not new_file_name:
+            _, old_file_name = os.path.split(old_file_loc)
+            new_file_loc = os.path.join(new_path, old_file_name)
 
-            _check_path(new_path)
-
-        with open(old_file_loc) as reader, open(new_file_loc, "w") as writer:
-            writer.write(reader.read())
+        with open(old_file_loc, "r") as reader:
+            with open(new_file_loc, "w") as writer:
+                writer.write(reader.read())
         os.remove(old_file_loc)
