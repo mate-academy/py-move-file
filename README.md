@@ -20,7 +20,7 @@ print(open("file.txt").read())
 # Some
 # Text
 move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
-print(open("app/1/first_dir/second_dir/third_dir/file2.txt").read())
+print(open("first_dir/second_dir/third_dir/file2.txt").read())
 # Some
 # Text
 open("file.txt")
