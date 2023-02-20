@@ -6,7 +6,8 @@ def move_file(command: str) -> None:
     direction = direction.split("/")
     new_file = direction.pop(-1)
     path = ""
-
+    if command != "mv":
+        raise ValueError("Wrong command")
     for directory in direction:
         path += directory + "/"
         if not os.path.exists(path):
