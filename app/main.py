@@ -3,16 +3,14 @@ import os
 
 def move_file(command: str) -> None:
     command, file_before, direction = command.split()
-    direction = direction.split("/")
-    new_file = direction.pop(-1)
-    path = ""
     if command != "mv":
         raise ValueError("Wrong command")
-    for directory in direction:
-        path += directory + "/"
-        if not os.path.exists(path):
-            os.mkdir(path)
 
-    with open(file_before) as old_file, open(path + new_file, "w") as file:
+    path, new_file = os.path.split(direction)
+
+    if not os.path.exists(path) and path != "":
+        os.makedirs(name=path)
+
+    with open(file_before, "r") as old_file, open(direction, "w") as file:
         file.write(old_file.read())
     os.remove(file_before)
