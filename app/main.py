@@ -13,7 +13,6 @@ def move_file(command: str) -> None:
         rename(file, new_location)
     else:
         directories, new_file = new_location.rsplit("/", 1)
-        
         makedirs(directories)
 
         with open(file) as read_file, open(new_location, "w") as write_file:
