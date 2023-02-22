@@ -24,8 +24,8 @@ def move_file(command: str) -> None:
         os.makedirs(path, exist_ok=True)
         try:
             with (
-                 open(old_file_name) as old_file,
-                 open(os.path.join(path, file_name), "w") as new_file
+                open(old_file_name) as old_file,
+                open(os.path.join(path, file_name), "w") as new_file
             ):
                 new_file.write(old_file.read())
         except FileNotFoundError:
