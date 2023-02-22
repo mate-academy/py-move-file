@@ -23,7 +23,7 @@ print(open("first_dir/second_dir/third_dir/file2.txt").read())
 # Some
 # Text
 open("file.txt")
-# FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+# FileNotFoundError: [Errno 1] No such file or directory: 'file.txt'
 ```
 
 **Note**: You can create directory by `os.mkdir("first")` from module `os`.

@@ -1,4 +1,4 @@
-from os import makedirs, remove, rename
+from os import makedirs, remove
 
 
 def move_file(command: str) -> None:
@@ -9,12 +9,9 @@ def move_file(command: str) -> None:
             "or mv file1.txt new_folder/file1.txt"
         )
 
-    if "/" not in new_location:
-        rename(file, new_location)
-    else:
-        directories, new_file = new_location.rsplit("/", 1)
-        makedirs(directories)
+    if "/" in new_location:
+        makedirs(new_location.rsplit("/", 1)[0])
 
-        with open(file) as read_file, open(new_location, "w") as write_file:
-            write_file.write(read_file.read())
-        remove(file)
+    with open(file) as read_file, open(new_location, "w") as write_file:
+        write_file.write(read_file.read())
+    remove(file)
