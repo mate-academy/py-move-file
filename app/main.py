@@ -8,7 +8,7 @@ class MoveFile:
             self,
             old_filename: str,
             new_filename: str,
-            direction: str = os.getcwd()
+            direction: str
     ) -> None:
         self.old_filename = old_filename
         self.new_filename = new_filename
@@ -37,8 +37,8 @@ def move_file(command: str) -> None:
             if direction:
                 if not os.path.exists(direction):
                     os.makedirs(direction, exist_ok=True)
-                with MoveFile(old_file, new_file_name, direction):
-                    pass
             else:
-                with MoveFile(old_file, new_file_name):
-                    pass
+                direction = os.getcwd()
+
+            with MoveFile(old_file, new_file_name, direction):
+                pass
