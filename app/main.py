@@ -20,14 +20,13 @@ def move_file(command: str) -> None:
     if "/" not in directory_file:
         os.rename(old_file_name, directory_file)
     else:
-        path_list = directory_file.split("/")
-        path = "/".join(path_list[:-1])
-        file_name = path_list[-1]
-        if not os.path.exists(path):
-            os.makedirs(path)
+        path, file_name = os.path.split(directory_file)
+        os.makedirs(path, exist_ok=True)
         try:
-            with open(old_file_name) as old_file, \
-                    open(os.path.join(path, file_name), "w") as new_file:
+            with (
+                 open(old_file_name) as old_file,
+                 open(os.path.join(path, file_name), "w") as new_file
+            ):
                 new_file.write(old_file.read())
         except FileNotFoundError:
             print(f"{old_file_name} not found")
