@@ -2,14 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
-    operation, old_file_loc, new_file_loc = command.split()
+    operation, old_file, new_file = command.split()
 
-    if operation == "mv" and old_file_loc != new_file_loc:
-        new_path, _ = os.path.split(new_file_loc)
+    if operation == "mv" and old_file != new_file:
+        new_path, _ = os.path.split(new_file)
         if new_path:
             os.makedirs(new_path, exist_ok=True)
 
-        with open(old_file_loc, "r") as reader:
-            with open(new_file_loc, "w") as writer:
-                writer.write(reader.read())
-        os.remove(old_file_loc)
+        with open(old_file, "r") as reader, open(new_file, "w") as writer:
+            writer.write(reader.read())
+        os.remove(old_file)
