@@ -3,18 +3,18 @@ from typing import Any
 import os
 
 
-class CreateFile:
+class MoveFile:
     def __init__(
             self,
             old_filename: str,
             new_filename: str,
-            direction: str
+            direction: str = os.getcwd()
     ) -> None:
         self.old_filename = old_filename
         self.new_filename = new_filename
         self.direction = direction
 
-    def __enter__(self) -> CreateFile:
+    def __enter__(self) -> MoveFile:
         self.new_filename = open(f"{self.direction}/{self.new_filename}", "w")
         with open(self.old_filename, "r") as f:
             content_to_copy = f.read()
@@ -29,22 +29,16 @@ class CreateFile:
 def move_file(command: str) -> None:
     content = command.split()
     if len(content) == 3:
-        (
-            command, old_file, new_file_and_direction
-        ) = (
+        command, old_file, new_file_and_direction = (
             content[0], content[1], content[2]
         )
         if command == "mv":
-            directories = new_file_and_direction.split("/")
-            new_file_name = directories[-1]
-            directories.remove(new_file_name)
-            if directories:
-                direction = "/".join(directories)
-                os.makedirs(direction, exist_ok=True)
-                with CreateFile(old_file, new_file_name, direction):
+            direction, new_file_name = os.path.split(new_file_and_direction)
+            if direction:
+                if not os.path.exists(direction):
+                    os.makedirs(direction, exist_ok=True)
+                with MoveFile(old_file, new_file_name, direction):
                     pass
             else:
-                with CreateFile(
-                        old_file, new_file_name, direction=os.getcwd()
-                ):
+                with MoveFile(old_file, new_file_name):
                     pass
