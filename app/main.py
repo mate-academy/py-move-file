@@ -8,8 +8,8 @@ def move_file(command: str) -> None:
     directories, file_name = os.path.split(future_file)
     new_path = ""
 
-    for new_dir in directories.split("/"):
-        new_path += new_dir + "/"
+    for new_dir in directories:
+        new_path += new_dir
         os.makedirs(new_path, exist_ok=True)
 
     if directories != "":
