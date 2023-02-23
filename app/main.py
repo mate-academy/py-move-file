@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import Any
 import os
+from typing import Any
 
 
 class MoveFile:
@@ -29,9 +29,7 @@ class MoveFile:
 def move_file(command: str) -> None:
     content = command.split()
     if len(content) == 3:
-        command, old_file, new_file_and_direction = (
-            content[0], content[1], content[2]
-        )
+        command, old_file, new_file_and_direction = content
         if command == "mv":
             direction, new_file_name = os.path.split(new_file_and_direction)
             if direction:
