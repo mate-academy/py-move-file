@@ -5,8 +5,7 @@ def move_file(command: str) -> None:
     try:
         command, source, destination = command.split()
     except ValueError:
-        print("Three arguments expected")
-        return
+        raise ValueError("Three arguments expected")
     if command != "mv" or source == destination:
         return
     if not os.path.exists(source):
@@ -16,6 +15,8 @@ def move_file(command: str) -> None:
     if not directories:
         os.rename(source, destination)
         return
+
+    directories = os.path.join(directories)
     os.makedirs(directories, exist_ok=True)
 
     destination = os.path.join(directories, file_name)
