@@ -1,20 +1,24 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
     operation, file_in, file_to_move = command.split()
-    if operation == "mv" and "/" not in file_to_move:
-        os.rename(file_in, file_to_move)
-    if operation == "mv" and "/" in file_to_move:
-        path_generator = file_to_move.split("/")
-        folder_index = 0
-        path_for_creation = ""
-        while folder_index < len(path_generator) - 1:
-            path_for_creation += f"{path_generator[folder_index]}/"
-            try:
-                os.mkdir(path_for_creation)
-            except FileExistsError:
-                pass
-            folder_index += 1
-        shutil.move(file_in, f"{path_for_creation}{path_generator[-1]}")
+    if (
+            len(command.split()) != 3
+            or operation != "mv"
+            or not os.path.isfile(file_in)
+            or file_to_move.endswith("/")
+    ):
+        raise ValueError("The input command has wrong structure")
+    if not os.path.exists(file_to_move):
+        try:
+            os.rename(file_in, file_to_move)
+        except FileNotFoundError:
+            path, new_file = os.path.split(file_to_move)
+            os.makedirs(path, exist_ok=True)
+            with (
+                open(file_to_move, "w") as created_file,
+                open(file_in, "r") as context
+            ):
+                created_file.write(context.read())
+            os.remove(file_in)
