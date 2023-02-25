@@ -13,12 +13,11 @@ def move_file(command: str) -> None:
         os.makedirs(new_path, exist_ok=True)
 
     if directories != "":
-        with open(
-            current_file, "r"
-        ) as file, open(
-            f"{directories}/{file_name}", "w"
-        ) as new_file:
-            new_file.write(file.read())
+        with (
+            open(current_file, "r") as source_file,
+            open(f"{directories}/{file_name}", "w") as destination_file
+        ):
+            destination_file.write(source_file.read())
         os.remove(current_file)
     else:
         os.rename(current_file, file_name)
