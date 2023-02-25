@@ -1,12 +1,13 @@
-from pathlib import Path
-from shutil import move
+import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        raise ValueError("The command must be 'mv file.txt dir/new.txt'")
     input_command, source_path, move_path = command.split()
     if input_command != "mv":
         raise ValueError("The command should be 'mv'")
-    elif "/" in move_path:
-        path = move_path[:move_path.rfind("/")]
-        Path(path).mkdir(parents=True, exist_ok=True)
-    move(source_path, move_path)
+    head_tail = os.path.split(move_path)
+    if head_tail[0] != "" and not os.path.exists(head_tail[0]):
+        os.makedirs(head_tail[0])
+    os.replace(source_path, move_path)
