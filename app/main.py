@@ -2,7 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    input_command, file, new_file = command.split()
+    try:
+        input_command, file, new_file = command.split()
+    except ValueError:
+        raise ValueError("Command must have 3 parameters")
 
     if input_command == "mv":
         raise NameError(
