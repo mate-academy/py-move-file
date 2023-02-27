@@ -15,7 +15,7 @@ def move_file(command: str) -> None:
     with open(file_name, "r") as file:
         data = file.read()
 
-    with open(os.path.join(temp, destination_file), "w") as dest_f:
-        dest_f.write(data)
+    with open(os.path.join(temp, destination_file), "w") as file:
+        file.write(data)
 
     os.remove(file_name)
