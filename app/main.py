@@ -15,8 +15,8 @@ def move_file(command: str) -> None:
         pass
 
     with (
-        open(command_split_arr[1], "r") as f_file,
-        open(command_split_arr[2], "w") as s_file
+        open(command_split_arr[1], "r") as file_with_content,
+        open(command_split_arr[2], "w") as new_file
     ):
-        s_file.write(f_file.read())
+        new_file.write(file_with_content.read())
         os.remove(command_split_arr[1])
