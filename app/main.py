@@ -2,17 +2,16 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        return
     cp_command, current_file, future_file = command.split()
-    if cp_command != "mv" or len(command.split()) != 3:
+    if cp_command != "mv":
         return
     directories, file_name = os.path.split(future_file)
-    new_path = ""
-
-    for new_dir in directories:
-        new_path += new_dir
-        os.makedirs(new_path, exist_ok=True)
 
     if directories != "":
+        os.makedirs(os.path.join(*directories.split("/")), exist_ok=True)
+
         with (
             open(current_file, "r") as source_file,
             open(f"{directories}/{file_name}", "w") as destination_file
