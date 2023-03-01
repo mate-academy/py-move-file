@@ -14,4 +14,3 @@ def move_file(command: str) -> None:
             makedirs("/".join(dirs))
     dirs.append(new_filename)
     move(source, "/".join(dirs))
-
