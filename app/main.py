@@ -4,23 +4,17 @@ import shutil
 
 def move_file(command: str) -> None:
 
-    command_split = command.split()
-    if (command_split[0] != "mv"
-            or command_split[1][-4:] != command_split[2][-4:]
-            or command_split[1][-4:] != ".txt"):
+    command, command_old_file, command_new_file = command.split()
+    if (command_old_file.split(".")[1] != command_new_file.split(".")[1]
+            or command != "mv"):
         raise ValueError("Error in entered data!")
 
-    *directory, new_file = command_split[-1].split("/")
+    directory, new_file = os.path.split(command_new_file)
 
     if not directory:
-        os.rename(command_split[1], new_file)
-    else:
-        path = ""
-        for folder in directory:
-            path += folder + "/"
-            if not os.path.exists(path):
-                os.mkdir(path)
+        os.rename(command_old_file, new_file)
+        return
 
-        shutil.copy(command_split[1], command_split[-1])
-
-        os.remove(command_split[1])
+    os.makedirs(directory, exist_ok=True)
+    shutil.copy(command_old_file, command_new_file)
+    os.remove(command_old_file)

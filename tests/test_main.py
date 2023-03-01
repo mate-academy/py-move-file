@@ -27,7 +27,6 @@ def test_file_renamed(create_file: callable) -> None:
 
 
 def test_should_work_when_directory_exists(create_file: callable) -> None:
-
     os.makedirs("dir")
     move_file(f"mv file.txt dir/file2.txt")
 
