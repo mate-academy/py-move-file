@@ -20,4 +20,4 @@ def move_file(command: str) -> None:
                 open(os.path.join(path, new_file_name), "w") as file_copy
             ):
                 file_copy.write(file_to_move.read())
-        os.remove(source_file_path)
+            os.remove(source_file_path)
