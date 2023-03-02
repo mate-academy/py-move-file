@@ -3,14 +3,12 @@ from shutil import move
 
 
 def move_file(command: str) -> None:
-    args = command.split()
-    source = args[1]
-    destination = args[2].split("/")
+    _, source, destination = command.split()
+    destination = destination.split("/")
     new_filename = destination[-1]
     dirs = []
     if len(destination) > 1:
         dirs = destination[:-1]
-        if not path.exists("/".join(dirs)):
-            makedirs("/".join(dirs))
+        makedirs(path.join(*dirs), exist_ok=True)
     dirs.append(new_filename)
     move(source, "/".join(dirs))
