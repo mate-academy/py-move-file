@@ -4,7 +4,7 @@ import shutil
 
 def move_file(command: str) -> None:
     command = command.split(" ")
-    if "mv" not in command or len(command) > 3:
+    if "mv" not in command or len(command) != 3:
         return
 
     if "/" not in command[2]:
@@ -15,8 +15,8 @@ def move_file(command: str) -> None:
         return
 
     file_name = command[1]
-    new_file_name = command[2].split("/").pop()
-    path = command[2].replace(new_file_name, "")
+    new_file_name = os.path.split(command[2])[1]
+    path = os.path.split(command[2])[0]
 
     os.rename(file_name, new_file_name)
 
