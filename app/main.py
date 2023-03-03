@@ -4,12 +4,12 @@ import os
 def move_file(command: str) -> None:
     command_split_arr = command.split()
 
-    if command_split_arr[0] != "mv":
-        raise ValueError(f"There is not '{command_split_arr[0]}' command!")
     if len(command_split_arr) != 3:
         raise ValueError(
             f"Expected 3 arguments, got: {len(command_split_arr)}"
         )
+    if command_split_arr[0] != "mv":
+        raise ValueError(f"There is not '{command_split_arr[0]}' command!")
 
     os.makedirs(command_split_arr[2][:-1], exist_ok=True)
 
