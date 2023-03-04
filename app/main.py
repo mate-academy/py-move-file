@@ -11,6 +11,8 @@ def move_file(command: str) -> None:
                 directory = second_file.split("/")[0:-1]
                 os.makedirs(os.path.join(*directory), exist_ok=True)
                 create_file(first_file, second_file)
+    else:
+        raise Exception("wrong type of command")
 
 
 def create_file(
