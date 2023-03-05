@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
                 os.makedirs(os.path.join(*directory), exist_ok=True)
                 create_file(first_file, second_file)
     else:
-        raise Exception("wrong type of command")
+        raise ValueError("wrong type of command")
 
 
 def create_file(
