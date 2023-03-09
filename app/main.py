@@ -7,11 +7,10 @@ def move_file(command: str) -> None:
     if flag == "mv":
         path, new_file = os.path.split(directory)
 
-        if not os.path.exists(path) and path != "":
-            os.makedirs(name=path)
+        if path != "":
+            os.makedirs(name=path, exist_ok=True)
 
-        with open(old_name, "r") as old:
-            with open(directory, "w") as new:
-                new.write(old.read())
+        with open(old_name, "r") as old, open(directory, "w") as new:
+            new.write(old.read())
 
         os.remove(old_name)
