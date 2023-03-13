@@ -12,7 +12,6 @@ def move_file(command: str) -> None:
                 open(os.path.join(dir_way, file_to_copy), "w") as file_out
             ):
                 file_out.write(file_in.read())
-                os.remove(file_to_read)
+            os.remove(file_to_read)
         else:
-            with open(file_to_read, "r") as file_in:
-                os.rename(file_in.name, file_to_copy)
+            os.rename(file_to_read, file_to_copy)
