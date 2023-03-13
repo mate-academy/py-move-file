@@ -8,11 +8,9 @@ def move_file(command: str) -> None:
         if command == "mv":
             if len(dir_way) != 0:
                 os.makedirs(dir_way, exist_ok=True)
-                with (
-                    open(file_to_read, "r") as file_in,
-                    open(os.path.join(dir_way, file_to_copy), "w") as file_out
-                ):
-                    file_out.write(file_in.read())
-                os.remove(file_to_read)
-            else:
-                os.rename(file_to_read, file_to_copy)
+            with (
+                open(file_to_read, "r") as file_in,
+                open(os.path.join(dir_way, file_to_copy), "w") as file_out
+            ):
+                file_out.write(file_in.read())
+            os.remove(file_to_read)
