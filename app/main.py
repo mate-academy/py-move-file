@@ -3,6 +3,8 @@ import os
 
 
 def move_file(command: str) -> Any:
+    if not command.startswith("mv"):
+        return
     args = command.split()
     file_start = args[1]
     new_file = args[2]
