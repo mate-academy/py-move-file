@@ -2,7 +2,7 @@ from typing import Any
 import os
 
 
-def move_file(command: str) -> Any:
+def move_file(command: str) -> None:
     if not command.startswith("mv"):
         return
     args = command.split()
