@@ -9,6 +9,5 @@ def move_file(command: str) -> None:
             os.makedirs(new_file_path, exist_ok=True)
         with (open(in_file_name, "r") as in_file,
               open(new_file_destination, "w") as new_file):
-            file_in = in_file.read()
-            new_file.write(file_in)
+            new_file.write(in_file.read())
         os.remove(in_file_name)
