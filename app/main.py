@@ -4,17 +4,11 @@ import os
 def move_file(command: str) -> None:
     instruction, in_file_name, new_file_destination = command.split()
     new_file_path = os.path.dirname(new_file_destination)
-    new_file_name = os.path.basename(new_file_destination)
-    current_dir = os.getcwd()
     if os.path.exists(in_file_name) and instruction == "mv":
-        with open(in_file_name, "r") as in_file:
+        if "/" in new_file_destination:
+            os.makedirs(new_file_path, exist_ok=True)
+        with (open(in_file_name, "r") as in_file,
+              open(new_file_destination, "w") as new_file):
             file_in = in_file.read()
-            if "/" in new_file_destination:
-                os.makedirs(new_file_path, exist_ok=True)
-                os.chdir(new_file_path)
-            with open(new_file_name, "w") as new_file:
-                new_file.write(file_in)
-
-            os.chdir(current_dir)
-            in_file.close()
-            os.remove(in_file_name)
+            new_file.write(file_in)
+        os.remove(in_file_name)
