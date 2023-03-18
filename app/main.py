@@ -2,10 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) != 3:
+    try:
+        cmd, source_file, final_file = command.split()
+    except ValueError:
+        print(f"Invalid command: {command}")
         return
-
-    cmd, source_file, final_file = command.split()
 
     if cmd == "mv" and source_file != final_file:
 
@@ -17,7 +18,11 @@ def move_file(command: str) -> None:
         if final_path:
             os.makedirs(final_path, exist_ok=True)
 
-        with open(final_file, "w") as target_file:
+        with (
+            open(final_file, "w") as target_file,
+            open(source_file) as source
+        ):
+            data = source.read()
             target_file.write(data)
 
         os.remove(source_file)
