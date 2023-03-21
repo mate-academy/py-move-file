@@ -2,9 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) != 3:
+    parts = command.split()
+    if len(parts) != 3:
         raise ValueError("Invalid format")
-    md, source_path, destination_path = command.split()
+    md, source_path, destination_path = parts
     if md not in command or source_path == destination_path:
         raise FileNotFoundError(f"Source file {source_path} not found")
     if not os.path.isfile(source_path):
