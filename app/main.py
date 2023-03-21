@@ -11,7 +11,6 @@ def move_file(command: str) -> None:
     if not os.path.isfile(source_path):
         raise FileNotFoundError(f"Source file {source_path} not found")
     directories_path, file_name = os.path.split(source_path)
-    if not len(directories_path) != 0:
+    if len(directories_path):
         os.makedirs(directories_path, exist_ok=True)
-        os.path.join(directories_path, os.path.basename(source_path))
     os.rename(source_path, destination_path)
