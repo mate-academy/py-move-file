@@ -6,11 +6,12 @@ def move_file(command: str) -> None:
     if len(parts) != 3:
         raise ValueError("Invalid format")
     md, source_path, destination_path = parts
-    if (
+    condition = (
         md not in command or
         source_path == destination_path or
         not os.path.isfile(source_path)
-):
+)
+if condition:
     raise FileNotFoundError(f"Source file {source_path} not found")
 
     directories_path, file_name = os.path.split(source_path)
