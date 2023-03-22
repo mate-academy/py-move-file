@@ -7,9 +7,9 @@ def move_file(command: str) -> None:
         raise ValueError("Invalid format")
     md, source_path, destination_path = parts
     condition = (
-        md not in command or
-        source_path == destination_path or
-        not os.path.isfile(source_path)
+        md not in command
+        or source_path == destination_path
+        or not os.path.isfile(source_path)
     )
     if condition:
         raise FileNotFoundError(f"Source file {source_path} not found")
