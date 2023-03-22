@@ -10,9 +10,9 @@ def move_file(command: str) -> None:
         md not in command or
         source_path == destination_path or
         not os.path.isfile(source_path)
-)
-if condition:
-    raise FileNotFoundError(f"Source file {source_path} not found")
+    )
+    if condition:
+        raise FileNotFoundError(f"Source file {source_path} not found")
 
     directories_path, file_name = os.path.split(source_path)
     if len(directories_path):
