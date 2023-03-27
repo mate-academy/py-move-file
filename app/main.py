@@ -10,11 +10,9 @@ def move_file(command: str) -> None:
                 file_destination += file_source.split("/")[-1]
             destination_dirs = file_destination.split("/")
             if len(destination_dirs) > 1:
-                temporary_directory = destination_dirs[0] + "/"
-                if not os.path.exists(temporary_directory):
-                    os.mkdir(temporary_directory)
-                for i in destination_dirs[1:-1]:
-                    temporary_directory += i + "/"
+                temporary_directory = ""
+                for folder_name in destination_dirs[:-1]:
+                    temporary_directory = os.path.join(temporary_directory, folder_name)
                     if not os.path.exists(temporary_directory):
                         os.mkdir(temporary_directory)
             with open(file_source, "r") as input_file, \
