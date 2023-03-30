@@ -15,9 +15,10 @@ def move_file(command: str) -> None:
                     temporary_directory = os.path.join(
                         temporary_directory, folder_name
                     )
-                    if not os.path.exists(temporary_directory):
-                        os.mkdir(temporary_directory)
-            with open(file_source, "r") as input_file, \
-                    open(file_destination, "w") as output_file:
+                    os.makedirs(temporary_directory, exist_ok=True)
+            with (
+                open(file_source, "r") as input_file,
+                open(file_destination, "w") as output_file
+            ):
                 output_file.write(input_file.read())
             os.remove(file_source)
