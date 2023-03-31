@@ -6,10 +6,7 @@ def move_file(command: str) -> None:
         command, source, destination = command.split()
         if command == "mv" and source != destination:
             if os.path.dirname(destination):
-                try:
-                    os.makedirs(os.path.dirname(destination))
-                except FileExistsError:
-                    print("file path already created")
+                os.makedirs(os.path.dirname(destination), exist_ok=True)
             if not os.path.split(destination)[-1]:
                 destination += source
             with (
