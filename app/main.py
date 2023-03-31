@@ -2,16 +2,19 @@ import os
 
 
 def move_file(command: str) -> None:
-    if command.count(" ") == 2:
-        command1, source_path, destination_path = command.split()
-        if "/" not in command:
-            os.rename(source_path, destination_path)
-        else:
-            head_path, tail = os.path.split(destination_path)
-            os.makedirs(head_path, exist_ok=True)
+    if len(command.split()) == 3:
+        command, source, destination = command.split()
+        if command == "mv" and source != destination:
+            if os.path.dirname(destination):
+                try:
+                    os.makedirs(os.path.dirname(destination))
+                except FileExistsError:
+                    print("file path already created")
+            if not os.path.split(destination)[-1]:
+                destination += source
             with (
-                open(f"{source_path}", "r") as file_1,
-                open(f"{destination_path}", "w") as file_2
+                open(source) as file_in,
+                open(destination, "w") as file_out
             ):
-                file_2.write(file_1.read())
-            os.remove(source_path)
+                file_out.write(file_in.read())
+            os.remove(source)
