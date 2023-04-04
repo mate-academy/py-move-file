@@ -3,6 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     arguments = command.split()
+    if len(arguments) != 3:
+        return
     if arguments[0] == "mv":
         file_to_move = arguments[1]
         new_file_path = None
@@ -16,7 +18,8 @@ def move_file(command: str) -> None:
         os.remove(file_to_move)
         if new_file_path is not None:
             os.makedirs(new_file_path, exist_ok=True)
-            with open(arguments[2], "w") as file_out:
+            new_file_path = os.path.join(new_file_path, new_file)
+            with open(new_file_path, "w") as file_out:
                 file_out.write(content)
         else:
             with open(new_file, "w") as file_out:
