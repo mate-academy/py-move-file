@@ -18,8 +18,8 @@ create file2.txt inside and remove the source file.
 print(open("file.txt").read())
 # Some
 # Text
-move_file("mv file.txt first_dir/second_dir/third_dir/file.txt")
-print(open("first_dir/second_dir/third_dir/file.txt").read())
+move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
+print(open("first_dir/second_dir/third_dir/file2.txt").read())
 # Some
 # Text
 open("file.txt")
