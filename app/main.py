@@ -6,8 +6,9 @@ def move_file(command: str) -> None:
         command_name, source_file, directories_and_file = command.split()
 
         # prepare all child directories
-        directories = directories_and_file[:directories_and_file.rfind("/")]
-        os.makedirs(directories, exist_ok=True)
+        directories = os.path.split(directories_and_file)[0]
+        if len(directories) > 0:
+            os.makedirs(directories, exist_ok=True)
 
         # move file
         if command_name == "mv" and source_file != directories_and_file:
