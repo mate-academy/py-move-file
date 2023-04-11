@@ -2,7 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    action, file, destination = command.split()
+    command_parts = command.split()
+    if len(command_parts) != 3:
+        return
+    action, file, destination = command_parts
     destination_parts = destination.split("/")
     if destination_parts[-1] == "":
         destination_is_dir = True
