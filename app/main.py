@@ -1,4 +1,4 @@
-from os import remove, makedirs
+import os
 
 
 def move_file(command: str) -> None:
@@ -8,12 +8,12 @@ def move_file(command: str) -> None:
     command, source_path, destination_path = command_split
     if command != "mv":
         return
-    destination = destination_path.split("/")
-    if len(destination) > 1:
-        directory = "/".join(destination[:len(destination) - 1])
-        makedirs(directory, exist_ok=True)
-    with (open(source_path, "r") as o_file,
-          open(destination_path, "w") as c_file
-          ):
-        c_file.write(o_file.read())
-    remove(source_path)
+    dir_name, file_to_copy = os.path.split(destination_path)
+    if len(dir_name) > 0:
+        os.makedirs(dir_name, exist_ok=True)
+    with (
+        open(source_path, "r") as source,
+        open(destination_path, "w") as destination
+    ):
+        destination.write(source.read())
+    os.remove(source_path)
