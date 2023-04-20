@@ -2,7 +2,7 @@ import os
 import shutil
 
 
-def move_file(command):
+def move_file(command: str) -> None:
     cmd_parts = command.split()
 
     if len(cmd_parts) != 3 or cmd_parts[0] != "mv":
