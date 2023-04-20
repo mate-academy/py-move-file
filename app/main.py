@@ -12,11 +12,6 @@ def move_file(command: str) -> None:
 
     head, tail = os.path.split(destination)
 
-    destination_dir = os.path.dirname(destination)
-
-    if destination_dir:
-        os.makedirs(destination_dir, exist_ok=True)
-
     if head:
         os.makedirs(head, exist_ok=True)
 
