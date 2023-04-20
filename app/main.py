@@ -14,10 +14,12 @@ def move_file(command: str) -> None:
 
     if not tail:
         destination = os.path.join(head, os.path.basename(source))
-
     destination_dir = os.path.dirname(destination)
 
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
+
+    if head:
+        os.makedirs(head, exist_ok=True)
 
     shutil.move(source, destination)
