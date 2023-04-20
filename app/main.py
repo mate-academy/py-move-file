@@ -12,8 +12,6 @@ def move_file(command: str) -> None:
 
     head, tail = os.path.split(destination)
 
-    if not tail:
-        destination = os.path.join(head, os.path.basename(source))
     destination_dir = os.path.dirname(destination)
 
     if destination_dir:
