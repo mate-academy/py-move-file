@@ -2,18 +2,21 @@ import os
 import shutil
 
 
-def move_file(command: str) -> None:
+def move_file(command):
     cmd_parts = command.split()
 
     if len(cmd_parts) != 3 or cmd_parts[0] != "mv":
         raise ValueError("Invalid command format. Use: mv source destination")
 
-    source, destination = cmd_parts[1], cmd_parts[2]
+    _, source, destination = cmd_parts
 
-    if destination.endswith("/"):
-        destination = os.path.join(destination, os.path.basename(source))
+    head, tail = os.path.split(destination)
+
+    if not tail:
+        destination = os.path.join(head, os.path.basename(source))
 
     destination_dir = os.path.dirname(destination)
+
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
 
