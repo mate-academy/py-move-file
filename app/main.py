@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     command, old_file, new_file = command.split()
     if "mv" in command:
-        directory = new_file.split("/")
+        directory = os.path.split(new_file)
         parent = ""
         if len(directory) > 1:
             for path in directory[:-1]:
