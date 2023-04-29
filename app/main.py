@@ -9,7 +9,7 @@ def move_file(command: str) -> None:
         if len(directory) > 1:
             for path in directory[:-1]:
                 parent = os.path.join(parent, path)
-                os.mkdir(parent)
+                os.makedirs(parent)
         with open(old_file, "r") as file_in, open(new_file, "w") as file_out:
             for line in file_in:
                 file_out.write(line)
