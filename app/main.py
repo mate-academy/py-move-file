@@ -2,8 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
-    mv_command, first_file, second_file_with_path = command.split()
-    if mv_command == "mv" and len(command.split()) == 3:
+    if command.split()[0] == "mv" and len(command.split()) == 3:
+        mv_command, first_file, second_file_with_path = command.split()
         directories, second_file = os.path.split(second_file_with_path)
         if directories:
             os.makedirs(directories, exist_ok=True)
