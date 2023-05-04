@@ -13,4 +13,4 @@ def move_file(command: str) -> None:
         with open(old_file, "r") as file_in, open(new_file, "w") as file_out:
             for line in file_in:
                 file_out.write(line)
-            os.remove(old_file)
+        os.remove(old_file)
