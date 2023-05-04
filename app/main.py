@@ -2,8 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    command, old_file, new_file = command.split()
-    if "mv" == command:
+    command = command.split()
+    if len(command) != 3:
+        return
+    code, old_file, new_file = command
+    if "mv" == code:
         directory, file_name = os.path.split(new_file)
         if directory:
             os.makedirs(directory, exist_ok=True)
