@@ -21,8 +21,5 @@ def move_file(command: str) -> None:
         directory = list()
         for folder in output_file.split("/")[:-1]:
             directory.append(folder)
-            try:
-                makedirs(path.join(*directory), exist_ok=True)
-            except OSError:
-                continue
+            makedirs(path.join(*directory), exist_ok=True)
         moving_file(input_file=input_file, output_file=output_file)
