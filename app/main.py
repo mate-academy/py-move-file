@@ -11,14 +11,11 @@ def move_file(command: str) -> str:
     if mv_command != "mv":
         return "Input command is incorrect"
 
-    dir_line = dir_and_file.split("/")[:-1]
-    new_file = dir_and_file.split("/")[-1]
+    dir_path, new_file = os.path.split(dir_and_file)
 
-    new_dir = ""
-    if "/" in dir_and_file:
-        for name in dir_line:
-            new_dir = os.path.join(new_dir, name)
-            os.makedirs(new_dir, exist_ok=True)
-    os.rename(source_file, os.path.join(new_dir, new_file))
+    if dir_path:
+        os.makedirs(dir_path, exist_ok=True)
+
+    os.rename(source_file, os.path.join(dir_path, new_file))
 
     return "File moved successfully."
