@@ -7,9 +7,8 @@ def move_file(command: str) -> None:
         if "/" in path:
             folders, file = os.path.split(path)
             os.makedirs(folders, exist_ok=True)
-            with open(origin_file, "r") as f:
+            with open(origin_file, "r") as f, open(path, "w") as b:
                 data = f.read()
-            with open(path, "w") as b:
                 b.write(data)
             os.remove(origin_file)
         else:
