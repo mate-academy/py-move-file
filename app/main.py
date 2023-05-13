@@ -14,3 +14,4 @@ def move_file(command: str) -> None:
     remove(file_in_name)
     with open(file_out_name, "w") as file_out:
         file_out.write(content)
+g
