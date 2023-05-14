@@ -6,7 +6,8 @@ def move_file(command: str) -> None:
     if len(com_spl) != 3:
         return
     cmd, file_old, path_file = com_spl
-    if path_file.find("/") > -1 and os.path.exists(path_file) is False:
+    if os.path.split(path_file)[0] != "" and \
+            os.path.exists(path_file) is False:
         new = os.path.dirname(path_file)
         os.makedirs(new, exist_ok=True)
         with (
@@ -18,3 +19,6 @@ def move_file(command: str) -> None:
 
     elif os.path.isfile(file_old) and path_file.find("/") < 0:
         os.rename(file_old, path_file)
+
+
+move_file('mv file.txt file2.txt')
