@@ -19,6 +19,3 @@ def move_file(command: str) -> None:
 
     elif os.path.isfile(file_old) and path_file.find("/") < 0:
         os.rename(file_old, path_file)
-
-
-move_file('mv file.txt file2.txt')
