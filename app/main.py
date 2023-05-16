@@ -2,33 +2,17 @@ import os
 
 
 def move_file(command: str) -> None:
-    rename_case_flow = command.split(" ")
-    move_case_flow = command.split("/")
+    cmd, source_path, destination_path = command.split(" ")
 
-    if rename_case_flow[0] != "mv":
-        raise ValueError("Wrong command")
+    if len(command.split()) == 3 and "mv" in cmd:
 
-    if "/" not in rename_case_flow[2]:
-        os.rename(rename_case_flow[1], rename_case_flow[2])
+        if "/" not in destination_path:  # because name cannot contain "/"
+            os.rename(source_path, destination_path)
 
-    else:
-        source_name = move_case_flow[0].split(" ")[1]
-        new_name = move_case_flow[-1]
-        path = [f"{move_case_flow[0].split(' ')[2]}"]
-        mkdir_path = ""
-
-        for path_component in move_case_flow[1:-1]:
-            path.append(path_component)
-        for new_folder in range(len(path)):
-            try:
-                mkdir_path += f"{path[new_folder]}/"
-                os.makedirs(mkdir_path)
-            except FileExistsError as e:
-                print(f"{e}")
-
-    with (
-        open(f"{source_name}", "r") as source_file,
-        open(f"{mkdir_path + new_name}", "w") as file_copy
-    ):
-        file_copy.write(source_file.read())
-    os.remove(f"{source_name}")
+        os.makedirs(os.path.split(destination_path)[0])
+        with (
+            open(f"{source_path}", "r") as source_file,
+            open(f"{destination_path}", "w") as new_file
+        ):
+            new_file.write(source_file.read())
+        os.remove(source_path)
