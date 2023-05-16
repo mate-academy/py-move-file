@@ -3,7 +3,7 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    split_command = command.split(" ")
+    split_command = command.split()
     exist_file, new_name = split_command[1], split_command[2]
 
     directories = split_command[-1].split("/")

@@ -17,13 +17,13 @@ def create_file(filename: str = "file.txt") -> str:
 
 
 def test_file_renamed(create_file: callable) -> None:
-    move_file("mv file.txt file2.txt")
+    move_file("mv file.txt file1.txt")
 
     assert os.path.exists("file.txt") is False
-    with open("file2.txt", "r") as file_with_content:
+    with open("file1.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
 
-    os.remove("file2.txt")
+    os.remove("file1.txt")
 
 
 def test_should_work_when_directory_exists(create_file: callable) -> None:
