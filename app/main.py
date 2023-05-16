@@ -2,17 +2,22 @@ import os
 
 
 def move_file(command: str) -> None:
-    cmd, source_path, destination_path = command.split(" ")
+    if isinstance(command, str) and len(command.split()) == 3:
+        cmd, source_path, destination_path = command.split()
 
-    if len(command.split()) == 3 and "mv" in cmd:
+        if cmd == "mv":
 
-        if "/" not in destination_path:  # because name cannot contain "/"
-            os.rename(source_path, destination_path)
+            if os.path.split(command)[0] == "":
+                try:
+                    os.rename(source_path, destination_path)
+                except FileNotFoundError:
+                    print(f"{source_path} not found")
 
-        os.makedirs(os.path.split(destination_path)[0])
-        with (
-            open(f"{source_path}", "r") as source_file,
-            open(f"{destination_path}", "w") as new_file
-        ):
-            new_file.write(source_file.read())
-        os.remove(source_path)
+            else:
+                os.makedirs(os.path.split(destination_path)[0])
+                with (
+                    open(f"{source_path}", "r") as source_file,
+                    open(f"{destination_path}", "w") as new_file
+                ):
+                    new_file.write(source_file.read())
+                os.remove(source_path)
