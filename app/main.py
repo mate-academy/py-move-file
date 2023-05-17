@@ -4,32 +4,25 @@ import shutil
 
 def move_file(command: str) -> None:
     split_command = command.split()
-    exist_file, new_name = split_command[1], split_command[2]
+    comm, exist_file, path = split_command
+    path, new_file = os.path.split(path)
 
-    directories = split_command[-1].split("/")
-    new_file = directories[-1]
+    src_file = os.path.join(os.getcwd(), exist_file)
 
-    src_file = os.getcwd() + "\\" + exist_file
-    last_dir = "\\".join(directories[:-2])
-    parent_dir = os.getcwd() + "\\" + last_dir
+    if not path:
+        return os.rename(exist_file, new_file)
 
-    if len(directories) == 1:
-        return os.rename(exist_file, new_name)
+    dst_file1 = os.path.join(os.getcwd(), path, exist_file)
+    dst_file2 = os.path.join(os.getcwd(), path, new_file)
 
-    dst_file1 = parent_dir + "\\" + directories[-2] + "\\" + exist_file
-    dst_file2 = parent_dir + "\\" + directories[-2] + "\\" + new_file
-
-    path = os.getcwd()
-    for directorie in directories[:-1]:
-        path += "\\" + directorie
     if os.path.exists(path):
-
         shutil.copy(src_file, dst_file1)
 
         os.remove(exist_file)
         return os.rename(dst_file1, dst_file2)
 
-    path = os.path.join(parent_dir, directories[-2])
+    path = os.path.join(os.getcwd(), path)
+
     os.makedirs(path)
 
     shutil.copy(src_file, dst_file1)
