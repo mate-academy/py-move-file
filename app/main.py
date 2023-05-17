@@ -6,9 +6,12 @@ def move_file(command: str) -> None:
     if len(command.split()) != 3 or command_list[0] != "mv":
         raise Exception("Wrong command!")
     mv, incoming_file, new_file = command_list
-    if "/" in new_file:
-        makedirs(path.dirname(new_file), exist_ok=True)
-    with (open(incoming_file, "r") as incoming,
-          open(new_file, "w") as new):
+    dir_path, file_name = path.split(new_file)
+    if dir_path:
+        makedirs(dir_path, exist_ok=True)
+    with (
+        open(incoming_file, "r") as incoming,
+        open(new_file, "w") as new
+    ):
         new.write(incoming.read())
-        remove(incoming_file)
+    remove(incoming_file)
