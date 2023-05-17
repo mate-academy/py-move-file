@@ -14,7 +14,7 @@ def move_file(command: str) -> None:
                     print(f"{source_path} not found")
 
             else:
-                os.makedirs(os.path.split(destination_path)[0])
+                os.makedirs(os.path.split(destination_path)[0], exist_ok=True)
                 with (
                     open(f"{source_path}", "r") as source_file,
                     open(f"{destination_path}", "w") as new_file
