@@ -10,8 +10,6 @@ def move_file(command: str) -> None:
     if not path:
         os.rename(file_orig, file_goal)
         return
-    if not file:
-        file_goal = os.path.join(file_goal, file_orig)
     os.makedirs(path, exist_ok=True)
     with open(file_orig) as origin_file, open(file_goal, "w") as new_file:
         new_file.write(origin_file.read())
