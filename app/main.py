@@ -3,34 +3,29 @@ import os
 
 def move_file(command: str) -> None:
     # Exclude input without the command "mv"
-    if command.split()[0] != "mv":
+    if not command.startswith("mv "):
         print("The function only supports the 'mv' command!")
         return
 
-    directories = command.split("/")
-
     # Exclude the creation of a directory without a file.
-    if directories[-1] == "":
+    if command.endswith("/"):
         print("Specify the file name after '/'!")
         return
 
-    directory_names = [
-        directories[direct].split()[-1]
-        for direct in range(len(directories) - 1)
-    ]
-    first_file_name = directories[0].split()[1]
-    second_file_name = directories[-1]
-    directory_path = os.path.join("/".join(directory_names))
-    file_path = os.path.join(directory_path, second_file_name)
+    instruction = command.split()
+    first_file_name = instruction[1]
+    path = instruction[-1].split("/")[0:-1]
+    source_path, second_file_name = os.path.split(command.split()[-1])
+    file_path = os.path.join(os.path.join("/".join(path)), second_file_name)
 
     # If the original file needs to be copied to the same directory, rename it.
-    if len(directories) == 1:
-        second_file_name = directories[0].split()[-1]
+    if len(path) == 1:
+        second_file_name = instruction[-1]
         os.rename(first_file_name, second_file_name)
     else:
         # create directories
-        for i in range(len(directory_names)):
-            current_dir = os.path.join("/".join(directory_names[:i + 1]))
+        for i in range(len(path)):
+            current_dir = os.path.join("/".join(path[:i + 1]))
             try:
                 os.mkdir(current_dir)
             except FileExistsError:
