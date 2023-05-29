@@ -20,6 +20,3 @@ def move_file(command: str) -> None:
         target.write(source.read())
 
     os.remove(file)
-
-
-move_file("mv file.txt file2.txt")
