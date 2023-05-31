@@ -8,7 +8,9 @@ def move_file(command: str) -> None:
         comm, file_in, file_path = split_command
 
         if comm == "mv":
-            path = os.path.dirname(file_path)
+            path, _ = os.path.split(file_path)
+            if not path:
+                path = "./"
             if file_path.endswith("/"):
                 path = file_path
             elif len(path) > 1 and not os.path.exists(path):
