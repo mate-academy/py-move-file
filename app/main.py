@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command):
+def move_file(command: str) -> None:
     command_list = command.split()
     mv, incoming_file, new_file = command_list
     new_file_list = new_file.split("/")
@@ -26,4 +26,3 @@ def move_file(command):
 print(open("file.txt").read())
 move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
 print(open("first_dir/second_dir/third_dir/file2.txt").read())
-
