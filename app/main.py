@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
         raise Exception("You entered the wrong command!")
 
     source = parts_of_command[1]
-    destination = parts_of_command[0]
+    destination = parts_of_command[2]
     destination_path = os.path.dirname(destination)
 
     if destination_path:
