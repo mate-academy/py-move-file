@@ -5,9 +5,9 @@ def move_file(command: str) -> None:
     split_command = command.split()
 
     if len(split_command) == 3:
-        comm, file_in, file_path = split_command
+        command, file_in, file_path = split_command
 
-        if comm == "mv":
+        if command == "mv":
             path, _ = os.path.split(file_path)
             if path:
                 os.makedirs(path, exist_ok=True)
