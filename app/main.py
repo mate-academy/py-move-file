@@ -13,7 +13,7 @@ def move_file(command: str) -> None:
         return
 
     if "/" in target:
-        target_directory = Path(target[:target.rfind("/")])
+        target_directory = Path(os.path.split(target)[0])
 
         if not os.path.exists(target_directory):
             target_directory.mkdir(parents=True, exist_ok=True)
