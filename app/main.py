@@ -16,9 +16,7 @@ def move_file(command: str) -> bool:
                 os.makedirs(dir_path)
             shutil.move(file, new_file)
         elif file != new_file:
-            with open(file) as old_file, open(new_file, "w") as new_file:
-                new_file.write(old_file.read())
-            os.remove(file)
+            os.rename(file, new_file)
     except (ValueError, FileNotFoundError, PermissionError):
         return False
     else:
