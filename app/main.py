@@ -26,14 +26,14 @@ def move_file(command: str) -> None:
 
     file_to_move = command[1]
 
+    if not path.exists(file_to_move):
+        raise FileNotFoundError(f"File {file_to_move} does not exist")
+
     try:
         with open(file_to_move) as source:
             source.read()
     except PermissionError:
         raise PermissionError(f"No permission to read the file {source}")
-
-    if not path.exists(file_to_move):
-        raise FileNotFoundError(f"File {file_to_move} does not exist")
 
     is_consist_directory = "/" in command[-1]
 
