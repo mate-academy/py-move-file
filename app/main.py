@@ -7,7 +7,7 @@ def move_file(command: str) -> bool:
         command, file, new_file = command.split(" ")
         consist_directory = "/" in new_file
 
-        if command != 'mv':
+        if command != "mv":
             raise ValueError
         elif consist_directory:
             dir_path = os.path.dirname(new_file)
