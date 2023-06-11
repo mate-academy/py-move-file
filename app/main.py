@@ -5,6 +5,7 @@ import shutil
 def move_file(command: str) -> bool:
     try:
         command, file, new_file = command.split(" ")
+
         if command != "mv" or file == new_file:
             raise ValueError
 
