@@ -24,15 +24,18 @@ def move_file(command: str) -> None:
             "mv file.txt some_dir/new_file.txt"
         )
 
-    if path.exists(command[-1]):
-        raise PermissionError("The file cannot be overwritten")
-
     file_to_move = command[1]
+
+    try:
+        with open(file_to_move) as source:
+            source.read()
+    except PermissionError:
+        raise PermissionError(f"No permission to read the file {source}")
 
     if not path.exists(file_to_move):
         raise FileNotFoundError(f"File {file_to_move} does not exist")
 
-    is_consist_directory = True if "/" in command[-1] else False
+    is_consist_directory = "/" in command[-1]
 
     if is_consist_directory:
         path_of_new_file = path.dirname(command[-1])
