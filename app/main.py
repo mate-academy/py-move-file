@@ -1,8 +1,9 @@
 from os import (
-    mkdir,
-    remove,
+    makedirs,
     path
 )
+
+from shutil import move
 
 
 class MoveCommandSyntaxError(Exception):
@@ -23,26 +24,22 @@ def move_file(command: str) -> None:
             "mv file.txt some_dir/new_file.txt"
         )
 
+    if path.exists(command[-1]):
+        raise PermissionError("The file cannot be overwritten")
+
     file_to_move = command[1]
 
     if not path.exists(file_to_move):
         raise FileNotFoundError(f"File {file_to_move} does not exist")
 
-    path_of_new_file = command[-1].split("/")
-    new_file = path_of_new_file[-1]
-    new_file_path = ""
+    is_consist_directory = True if "/" in command[-1] else False
 
-    for part_of_path in path_of_new_file[:-1]:
-        new_file_path = path.join(new_file_path, part_of_path)
+    if is_consist_directory:
+        path_of_new_file = path.dirname(command[-1])
 
-        try:
-            mkdir(new_file_path)
-        except FileExistsError:
-            pass
+        if not path.exists(path_of_new_file):
+            makedirs(path_of_new_file)
 
-    new_file = path.join(new_file_path, new_file)
+    path_of_new_file = command[-1]
 
-    with open(file_to_move, "r") as source, open(new_file, "w") as moved:
-        moved.write(source.read())
-
-    remove(f"{file_to_move}")
+    move(file_to_move, path_of_new_file)
