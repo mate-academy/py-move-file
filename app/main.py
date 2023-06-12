@@ -7,14 +7,14 @@ class CommandError(Exception):
 
 def move_file(command: str) -> None:
     command = command.split()
+    cmd, file_name, full_path = command
     if len(command) != 3:
         raise CommandError(f"Wrong format of command: {command}")
 
-    if command[0] != "mv":
+    if cmd != "mv":
         raise CommandError(f"Wrong command:"
-                           f"'{command[0]}', did you mean 'mv'?")
+                           f"'{cmd}', did you mean 'mv'?")
 
-    file_name, full_path = command[1], command[2]
     only_path = os.path.split(full_path)[0]
     if only_path:
         os.makedirs(only_path, exist_ok=True)
