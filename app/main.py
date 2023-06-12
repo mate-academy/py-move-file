@@ -7,7 +7,9 @@ def move_file(command: str) -> str:
         current_command, file, new_file = command.split()
 
         if current_command != "mv" or file == new_file:
-            raise ValueError
+            raise ValueError(
+                "You gave bad command or u didn't give correct new_file name"
+            )
 
         consist_directory = "/" in new_file
 
