@@ -2,7 +2,7 @@ import os
 import shutil
 
 
-def move_file(command: str) -> None:
+def move_file(command: str) -> str:
     try:
         current_command, file, new_file = command.split()
 
@@ -19,5 +19,5 @@ def move_file(command: str) -> None:
             shutil.move(file, new_file)
         else:
             os.rename(file, new_file)
-    except (ValueError, FileNotFoundError, PermissionError):
-        raise
+    except (ValueError, FileNotFoundError, PermissionError) as message:
+        return str(message)
