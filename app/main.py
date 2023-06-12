@@ -4,9 +4,9 @@ import shutil
 
 def move_file(command: str) -> bool:
     try:
-        command, file, new_file = command.split(" ")
+        current_command, file, new_file = command.split(" ")
 
-        if command != "mv" or file == new_file:
+        if current_command != "mv" or file == new_file:
             raise ValueError
 
         consist_directory = "/" in new_file
