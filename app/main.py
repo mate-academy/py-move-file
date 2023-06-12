@@ -2,9 +2,9 @@ import os
 import shutil
 
 
-def move_file(command: str) -> bool:
+def move_file(command: str) -> None:
     try:
-        current_command, file, new_file = command.split(" ")
+        current_command, file, new_file = command.split()
 
         if current_command != "mv" or file == new_file:
             raise ValueError
@@ -20,6 +20,4 @@ def move_file(command: str) -> bool:
         else:
             os.rename(file, new_file)
     except (ValueError, FileNotFoundError, PermissionError):
-        return False
-    else:
-        return True
+        raise
