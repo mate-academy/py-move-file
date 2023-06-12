@@ -11,15 +11,10 @@ def move_file(command: str) -> str:
                 "You gave bad command or u didn't give correct new_file name"
             )
 
-        consist_directory = "/" in new_file
+        dir_path = os.path.dirname(new_file)
 
-        if consist_directory:
-            dir_path = os.path.dirname(new_file)
-
-            if not os.path.exists(dir_path):
-                os.makedirs(dir_path)
-            shutil.move(file, new_file)
-        else:
-            os.rename(file, new_file)
+        if dir_path:
+            os.makedirs(dir_path, exist_ok=True)
+        shutil.move(file, new_file)
     except (ValueError, FileNotFoundError, PermissionError) as message:
         return str(message)
