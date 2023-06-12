@@ -25,12 +25,10 @@ def move_file(command: str) -> None:
         )
 
     mv_command, file_to_move, new_file_path = command
-    is_consist_directory = "/" in command[-1]
+    new_file_directory, new_file = path.split(new_file_path)
 
-    if is_consist_directory:
-        path_of_new_file = path.dirname(new_file_path)
-
-        makedirs(path_of_new_file, exist_ok=True)
+    if new_file_directory:
+        makedirs(new_file_directory, exist_ok=True)
 
     path_of_new_file = new_file_path
 
