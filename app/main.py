@@ -11,10 +11,10 @@ class MoveCommandSyntaxError(Exception):
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-
-    if command[0] != "mv":
+    if not command.startswith("mv"):
         raise MoveCommandSyntaxError("Move command not found")
+
+    command = command.split()
 
     if len(command) != 3:
         raise MoveCommandSyntaxError(
@@ -24,18 +24,14 @@ def move_file(command: str) -> None:
             "mv file.txt some_dir/new_file.txt"
         )
 
-    file_to_move = command[1]
+    mv_command, file_to_move, new_file_path = command
     is_consist_directory = "/" in command[-1]
 
     if is_consist_directory:
-        path_of_new_file = path.dirname(command[-1])
+        path_of_new_file = path.dirname(new_file_path)
 
-        if not path.exists(path_of_new_file):
-            makedirs(path_of_new_file)
+        makedirs(path_of_new_file, exist_ok=True)
 
-    path_of_new_file = command[-1]
+    path_of_new_file = new_file_path
 
-    try:
-        move(file_to_move, path_of_new_file)
-    except (FileNotFoundError, PermissionError):
-        raise
+    move(file_to_move, path_of_new_file)
