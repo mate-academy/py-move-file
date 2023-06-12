@@ -3,7 +3,7 @@ from os import path, makedirs, remove
 
 def move_file(command: str) -> None:
     try:
-        cmd_name, file_path, new_file_path = command.split(" ")
+        cmd_name, file_path, new_file_path = command.split()
         if cmd_name != "mv":
             raise ValueError("Incorrect command!!! "
                              "Must be: mv path_to_file new_path")
