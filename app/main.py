@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
         return
 
     file_orig = command_list[1]
-    file_copy = command_list[2].split("/").pop()
+    file_copy = os.path.split(command_list[2])[-1]
     path = command_list[2].replace(file_copy, "")
 
     if path != "" and not os.path.exists(path):
