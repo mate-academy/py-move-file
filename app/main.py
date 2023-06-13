@@ -13,6 +13,7 @@ def move_file(command: str) -> None:
             os.makedirs(path)
             print("Directory not found. Creating directory")
 
-        with open(file_orig, "r") as source, open(path + file_copy, "a+") as copy:
+        with (open(file_orig, "r") as source,
+              open(path + file_copy, "a+") as copy):
             copy.write(source.read())
         os.remove(file_orig)
