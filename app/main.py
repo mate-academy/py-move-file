@@ -10,7 +10,7 @@ def move_file(command: str) -> None:
         (path_to_second_file,
             second_file_name) = os.path.split(path_to_second_file)
 
-        if path_to_second_file == "":
+        if not path_to_second_file:
             os.rename(first_file_name, second_file_name)
             return
 
