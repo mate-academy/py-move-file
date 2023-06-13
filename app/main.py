@@ -2,9 +2,15 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    path = os.path.dirname(command[2])
-    if path:
-        if not os.path.exists(path):
-            os.makedirs(path)
-    os.rename(command[1], command[2])
+    command, origin, copy = command.split()
+    if command != "mv":
+        print("Wrong command")
+        return
+    try:
+        destination_path = os.path.dirname(copy)
+        if destination_path:
+            if not os.path.exists(destination_path):
+                os.makedirs(destination_path)
+        os.rename(origin, copy)
+    except FileNotFoundError:
+        print("There is no file with this name")
