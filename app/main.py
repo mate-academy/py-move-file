@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
     file_copy = os.path.split(command_list[2])[-1]
     path = command_list[2].replace(file_copy, "")
 
-    if path != "" and not os.path.exists(path):
+    if path and not os.path.exists(path):
         os.makedirs(path)
         print("Directory not found. Creating directory")
 
