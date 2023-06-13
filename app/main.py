@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
         raise ValueError("Command not found.")
     if not os.path.exists(target_file):
         raise FileNotFoundError("Target file not found.")
-    if destination.endswith("/"):
+    if os.path.isdir(destination):
         raise ValueError("Name of destination file is not found")
 
     if destination_path:
