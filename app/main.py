@@ -9,8 +9,6 @@ def move_file(command: str) -> None:
             raise ValueError("Invalid command!")
         if not os.path.exists(source):
             raise FileNotFoundError(f"{source} doesn't exists!")
-        if destination.endswith("/"):
-            raise ValueError("There's no name for new file!")
 
         dest_dir = os.path.dirname(destination)
 
