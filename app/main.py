@@ -27,4 +27,3 @@ def move_file(command: str) -> None:
         os.rename(source_file, destination_file)
     else:
         raise ValueError(f"Invalid mode: {mode}")
-
