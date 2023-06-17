@@ -3,16 +3,19 @@ import os
 
 def move_file(command: str) -> None:
     command_list = command.split()
+    command_move = command_list[0]
+    source_file = command_list[1]
+    destination = command_list[2]
 
-    if len(command_list) < 3 or command_list[0] != "mv":
+    if len(command_list) < 3 or command_move != "mv":
         print("command wrong")
         return
 
-    if "/" not in command_list[2]:
-        os.rename(command_list[1], command_list[2])
+    if "/" not in destination:
+        os.rename(source_file, destination)
         return
 
-    patch, name = os.path.split(command_list[2])
-    os.rename(command_list[1], name)
+    patch, name = os.path.split(destination)
+    os.rename(source_file, name)
     os.makedirs(patch)
-    os.replace(name, command_list[2])
+    os.replace(name, destination)
