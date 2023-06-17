@@ -8,10 +8,9 @@ def move_file(command: str) -> None:
 
         destination = os.path.dirname(path)
         if destination:
-            if not os.path.exists(destination):
-                os.makedirs(destination)
+            os.makedirs(destination, exist_ok=True)
 
-        with open(origin, "r") as f_out, open(path, "w") as f_in:
-            f_in.write(f_out.read())
+        with open(origin, "r") as read_file, open(path, "w") as write_file:
+            write_file.write(read_file.read())
 
         os.remove(origin)
