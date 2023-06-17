@@ -13,6 +13,6 @@ def move_file(command: str) -> None:
         return
 
     patch, name = os.path.split(command_list[2])
-    os.rename(command[1], name)
+    os.rename(command_list[1], name)
     os.makedirs(patch)
     os.replace(name, command_list[2])
