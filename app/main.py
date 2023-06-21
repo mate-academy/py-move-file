@@ -14,22 +14,14 @@ def move_file(command: str) -> None:
 
     instruction = command.split()
     first_file_name = instruction[1]
-    path = instruction[-1].split("/")[0:-1]
-    source_path, second_file_name = os.path.split(command.split()[-1])
-    file_path = os.path.join(os.path.join("/".join(path)), second_file_name)
+    dest_path = os.path.split(instruction[-1])[0]
 
     # If the original file needs to be copied to the same directory, rename it.
-    if len(path) == 1:
+    if not dest_path:
         second_file_name = instruction[-1]
         os.rename(first_file_name, second_file_name)
     else:
-        # create directories
-        for i in range(len(path)):
-            current_dir = os.path.join("/".join(path[:i + 1]))
-            try:
-                os.mkdir(current_dir)
-            except FileExistsError:
-                pass
+        os.makedirs(dest_path, exist_ok=True)
 
         # Open source file for reading
         try:
@@ -41,7 +33,7 @@ def move_file(command: str) -> None:
             )
 
         # Opening a new file for writing
-        with open(file_path, "w") as new_file:
+        with open(instruction[-1], "w") as new_file:
             new_file.write(content)
 
         # Remove the original file
