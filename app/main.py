@@ -2,7 +2,7 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command) > 0:
+    if len(command.split()) == 3:
         command_name, file_name, path_to_new_file = command.split()
         if command_name == "mv" and os.path.isfile(file_name):
             new_file = os.path.dirname(path_to_new_file)
