@@ -11,20 +11,11 @@ def move_file(command: str) -> None:
             "'mv file.txt some_path/new_file.txt'"
         )
 
-    old_file_name = command_parts[1]
-    new_file_path = command_parts[2]
-    new_file_path_parts = new_file_path.split("/")
-    new_file_name = new_file_path_parts[-1]
+    _, old_file_name, new_file_path = command.split()
+    directories_path, new_file_name = os.path.split(new_file_path)
 
-    if len(new_file_path_parts) > 1:
-        directories_path = ""
-
-        for i in range(len(new_file_path_parts) - 1):
-            directories_path \
-                = os.path.join(directories_path, new_file_path_parts[i])
-
+    if directories_path:
         os.makedirs(directories_path, exist_ok=True)
-
         copyfile(old_file_name, os.path.join(directories_path, new_file_name))
         os.remove(old_file_name)
     else:
