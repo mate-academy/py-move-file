@@ -32,6 +32,3 @@ def move_file(command: str) -> None:
         os.remove(old_file_name)
     else:
         os.rename(old_file_name, new_file_name)
-
-
-move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
