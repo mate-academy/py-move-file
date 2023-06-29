@@ -23,10 +23,7 @@ def move_file(command: str) -> None:
             directories_path \
                 = os.path.join(directories_path, new_file_path_parts[i])
 
-        try:
-            os.makedirs(directories_path)
-        except FileExistsError:
-            print("File already exists")
+        os.makedirs(directories_path, exist_ok=True)
 
         copyfile(old_file_name, os.path.join(directories_path, new_file_name))
         os.remove(old_file_name)
