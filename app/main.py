@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
             "'mv file.txt some_path/new_file.txt'"
         )
 
-    _, old_file_name, new_file_path = command.split()
+    _, old_file_name, new_file_path = command_parts
     directories_path, new_file_name = os.path.split(new_file_path)
 
     if directories_path:
