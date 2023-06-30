@@ -7,8 +7,7 @@ def move_file(command: str) -> None:
     if parts_of_command[0] != "mv" or len(parts_of_command) != 3:
         raise ValueError("Wrong command!")
 
-    source = parts_of_command[1]
-    destination = parts_of_command[2]
+    _, source, destination = parts_of_command
     destination_path = os.path.dirname(destination)
 
     if destination_path:
