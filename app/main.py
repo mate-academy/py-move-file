@@ -3,7 +3,7 @@ from os.path import exists
 
 
 def move_file(command: str) -> None:
-    command = command.split(" ")
+    command = command.split()
     source_file = command[1]
     new_file = command[2]
     new_file_path = "/".join(new_file.split("/")[:-1])
