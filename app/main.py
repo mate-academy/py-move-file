@@ -2,12 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    if len(command) != 3 or command[0] != "mv":
+    command_split = command.split()
+    command_name, source_path, dest_path = command_split
+    if len(command_split) != 3 or command_name != "mv":
         raise Exception("Wrong command")
 
-    file_path = os.path.dirname(command[2])
+    file_path = os.path.dirname(dest_path)
 
     if file_path:
         os.makedirs(file_path, exist_ok=True)
-    os.replace(command[1], command[2])
+    os.replace(source_path, dest_path)
