@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
 
-    command_list = command.split(" ")
+    command_list = command.split()
 
     if len(command_list) == 3:
         command_name, src_file, dest_file = command_list
