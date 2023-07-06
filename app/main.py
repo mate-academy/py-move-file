@@ -5,7 +5,7 @@ def move_file(command: str) -> None:
     command_split = command.split()
     command_name, source_path, dest_path = command_split
     if len(command_split) != 3 or command_name != "mv":
-        raise Exception("Wrong command")
+        raise ValueError("Wrong command")
 
     file_path = os.path.dirname(dest_path)
 
