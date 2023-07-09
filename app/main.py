@@ -1,5 +1,4 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
@@ -14,17 +13,17 @@ def move_file(command: str) -> None:
 
     command, old_file, new_file = commands
 
-    if new_file.find("/") == -1:
-        os.rename(old_file, new_file)
-        return None
+    if new_file.find("/") != -1:
+        new_file_path_list = new_file.split("/")
+        directory_path = os.path.join(os.getcwd(), *new_file_path_list[:-1])
+        new_file = os.path.join(os.getcwd(), *new_file_path_list)
 
-    new_file_path_list = new_file.split("/")
+        os.makedirs(
+            directory_path,
+            exist_ok=True
+        )
+    with open(old_file, "r") as in_file, open(new_file, "w") as out_file:
+        content = in_file.read()
+        out_file = out_file.write(content)
 
-    directory_path = os.getcwd()
-    for directory in new_file_path_list[:-1]:
-        directory_path = os.path.join(directory_path, directory)
-        if not os.path.exists(directory_path):
-            os.mkdir(directory_path)
-
-    new_file_path = os.path.join(directory_path, new_file_path_list[-1])
-    shutil.move(old_file, new_file_path)
+    os.remove(old_file)
