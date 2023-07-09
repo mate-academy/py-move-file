@@ -2,7 +2,7 @@ import os
 
 
 def move_file(command: str) -> None:
-    commands = command.split(" ")
+    commands = command.split()
 
     if any([
         len(commands) != 3,
