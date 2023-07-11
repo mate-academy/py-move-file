@@ -4,12 +4,7 @@ import os
 def move_file(command: str) -> None:
     command_name, source_file, final_file = command.split()
 
-    if (
-            command_name and
-            source_file and
-            final_file and
-            command_name == "mv"
-    ):
+    if command_name and source_file and final_file and command_name == "mv":
         file_directories, file_name = os.path.split(final_file)
 
         if file_directories:
