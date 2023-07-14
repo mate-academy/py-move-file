@@ -11,8 +11,7 @@ def move_file(command: str) -> None:
 
             if destination_dir:
                 os.makedirs(destination_dir, exist_ok=True)
-            new_file_path = os.path.join(destination_dir, new_file_name)
-            os.rename(source_path, new_file_path)
+            os.rename(source_path, destination_path)
 
             if os.path.exists(source_path):
                 os.remove(source_path)
