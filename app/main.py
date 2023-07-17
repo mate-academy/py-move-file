@@ -1,12 +1,12 @@
-from os import makedirs, remove
+from os import makedirs, path, remove
 
 
 def move_file(command: str) -> None:
     if len(command.split()) == 3 and command.split()[0] == "mv":
         command, filename, new_file_path = command.split()
 
-        if len(new_file_path.split("/")) > 1:
-            makedirs("/".join(new_file_path.split())[:-1], exist_ok=True)
+        if path.split(new_file_path)[0]:
+            makedirs(path.split(new_file_path)[0], exist_ok=True)
 
         with (
             open(filename, "r") as file_out,
