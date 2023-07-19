@@ -13,6 +13,6 @@ def move_file(command: str) -> None:
         with open(file_from, "r") as file_from, open(file_to, "w") as file_to:
             file_to.write(file_from.read())
 
-        os.remove(file_from)
+        os.remove(file_from.name)
     else:
         os.rename(file_from, file_to)
