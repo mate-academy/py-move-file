@@ -8,12 +8,15 @@ def move_file(command: str) -> None:
     if cmd != "mv":
         raise ValueError('Invalid command. Only "mv" command is supported.')
 
-    if source_path == destination_path:
+    elif len(command.split()) != 3:
+        raise ValueError("Check that you entered the correct command.")
+
+    elif source_path == destination_path:
         print("Source file and destination file have the same name. "
               "No action needed.")
         return
 
-    if new_file_path and not os.path.exists(new_file_path):
+    elif new_file_path and not os.path.exists(new_file_path):
         os.makedirs(new_file_path, exist_ok=True)
 
     os.rename(source_path, destination_path)
