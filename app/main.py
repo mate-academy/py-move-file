@@ -2,14 +2,14 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        raise ValueError("Check that you entered the correct command.")
+
     cmd, source_path, destination_path = command.split()
     new_file_path = os.path.join(*os.path.split(destination_path)[:-1])
 
     if cmd != "mv":
         raise ValueError('Invalid command. Only "mv" command is supported.')
-
-    elif len(command.split()) != 3:
-        raise ValueError("Check that you entered the correct command.")
 
     elif source_path == destination_path:
         print("Source file and destination file have the same name. "
