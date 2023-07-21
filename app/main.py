@@ -3,22 +3,13 @@ import os
 
 def move_file(command: str) -> None:
     command_split = command.split()
-    command_name, filename, moved_file_path = command_split
-    directories = moved_file_path.split("/")
-    moved_file = directories.pop()
-
-    folder_path = ""
-    for i in range(len(directories)):
-        folder_path = os.path.join(folder_path, directories[i])
-        os.makedirs(folder_path, exist_ok=True)
-
-    if folder_path != "":
-        moved_file = os.path.join(folder_path, moved_file)
-
-    with (
-        open(filename, "r") as source,
-        open(moved_file, "w") as new_file
-    ):
-        new_file.write(source.read())
-
-    os.remove(filename)
+    if len(command_split) == 3 or command_split[0] == "mv":
+        command_name, filename, moved_file_path = command_split
+        if "/" in moved_file_path:
+            head, tail = os.path.split(moved_file_path)
+            os.makedirs(head, exist_ok=True)
+            with open(filename, "r") as file1, open(moved_file_path, "w") as file2:
+                file2.write(file1.read())
+            os.remove(filename)
+        else:
+            os.rename(filename, moved_file_path)
