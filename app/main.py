@@ -29,9 +29,3 @@ def move_file(command: str) -> None:
             with open(file) as content, open(path, "w") as copy:
                 copy.write(content.read())
             os.remove(file)
-
-
-if __name__ == "__main__":
-    move_file("mv resp.txt first_dir/second_dir/third_dir/file2.txt".replace("/", "\\"))
-    #move_file("mv resp.txt first_dir/second_dir/third_dir/file2.txt")
-
