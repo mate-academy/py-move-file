@@ -15,7 +15,7 @@ def check_command_params(command: str,
 def make_dir_on_path(path: str) -> None:
     slashes = ["/", "\\"]
     for index, slash in enumerate(slashes):
-        if path.count(slash) > 0 and slashes[index-1] not in path:
+        if path.count(slash) > 0 and slashes[index - 1] not in path:
             dir_path = slash.join(path.split(slash)[:-1])
             os.makedirs(dir_path, exist_ok=True)
 
