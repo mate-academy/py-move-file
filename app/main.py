@@ -4,20 +4,16 @@ import os
 def check_command_params(command: str,
                          old_file_name: str, path: str
                          ) -> bool:
-    if (command == "mv"
-            and old_file_name.count(".") == 1
-            and path.count(".") == 1
-            and old_file_name != path):
-        return True
-    return False
+    return True if (command == "mv"
+                    and old_file_name.count(".") == 1
+                    and path.count(".") == 1
+                    and old_file_name != path) else False
 
 
 def make_dir_on_path(path: str) -> None:
-    slashes = ["/", "\\"]
-    for index, slash in enumerate(slashes):
-        if path.count(slash) > 0 and slashes[index - 1] not in path:
-            dir_path = slash.join(path.split(slash)[:-1])
-            os.makedirs(dir_path, exist_ok=True)
+    path_split = os.path.split(path)[0]
+    if path_split:
+        os.makedirs(path_split, exist_ok=True)
 
 
 def move_file(command: str) -> None:
