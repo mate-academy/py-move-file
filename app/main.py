@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
         raise FileNotFoundError(f"This file {source_file} no exist.")
 
     begin_path, end_path = os.path.split(destination_path)
-    if "/" in destination_path:
+    if begin_path:
         os.makedirs(begin_path, exist_ok=True)
         with (
             open(source_file, "r") as source_file,
