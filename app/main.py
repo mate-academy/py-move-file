@@ -20,7 +20,11 @@ class MoveFile:
         self.new_filename.write(content_to_copy)
         return self.new_filename
 
-    def __exit__(self, exc_type: BaseException, exc_val: BaseException, exc_tb: None) -> None:
+    def __exit__(
+            self, exc_type:
+            BaseException, exc_val:
+            BaseException, exc_tb: None
+    ) -> None:
         os.remove(self.old_filename)
         self.new_filename.close()
 
