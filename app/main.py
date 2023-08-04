@@ -12,10 +12,9 @@ def move_file(command: str) -> None:
             new_file_name = os.path.basename(new_file)
             try:
                 os.makedirs(new_file_path)
-                with open(str(new_file_path + "/" + new_file_name), "w")\
-                        as n_file:
-                    n_file.write(content)
             except FileExistsError:
+                pass
+            finally:
                 with open(str(new_file_path + "/" + new_file_name), "w")\
                         as n_file:
                     n_file.write(content)
