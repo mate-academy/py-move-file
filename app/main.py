@@ -1,24 +1,23 @@
+import os
 from pathlib import Path
 
 
 def move_file(command: str) -> None:
-    cmd, source_file, result_file = command.split()
+    split_command = command.split()
+    if len(split_command) != 3:
+        raise ValueError("The command should have 3 parts.")
+    cmd, source_file, result_file = split_command
     flag = cmd == "mv" and Path(source_file).exists()
-    base_direction = Path(".").cwd()
 
     if "/" in result_file:
-        root_add = [comp for comp in result_file.split("/") if comp]
+        result_dir, result_filename = os.path.split(result_file)
 
-        if result_file.endswith("/"):
-            for root in root_add:
-                base_direction = base_direction.joinpath(root)
-            path_to_result = base_direction.joinpath(source_file)
-        else:
-            for root in root_add[:-1]:
-                base_direction = base_direction.joinpath(root)
-            path_to_result = base_direction.joinpath(root_add[-1])
+        if not result_filename:
+            result_filename = Path(source_file).name
 
-        path_to_result.parent.mkdir(parents=True, exist_ok=True)
+        os.makedirs(result_dir, exist_ok=True)
+
+        path_to_result = os.path.join(result_dir, result_filename)
     else:
         path_to_result = Path(result_file).resolve()
 
