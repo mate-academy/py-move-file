@@ -10,26 +10,17 @@ def move_file(command: str) -> None:
         print(e)
         return e
 
-    command_name, filename, move_filename = command.split()
+    command_name, source_name, path_new_file = command.split()
+    path, filename = os.path.split(path_new_file)
 
-    current_dir = os.getcwd()
-    source_path = os.path.join(current_dir, filename)
-    destination_path = os.path.join(current_dir, move_filename)
+    if path:
+        os.makedirs(path, exist_ok=True)
 
-    if "/" not in move_filename and "\\" not in move_filename:
-        os.rename(source_path, destination_path)
+    with (
+        open(source_name, "r") as file_in,
+        open(path_new_file, "a") as file_out
+    ):
+        for line in file_in:
+            file_out.write(line)
 
-    else:
-        destination_dir = os.path.dirname(destination_path)
-
-        if not os.path.exists(destination_dir):
-            os.makedirs(destination_dir)
-
-        with (
-            open(source_path, "r") as file_in,
-            open(destination_path, "a") as file_out
-        ):
-            for line in file_in:
-                file_out.write(line)
-
-        os.remove(source_path)
+    os.remove(source_name)
