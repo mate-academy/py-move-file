@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     command = command.split()
-    if len(command) == 3:
+    if len(command) == 3 and command[0] == "mv":
         command, old_file, new_file = command
         with open(old_file, "r") as file_from:
             content = file_from.read()
