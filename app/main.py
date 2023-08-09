@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
 
     except (WrongCommand, NoSourceFile) as e:
         print(e)
-        return e
+        return
 
     command_name, source_name, path_new_file = command.split()
     path, filename = os.path.split(path_new_file)
