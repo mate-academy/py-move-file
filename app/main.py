@@ -20,7 +20,6 @@ def move_file(command: str) -> None:
         open(source_name, "r") as file_in,
         open(path_new_file, "a") as file_out
     ):
-        for line in file_in:
-            file_out.write(line)
+        file_out.write(file_in.read())
 
     os.remove(source_name)
