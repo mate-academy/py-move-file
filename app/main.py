@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
         separated = destination.split("/")[:-1]
         directories = "/".join(separated)
         if directories:
-            os.makedirs(directories)
+            os.makedirs(directories, exist_ok=True)
         with (
             open(current, "r") as current_file,
             open(destination, "w") as destination_file
