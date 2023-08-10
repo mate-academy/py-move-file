@@ -8,10 +8,7 @@ def move_file(command: str) -> None:
         if action == "mv":
             head = os.path.split(path)[0]
             if head:
-                try:
-                    os.makedirs(os.path.join(os.getcwd(), head))
-                except OSError:
-                    pass
+                os.makedirs(os.path.join(os.getcwd(), head), exist_ok=True)
 
             with (open(path, "w") as file_to_write,
                   open(file_name) as file_to_read):
