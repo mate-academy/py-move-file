@@ -7,8 +7,6 @@ def move_file(command: str) -> None:
         action, file_name, path = command.split()
         if action == "mv":
             with open(file_name) as file_to_read:
-
-                # check if directories are in path for writing file
                 if "/" in path:
                     list_of_directories = path.split("/")[:-1]
                     file_name_to_move = path.split("/")[-1]
