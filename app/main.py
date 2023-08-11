@@ -1,10 +1,13 @@
 import os
 
 
-def move_file(command: str) -> None:
+def move_file(command: str) -> None | str:
 
     if len(command.split()) == 3:
         action, file_name, path = command.split()
+        if file_name == path:
+            return ("Are you kidding? "
+                    "Are you really gonna move file to itself? :)")
         if action == "mv":
             head = os.path.split(path)[0]
             if head:
