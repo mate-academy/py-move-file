@@ -12,5 +12,4 @@ def move_file(command: str) -> None:
 
                 os.makedirs(path_folder_file, exist_ok=True)
 
-            if not os.path.exists(mv_file):
-                os.rename(file_name, mv_file)
+            os.rename(file_name, mv_file)
