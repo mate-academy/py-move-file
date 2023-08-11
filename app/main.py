@@ -2,8 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3:
-        command_name, file_name, mv_file = command.split()
+    command_list = command.split()
+    if len(command_list) == 3:
+        command_name, file_name, mv_file = command_list
         path_folder_file = os.path.split(mv_file)
 
         if command_name == "mv":
