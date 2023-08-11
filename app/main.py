@@ -2,7 +2,6 @@ import os
 
 
 def move_file(command: str) -> None | str:
-
     if len(command.split()) != 3:
         return "Incorrect statement printed"
 
@@ -22,6 +21,8 @@ def move_file(command: str) -> None | str:
     except FileNotFoundError:
         print("Not need to create folders")
 
-    with open(curent_file, "r") as source_file, open(destination, "w") as moved_file:
+    with open(curent_file, "r") as source_file, open(
+        destination, "w"
+    ) as moved_file:
         moved_file.write(source_file.read())
     os.remove(curent_file)
