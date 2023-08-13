@@ -10,18 +10,17 @@ def move_file(command: str) -> None:
         if cmd == "mv" and file1 != file2:
             dir_file2, name_file2 = os.path.split(file2)
 
-            ls_dir_file2 = dir_file2.split("/")
-            item = list()
             path_file2 = ""
 
-            for elem in ls_dir_file2:
-                item.append(elem)
-                path_file2 = os.path.join(*item)
+            if dir_file2 != "":
+                ls_dir_file2 = dir_file2.split("/")
+                item = list()
 
-                try:
+                for elem in ls_dir_file2:
+                    item.append(elem)
+                    path_file2 = os.path.join(*item)
+
                     os.makedirs(path_file2, exist_ok=True)
-                except WindowsError:
-                    continue
 
             if name_file2 != "":
                 path_file2 = os.path.join(path_file2, name_file2)
