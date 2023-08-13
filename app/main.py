@@ -24,10 +24,8 @@ def move_file(command: str) -> None:
                     continue
 
             if name_file2 != "":
-                path_file2 = os.path.join(path_file2, name_file2)
-
                 with (open(file1, "r") as file_in,
-                      open(path_file2, "w") as file_out):
+                      open(file2, "w") as file_out):
                     file_out.write(file_in.read())
 
-        os.remove(file1)
+            os.remove(file1)
