@@ -8,25 +8,26 @@ def move_file(command: str) -> None:
         cmd, file1, file2 = args
 
         if cmd == "mv" and file1 != file2:
-            dir_path = file2.split("/")
-            path = ""
+            dir_file2, name_file2 = os.path.split(file2)
 
-            for elem in dir_path:
-                if "." not in elem:
-                    path += elem + "/"
+            ls_dir_file2 = dir_file2.split("/")
+            item = list()
+            path_file2 = ""
 
-                    try:
-                        os.mkdir(path)
-                        print(path)
-                    except WindowsError:
-                        continue
-                elif "." in elem:
-                    with (open(file1, "r") as file_in,
-                            open(file2, "w") as file_out):
-                        file_out.write(file_in.read())
-                else:
-                    with (open(file1, "r") as file_in,
-                            open(file1, "w") as file_out):
-                        file_out.write(file_in.read())
+            for elem in ls_dir_file2:
+                item.append(elem)
+                path_file2 = os.path.join(*item)
 
-            os.remove(file1)
+                try:
+                    os.mkdir(path_file2)
+                except WindowsError:
+                    continue
+
+            if name_file2 != "":
+                path_file2 = os.path.join(path_file2, name_file2)
+
+                with (open(file1, "r") as file_in,
+                      open(path_file2, "w") as file_out):
+                    file_out.write(file_in.read())
+
+        os.remove(file1)
