@@ -2,15 +2,19 @@ import os
 
 
 def move_file(command: str) -> None:
-    args = command.split()[1:]
-    source = args[0]
-    destination = args[1]
+    args = command.split()
 
-    if not os.path.isfile(source):
+    if len(args) != 3:
+        print("Invalid command format")
         return
 
-    dest_directory = os.path.dirname(destination)
-    if dest_directory and not os.path.exists(dest_directory):
-        os.makedirs(dest_directory)
+    command_name, origin_path, new_path = args
 
-    os.rename(source, destination)
+    if not os.path.isfile(origin_path):
+        return
+
+    dest_directory = os.path.dirname(new_path)
+    if dest_directory:
+        os.makedirs(dest_directory, exist_ok=True)
+
+    os.rename(origin_path, new_path)
