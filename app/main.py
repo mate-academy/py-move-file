@@ -33,7 +33,9 @@ def move_file(command: str) -> None:
 
         with (
             open(file_to_move, "r") as moving_file,
-            open(f"{os.path.join('/'.join(dirs), name_file_2_create)}", "w") as moved_file
+            open(
+                f"{os.path.join('/'.join(dirs), name_file_2_create)}", "w"
+            ) as moved_file,
         ):
             moved_file.write(moving_file.read())
             os.remove(file_to_move)
