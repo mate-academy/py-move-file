@@ -13,7 +13,7 @@ def move_file(command: str) -> None:
             dirs = dir_path.split("/")
             dir_ = ""
             for temp in dirs:
-                dir_ += temp + "/"
+                dir_ = os.path.join(dir_, temp)
                 if not os.path.exists(dir_):
                     os.mkdir(dir_)
 
