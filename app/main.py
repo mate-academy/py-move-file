@@ -31,8 +31,9 @@ def move_file(command: str) -> None:
             dir_path += f"{folder}/"
             os.makedirs(dir_path, exist_ok=True)
 
-        with open(file_to_move, "r") as moving_file, open(
-            f"{dir_path}/{name_file_2_create}", "w"
-        ) as moved_file:
+        with (
+            open(file_to_move, "r") as moving_file,
+            open(f"{dir_path}/{name_file_2_create}", "w") as moved_file
+        ):
             moved_file.write(moving_file.read())
             os.remove(file_to_move)
