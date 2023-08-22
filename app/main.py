@@ -12,13 +12,13 @@ def move_file(command: str) -> None:
             os.rename(file_to_move, destination)
             return
 
-        """this block just will open the existing dir"""
-        *dirs, name_file_2_create = destination.split("/")
-        if os.path.exists(f"{'/'.join(dirs)}"):
+        """this block just will open the existing dir and create new file"""
+        *dirs, name_file_2_create = destination_parts
+        if os.path.exists(f"{os.path.join('/'.join(dirs))}"):
             with (
                 open(file_to_move, "r") as moving_file,
                 open(
-                    f"{'/'.join(dirs)}/{name_file_2_create}", "w"
+                    f"{os.path.join('/'.join(dirs), name_file_2_create)}", "w"
                 ) as moved_file,
             ):
                 moved_file.write(moving_file.read())
@@ -28,12 +28,12 @@ def move_file(command: str) -> None:
         """last possible way is to create dirs"""
         dir_path = ""
         for folder in dirs:
-            dir_path += f"{folder}/"
+            dir_path = os.path.join(dir_path, folder)
             os.makedirs(dir_path, exist_ok=True)
 
         with (
             open(file_to_move, "r") as moving_file,
-            open(f"{dir_path}/{name_file_2_create}", "w") as moved_file
+            open(f"{os.path.join('/'.join(dirs), name_file_2_create)}", "w") as moved_file
         ):
             moved_file.write(moving_file.read())
             os.remove(file_to_move)
