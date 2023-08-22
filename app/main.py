@@ -3,7 +3,6 @@ import os
 
 def move_file(command: str) -> None:
     args = command.split()[1:]
-
     source = args[0]
     destination = args[1]
 
