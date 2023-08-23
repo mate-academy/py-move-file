@@ -14,3 +14,5 @@ def move_file(command: str) -> None:
 
             if os.path.exists(origin_path):
                 os.remove(origin_path)
+    else:
+        raise ValueError("The command should consist of three elements")
