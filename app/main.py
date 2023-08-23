@@ -2,7 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    keyword, source, target = command.strip().split()
+    try:
+        keyword, source, target = command.strip().split()
+    except ValueError as e:
+        print(f"Invalid command: {e}")
+        return
     if keyword != "mv":
         return
     if (target_dirname := os.path.dirname(target)) != "":
