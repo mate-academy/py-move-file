@@ -2,6 +2,7 @@ import os
 
 
 def move_file(command: str) -> str:
+
     parts = command.split()
 
     if len(parts) < 3:
