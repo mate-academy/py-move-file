@@ -2,13 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    commands = command.split(" ")
     try:
-        first_file = commands[1]
-        second_file = commands[2]
+        key, first_file, second_file = command.split()
     except IndexError:
         return
-    if commands[0] != "mv" or first_file == second_file:
+    if key != "mv" or first_file == second_file:
         return
 
     if os.path.dirname(second_file) != "":
