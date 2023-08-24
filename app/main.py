@@ -9,8 +9,9 @@ def move_file(command: str) -> None:
     parts = command.split()
 
     if len(parts) < 3 or parts[0] != "mv":
-        raise InvalidCommandFormat("Please provide a command like "
-                                   "'mv source_file destination_path'")
+        raise InvalidCommandFormat(
+            "Please provide a command like 'mv source_file destination_path'"
+        )
 
     action = parts[0]
     source_file = parts[1]
