@@ -20,11 +20,11 @@ def move_file(command: str) -> None:
     if source_file == destination and action == "mv":
         return
 
-    if "/" not in destination and action == "mv":
-        os.rename(source_file, destination)
-        return
-
     destination, new_file_name = os.path.split(destination)
+
+    if destination == "":
+        os.rename(source_file, new_file_name)
+        return
 
     os.makedirs(destination, exist_ok=True)
 
