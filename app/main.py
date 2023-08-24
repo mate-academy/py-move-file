@@ -5,7 +5,7 @@ def move_file(command: str) -> None:
     command_split = command.split()
 
     if len(command_split) == 3:
-        command, source_path, new_path = command_parts
+        command, source_path, new_path = command_split
 
         if command == "mv":
             path, destination_file = os.path.split(new_path)
