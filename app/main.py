@@ -13,24 +13,23 @@ def move_file(command: str) -> None:
             "Please provide a command like 'mv source_file destination_path'"
         )
 
-    action = parts[0]
     source_file = parts[1]
     destination = parts[2]
 
-    if source_file == destination and action == "mv":
+    if source_file == destination:
         return
 
-    destination, new_file_name = os.path.split(destination)
+    make_dirs, new_file_name = os.path.split(destination)
 
-    if destination == "":
+    if make_dirs == "":
         os.rename(source_file, new_file_name)
         return
 
-    os.makedirs(destination, exist_ok=True)
+    os.makedirs(make_dirs, exist_ok=True)
 
     with (
         open(source_file, "r") as old_file,
-        open(parts[2], "w") as new_file
+        open(destination, "w") as new_file
     ):
         content = old_file.read()
         new_file.write(content)
