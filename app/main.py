@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     try:
         key, first_file, second_file = command.split()
-    except IndexError:
+    except ValueError:
         return
     if key != "mv" or first_file == second_file:
         return
