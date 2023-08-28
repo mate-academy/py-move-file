@@ -3,16 +3,13 @@ import os
 
 def move_file(command: str) -> None:
     try:
-        key, first_file, second_file = command.split()
+        key, source, target = command.split()
     except ValueError:
         return
-    if key != "mv" or first_file == second_file:
+    if key != "mv" or source == target:
         return
-
-    if os.path.dirname(second_file) != "":
-        os.makedirs(os.path.dirname(second_file), exist_ok=True)
-
-    with (open(first_file, "r") as read_file,
-          open(second_file, "w") as write_file):
+    if os.path.dirname(target) != "":
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+    with open(source, "r") as read_file, open(target, "w") as write_file:
         write_file.write(read_file.read())
-    os.remove(first_file)
+    os.remove(source)
