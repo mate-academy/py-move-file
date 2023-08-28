@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
     if len(command_list) != 3 or command_list[0] != "mv":
         raise InvalidCommandError("Unknown command.")
 
-    _, origin_path, new_path = command.split()
+    _, origin_path, new_path = command_list
 
     dirs, _ = os.path.split(new_path)
 
