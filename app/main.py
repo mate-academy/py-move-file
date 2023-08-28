@@ -11,7 +11,9 @@ def move_file(command: str) -> None:
         raise InvalidCommandError("Unknown command.")
 
     dirs, _ = os.path.split(command_list[2])
-    os.makedirs(dirs)
+
+    if dirs:
+        os.makedirs(dirs, exist_ok=True)
 
     with (
         open(command_list[1], "r") as source_file,
