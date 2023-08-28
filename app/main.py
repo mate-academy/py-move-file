@@ -6,10 +6,12 @@ class InvalidCommandError(Exception):
 
 
 def move_file(command: str) -> None:
-    command_name, origin_path, new_path = command.split()
+    command_list = command.split()
 
-    if len(command.split()) != 3 or command_name != "mv":
+    if len(command_list) != 3 or command_list[0] != "mv":
         raise InvalidCommandError("Unknown command.")
+
+    _, origin_path, new_path = command.split()
 
     dirs, _ = os.path.split(new_path)
 
