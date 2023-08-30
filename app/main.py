@@ -2,23 +2,26 @@ import os
 
 
 def move_file(command: str) -> None:
-    list_from_command = command.split(" ")
-    if len(list_from_command) != 3:
+    command_call, file_to_copy, result_file, *redundant = command.split(" ")
+    if redundant:
         return
-    if list_from_command[0] != "mv":
+    if command_call != "mv":
         return
-    if list_from_command[1] == list_from_command[2]:
+    if file_to_copy == result_file:
         return
-    if "/" not in list_from_command[2]:
-        os.rename(list_from_command[1], list_from_command[2])
+    if "/" not in result_file:
+        os.rename(file_to_copy, result_file)
         return
-    directories = list_from_command[2].split("/")
+    directories = result_file.split("/")
     path = ""
     for folder in directories[:-1]:
         path = os.path.join(path, folder)
-        os.mkdir(path)
-    with open(list_from_command[1], "r") as file_in, open(
-        list_from_command[2], "w"
+        try:
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+    with open(file_to_copy, "r") as file_in, open(
+            result_file, "w"
     ) as file_out:
         file_out.write(file_in.read())
-    os.remove(list_from_command[1])
+    os.remove(file_to_copy)
