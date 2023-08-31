@@ -4,10 +4,11 @@ import os
 def move_file(command: str) -> None:
     command_parts = command.split()
 
-    if len(command_parts) != 3:
+    try:
+        command, source_path, new_path = command_parts
+    except ValueError as e:
+        print(f"Invalid command: {e}")
         return
-
-    command, source_path, new_path = command_parts
 
     if command == "mv":
         path, destination_file = os.path.split(new_path)
