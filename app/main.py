@@ -14,9 +14,8 @@ def move_file(command: str) -> None:
     if not os.path.exists(output_file) and dir_path:
         os.makedirs(dir_path, exist_ok=True)
 
-    with open(source_file, "r") as source:
+    with open(source_file, "r") as source, open(output_file, "w") as new_file:
         file_content = source.read()
-        with open(output_file, "w") as new_file:
-            new_file.write(file_content)
+        new_file.write(file_content)
 
     os.remove(source_file)
