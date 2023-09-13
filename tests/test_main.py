@@ -57,6 +57,6 @@ def test_should_create_multiple_directories_when_they_exist(create_file: callabl
     with open("first_dir/second_dir/third_dir/file2.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
 
-    assert os.path.exists("../file.txt") is False
+    assert os.path.exists("file.txt") is False
 
     shutil.rmtree("first_dir")
