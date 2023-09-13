@@ -19,7 +19,7 @@ def create_file(filename: str = "file.txt") -> str:
 def test_file_renamed(create_file: callable) -> None:
     move_file("mv file.txt file1.txt")
 
-    assert os.path.exists("file.txt") is False
+    assert os.path.exists("../file.txt") is False
     with open("file1.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
 
@@ -33,7 +33,7 @@ def test_should_work_when_directory_exists(create_file: callable) -> None:
     with open("dir/file2.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
 
-    assert os.path.exists("file.txt") is False
+    assert os.path.exists("../file.txt") is False
 
     shutil.rmtree("dir")
 
@@ -42,7 +42,7 @@ def test_should_create_multiple_directories(create_file: callable) -> None:
     move_file(f"mv file.txt first_dir/second_dir/file2.txt")
 
     assert os.path.exists("first_dir/second_dir/file2.txt") is True
-    assert os.path.exists("file.txt") is False
+    assert os.path.exists("../file.txt") is False
 
     with open("first_dir/second_dir/file2.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
@@ -57,6 +57,6 @@ def test_should_create_multiple_directories_when_they_exist(create_file: callabl
     with open("first_dir/second_dir/third_dir/file2.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
 
-    assert os.path.exists("file.txt") is False
+    assert os.path.exists("../file.txt") is False
 
     shutil.rmtree("first_dir")

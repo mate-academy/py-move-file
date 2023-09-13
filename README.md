@@ -14,6 +14,7 @@ Examples:
 - `mv file.txt first_dir/second_dir/file2.txt` create directory `first_dir`
 inside current directory, then create directory `first_dir/second_dir`,
 create file2.txt inside and remove the source file.
+
 ```python
 print(open("file.txt").read())
 # Some
