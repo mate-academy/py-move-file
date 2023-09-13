@@ -1,10 +1,12 @@
 import os
 
 
-def move_file(command: str) -> None:
-    files = command[3:].split(" ")
-    source_name = files[0]
-    dest_path = files[1]
+def move_file(command: str) -> None | str:
+    if command.startswith("mv "):
+        pass
+    else:
+        return "write correct command"
+    source_name, dest_path = command[3:].split(" ")
     if os.path.sep in dest_path:
         dest_file = dest_path.rstrip("/").split("/")[-1]
         dest_dir = "/".join(dest_path.rstrip("/").split("/")[0:-1])
