@@ -1,6 +1,4 @@
-import shutil
 import os
-
 
 def move_file(command: str) -> None:
     command_parts = command.split()
@@ -22,4 +20,5 @@ def move_file(command: str) -> None:
     if is_directory:
         destination_path = os.path.join(destination_path,
                                         os.path.basename(source_path))
-    shutil.move(source_path, destination_path)
+
+    os.rename(source_path, destination_path)
