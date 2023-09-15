@@ -1,14 +1,15 @@
 import os
 
 
-def move_file(command: str) -> None | str:
-    if not command.startswith("mv "):
+def move_file(command: str) -> None:
+    elements = command.split(" ")
+    if not elements[0] == "mv":
         print("write correct command: it should start with 'mv '")
         exit()
-    if not len(command.split(" ")) == 3:
+    if not len(elements) == 3:
         print("write correct command: mv source_file destination_file")
         exit()
-    source_name, dest_path = command[3:].split(" ")
+    source_name, dest_path = elements[1:3]
     if os.path.sep in dest_path:
         dest_file = dest_path.rstrip("/").split("/")[-1]
         dest_dir = "/".join(dest_path.rstrip("/").split("/")[0:-1])
