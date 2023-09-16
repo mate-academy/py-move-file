@@ -10,13 +10,11 @@ def move_file(command: str) -> None:
 
         if dirs:
             os.makedirs(dirs, exist_ok=True)
-        else:
-            os.rename(old_file, new_file)
 
-            with (
-                open(old_file, "r") as file_in,
-                open(full_path_to_new_file, "w") as file_out
-            ):
-                file_out.write(file_in.read())
+        with (
+            open(old_file, "r") as file_in,
+            open(full_path_to_new_file, "w") as file_out
+        ):
+            file_out.write(file_in.read())
 
-            os.remove(old_file)
+        os.remove(old_file)
