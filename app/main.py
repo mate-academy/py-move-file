@@ -1,22 +1,14 @@
 import os
 
 
-def move_file(command: str) -> str:
-
-    parts = command.split()
-
-    if len(parts) < 3:
-        return "Invalid command. Please provide source and destination paths."
-
-    source_file = parts[1]
-    destination = parts[2]
-
-    if destination.endswith("/"):
-        destination = os.path.join(destination, os.path.basename(source_file))
-
-    try:
-        os.makedirs(os.path.dirname(destination), exist_ok=True)
-        os.rename(source_file, destination)
-        return "File moved successfully."
-    except Exception as e:
-        return f"An error occurred: {str(e)}"
+def move_file(command: str) -> None:
+    if len(command.split()) == 3:
+        cmd, original, file_path = command.split()
+        if "/" in file_path:
+            head, tail = os.path.split(file_path)
+            os.makedirs(head, exist_ok=True)
+            with open(original, "r") as file1, open(file_path, "w") as file2:
+                file2.write(file1.read())
+            os.remove(original)
+        else:
+            os.rename(original, file_path)
