@@ -10,6 +10,10 @@ def move_file(command: str) -> None:
         print(f"Invalid command: {e}")
         return
 
+    if not os.path.exists(source_path):
+        print(f"Source file '{source_path}' does not exist.")
+        return
+
     if command == "mv":
         path, destination_file = os.path.split(new_path)
 
@@ -23,6 +27,5 @@ def move_file(command: str) -> None:
             new_path.write(source.read())
 
         os.remove(source_path)
-
     else:
         os.rename(source_path, new_path)
