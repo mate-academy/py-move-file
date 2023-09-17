@@ -6,7 +6,6 @@ def move_file(command: str) -> None:
     if len(command_parts) != 3 or command_parts[0] != "mv":
         raise ValueError("Invalid command format. ")
 
-    
     source_path, destination_path = command_parts[1:]
     is_directory = destination_path.endswith("/")
 
