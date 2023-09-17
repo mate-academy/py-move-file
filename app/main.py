@@ -4,12 +4,10 @@ import os
 def move_file(command: str) -> None:
     command_parts = command.split()
     if len(command_parts) != 3 or command_parts[0] != "mv":
-        raise ValueError("Invalid command format. "
-                         "Use 'mv source destination'.")
-
-    source_path = command_parts[1]
-    destination_path = command_parts[2]
-
+        raise ValueError("Invalid command format. ")
+    
+    
+    source_path, destination_path = command_parts[1:]
     is_directory = destination_path.endswith("/")
 
     if not os.path.exists(source_path):
