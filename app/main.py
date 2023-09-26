@@ -3,8 +3,11 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
+    if len(parts) != 3:
+        return
     command, source, target = parts
-    if any([len(parts) != 3, command != "mv", source == target]):
+
+    if any([command != "mv", source == target]):
         return
 
     if os.path.dirname(target) != "" or target.endswith("/"):
