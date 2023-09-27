@@ -1,5 +1,6 @@
 import os
-from typing import Callable
+from typing import Any, Callable
+from functools import wraps
 
 
 class CommandError(Exception):
@@ -7,7 +8,8 @@ class CommandError(Exception):
 
 
 def check_command(func: Callable) -> Callable:
-    def wrapper(command: str) -> Callable:
+    @wraps(func)
+    def wrapper(command: str) -> Any:
         if command.split()[0] != "mv" or len(command.split()) != 3:
             raise CommandError("Please enter valid command!")
         return func(command)
@@ -17,9 +19,10 @@ def check_command(func: Callable) -> Callable:
 
 @check_command
 def move_file(command: str) -> None:
-    source_name, target_name = command.split()[1:3]
-    if "/" not in target_name:
-        os.rename(source_name, target_name)
+    _, source_name, target_name = command.split()
+    destination_path = os.path.join(target_name)
+    if not os.path.dirname(destination_path):
+        os.rename(source_name, destination_path)
     else:
         path_to_file = os.path.split(target_name)[0]
         os.makedirs(path_to_file, exist_ok=True)
