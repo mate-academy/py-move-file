@@ -20,9 +20,8 @@ def check_command(func: Callable) -> Callable:
 @check_command
 def move_file(command: str) -> None:
     _, source_name, target_name = command.split()
-    destination_path = os.path.join(target_name)
-    if not os.path.dirname(destination_path):
-        os.rename(source_name, destination_path)
+    if not os.path.dirname(target_name):
+        os.rename(source_name, target_name)
     else:
         path_to_file = os.path.split(target_name)[0]
         os.makedirs(path_to_file, exist_ok=True)
