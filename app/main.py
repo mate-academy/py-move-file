@@ -13,9 +13,8 @@ def move_file(command: str) -> None:
         return
 
     if os.path.isdir(destination_path):
-        os.makedirs(destination_path, exist_ok=True)
+        os.makedirs(os.path.dirname(destination_path), exist_ok=True)
 
-    if os.path.isdir(destination_path):
         destination_file = os.path.join(destination_path,
                                         os.path.basename(source_path))
     else:
