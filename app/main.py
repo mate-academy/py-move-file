@@ -2,6 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
+    if not command:
+        return
     command_list = command.split()
     if command_list[0] == "mv" and len(command_list) == 3:
         if "/" in command_list[2]:
