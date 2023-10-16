@@ -1,30 +1,14 @@
-from os import makedirs, remove, path
+import os
 
 
 def move_file(command: str) -> None:
-    command_split = command.split()
-    if len(command_split) != 3 or command_split[0] != "mv":
-        print("Invalid  usage. mv <file> <directory/file_moved>")
-        return
+    command_list = command.split()
+    if len(command_list) == 3:
 
-    command_name, filename, moved_file_path = command_split
+        command_name, file_name, mv_file = command_list
+        dirs, file_name_out = os.path.split(mv_file)
 
-    directories = moved_file_path.split("/")
-
-    moved_file = directories.pop()
-
-    folder_path = ""
-    for i in range(len(directories)):
-        folder_path = path.join(folder_path, directories[i])
-        makedirs(folder_path, exist_ok=True)
-
-    if folder_path != "":
-        moved_file = path.join(folder_path, moved_file)
-
-    with (
-        open(filename, "r") as source,
-        open(moved_file, "w") as new_file
-    ):
-        new_file.write(source.read())
-
-    remove(filename)
+        if command_name == "mv" and os.path.isfile(file_name):
+            if dirs:
+                os.makedirs(dirs, exist_ok=True)
+            os.rename(file_name, mv_file)
