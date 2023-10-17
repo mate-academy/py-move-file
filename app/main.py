@@ -3,10 +3,10 @@ import os
 
 def move_file(command: str) -> None:
 
-    if "mv" not in command or len(command.split()) != 3:
+    command_upd, file, new_file = command.split()
+
+    if command_upd != "mv" or len(command.split()) != 3:
         raise ValueError("Incorrect command")
-    else:
-        command, file, new_file = command.split()
 
     if not os.path.exists(file):
         raise ValueError("File doesn't exist")
