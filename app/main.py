@@ -4,9 +4,9 @@ import os
 def move_file(command: str) -> None:
     get_command = command.split(" ")
     if get_command[0] == "mv" and len(get_command) == 3:
-        old_file_name = get_command[1]
-        new_file_name = get_command[2]
-        if "/" in new_file_name:
+        command, old_file_name, new_file_name = get_command
+        directory = os.path.dirname(new_file_name)
+        if directory:
             if not os.path.exists(os.path.dirname(new_file_name)):
                 os.makedirs(os.path.dirname(new_file_name), exist_ok=True)
             elif os.path.isfile(new_file_name):
