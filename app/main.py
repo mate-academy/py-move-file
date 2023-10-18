@@ -2,17 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    dirs = command[2].split("/")
-    if not len(dirs) == 1:
-        for i in range(1, len(dirs)):
-            try:
-                os.mkdir("/".join(dirs[:i]))
-            except FileExistsError:
-                pass
-
-    with open(command[1]) as file_in, open(command[2], "a") as file_out:
-        for row in file_in:
-            file_out.write(row)
-
-    os.remove(command[1])
+    mv, initial_file, dirs = command.split()
+    if mv == "mv":
+        path = os.path.dirname(dirs)
+        if path:
+            os.makedirs(path, exist_ok=True)
+        with open(initial_file) as file_in, open(dirs, "w") as file_out:
+            file_out.write("".join(file_in.readlines()))
+    os.remove(initial_file)
