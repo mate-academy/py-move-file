@@ -3,9 +3,10 @@ import os
 
 def move_file(command: str) -> None:
     source, destination = read_command(command)
+    create_path_to(destination)
 
-    with open(source, "r") as target_file, \
-         open(destination, "w") as destination_file:
+    with (open(source, "r") as target_file,
+          open(destination, "w") as destination_file):
         destination_file.write(target_file.read())
 
     os.remove(source)
@@ -16,19 +17,17 @@ def read_command(command: str) -> tuple[str, str]:
 
     try:
         verify_command(command_items)
-    except (ValueError, FileNotFoundError) as err:
-        print(err)
+    except (ValueError, FileNotFoundError):
+        raise
 
-    return command_items[1], create_path(command_items[-1].split("/"))
+    return command_items[1], command_items[-1]
 
 
-def create_path(dir_names: list[str]) -> str:
-    path = ""
-    for i in range(len(dir_names)):
-        path = os.path.join(path, dir_names[i])
-        if i < len(dir_names) - 1 and not os.path.isdir(path):
-            os.mkdir(path)
-    return path
+def create_path_to(path: str) -> None:
+    head = os.path.split(path)[0]
+
+    if head != "" and not os.path.isdir(head):
+        os.makedirs(head)
 
 
 def verify_command(command: list[str]) -> None:
