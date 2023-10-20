@@ -8,5 +8,5 @@ def move_file(command: str) -> None:
         if path:
             os.makedirs(path, exist_ok=True)
         with open(initial_file) as file_in, open(dirs, "w") as file_out:
-            file_out.write("".join(file_in.readlines()))
-    os.remove(initial_file)
+            file_out.write("".join(file_in.read()))
+        os.remove(initial_file)
