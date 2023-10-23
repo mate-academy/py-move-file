@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
         return
 
     path_to_file, file_from_path = os.path.split(path)
-    if len(path.split("/")) > 1:
+    if len(os.path.normpath(path_to_file).split(os.path.sep)) > 1:
         os.makedirs(os.path.join(path_to_file), exist_ok=True)
 
     with (open(file, "r") as current_file,
