@@ -3,7 +3,10 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    tag, source, destination = command.split()
+    command_split = command.split()
+    if len(command_split) != 3:
+        return
+    tag, source, destination = command_split
     if len(destination.split("/")) == 1:
         os.rename(source, destination)
         return
