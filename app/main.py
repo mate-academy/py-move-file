@@ -15,7 +15,9 @@ def move_file(command: str) -> None:
         os.rename(old_filename, new_filename)
         return
 
-    dirs = path.split("/")
+    dirs = os.path.split(path)
+    if "" in dirs:
+        dirs = dirs[1:]
     with open(old_filename, "r") as old_file:
         old_file_content = old_file.read()
         previous = ""
