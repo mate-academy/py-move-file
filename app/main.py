@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     mv, source_file, path_file = command.split()
     if mv == "mv" and len(command.split()) == 3:
         if "/" not in path_file:
@@ -16,7 +16,10 @@ def move_file(command: str):
                 os.makedirs(path_file)
             if os.path.exists(new_file_name):
                 os.remove(new_file_name)
-            with open(source_file, "r") as in_file, open(full_path_file, "w") as out_file:
+            with (
+                open(source_file, "r") as in_file,
+                open(full_path_file, "w") as out_file
+            ):
                 out_file.write(in_file.read())
 
             os.remove(source_file)
