@@ -5,9 +5,14 @@ class CommandError(Exception):
     pass
 
 
-def move_file(command: str) -> None:
-    command, filename, path_to_file = command.split()
+class ArgumentError(Exception):
+    pass
 
+
+def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        raise ArgumentError("Error in argument's string")
+    command, filename, path_to_file = command.split()
     if command != "mv":
         raise CommandError("Wrong command")
 
