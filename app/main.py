@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
     if comand == "mv" and source_file != destination:
         source_file = os.path.normpath(source_file)
         destination = os.path.normpath(destination)
-        if destination.endswith("/"):
+        if destination.endswith(os.sep):
             destination_dir = destination
             file_name = os.path.basename(source_file)
             destination_path = os.path.join(destination_dir, file_name)
