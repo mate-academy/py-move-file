@@ -1,5 +1,4 @@
 import os
-from shutil import move
 
 
 def move_file(command: str) -> None:
@@ -29,4 +28,4 @@ def move_file(command: str) -> None:
     if directory_path and not os.path.exists(directory_path):
         os.makedirs(directory_path, exist_ok=True)
 
-    move(file_name, new_file_name)
+    os.rename(file_name, new_file_name)
