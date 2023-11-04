@@ -14,8 +14,8 @@ def move_file(command: str) -> None:
 
     if not os.path.exists(file_name):
         print(
-            f'Error: File with name '
-            f'"{file_name}" not found.'
+            f"Error: File with name: "
+            f"{file_name} not found."
         )
         return
 
