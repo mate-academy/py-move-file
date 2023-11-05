@@ -8,22 +8,17 @@ def move_file(command: str) -> None:
         return
 
     mv, filename, destination_path = parts
-    path, new_filename = os.path.split(destination_path)
+    new_file_name = ""
 
-    if mv != "mv":
-        return
+    if mv == "mv" and os.path.exists(filename):
+        if destination_path.endswith("/"):
+            directory_path = destination_path
+            new_file_name = os.path.join(directory_path, filename)
+        else:
+            directory_path = os.path.dirname(destination_path)
+            new_file_name = destination_path
 
-    if not os.path.exists(filename):
-        return
-
-    if destination_path.endswith("/"):
-        directory_path = destination_path
-        new_file_name = os.path.join(directory_path, filename)
-    else:
-        directory_path = os.path.dirname(destination_path)
-        new_file_name = destination_path
-
-    if directory_path and not os.path.exists(directory_path):
-        os.makedirs(directory_path, exist_ok=True)
+        if directory_path and not os.path.exists(directory_path):
+            os.makedirs(directory_path, exist_ok=True)
 
     os.rename(filename, new_file_name)
