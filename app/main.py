@@ -13,21 +13,17 @@ def move_file(command: str) -> None:
     if mv != "mv":
         return
 
-    if path == "":
-        os.rename(filename, new_filename)
+    if not os.path.exists(filename):
         return
 
-    dirs = os.path.split(path)
-    if "" in dirs:
-        dirs = dirs[1:]
-    with open(filename, "r") as old_file:
-        content = old_file.read()
-        previous = ""
-        for i, directory in enumerate(dirs):
-            directory = os.path.join(previous, directory)
-            os.makedirs(directory, exist_ok=True)
-            previous = directory
+    if destination_path.endswith("/"):
+        directory_path = destination_path
+        new_file_name = os.path.join(directory_path, filename)
+    else:
+        directory_path = os.path.dirname(destination_path)
+        new_file_name = destination_path
 
-        with open(destination_path, "w") as new_file:
-            new_file.write(content)
-    os.remove(filename)
+    if directory_path and not os.path.exists(directory_path):
+        os.makedirs(directory_path, exist_ok=True)
+
+    os.rename(filename, new_file_name)
