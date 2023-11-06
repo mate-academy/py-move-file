@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
         return
 
     mv, filename, destination_path = parts
-    new_file_name = ""
+    new_file_name = " "
 
     if mv == "mv" and os.path.exists(filename):
         if os.path.isdir(destination_path):
