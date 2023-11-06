@@ -9,9 +9,7 @@ def move_file(command: str) -> None:
 
         if os.path.isdir(dest) or dest.endswith("/"):
             dest = os.path.join(dest, source)
-        elif not os.path.dirname(dest):
-            pass
-        else:
+        if os.path.dirname(dest):
             os.makedirs(os.path.dirname(dest), exist_ok=True)
 
         os.rename(source, dest)
