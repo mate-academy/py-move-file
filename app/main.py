@@ -1,5 +1,4 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
@@ -8,7 +7,7 @@ def move_file(command: str) -> None:
         source = parts[1]
         dest = parts[2]
 
-        if os.path.isdir(dest) or dest.endswith('/'):
+        if os.path.isdir(dest) or dest.endswith("/"):
             dest = os.path.join(dest, source)
         elif not os.path.dirname(dest):
             pass
