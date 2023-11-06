@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
     new_file_name = ""
 
     if mv == "mv" and os.path.exists(filename):
-        if destination_path.endswith("/"):
+        if os.path.isdir(destination_path):
             directory_path = destination_path
             new_file_name = os.path.join(directory_path, filename)
         else:
