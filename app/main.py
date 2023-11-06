@@ -8,8 +8,8 @@ def move_file(command: str) -> None:
         mv, source_file, destination_file = command_parts
 
         if os.path.exists(source_file):
-            destination_dir = os.path.dirname(destination_file)
-            if destination_dir:
-                os.makedirs(destination_dir, exist_ok=True)
+            destination_path = os.path.dirname(destination_file)
+            if destination_path:
+                os.makedirs(destination_path, exist_ok=True)
 
             os.rename(source_file, destination_file)
