@@ -8,4 +8,4 @@ def move_file(command: str) -> None:
         directory_path = path.dirname(args[2])
         if directory_path:
             makedirs(directory_path, exist_ok=True)
-        rename(args[1], "./" + args[2])
+        rename(args[1], args[2])
