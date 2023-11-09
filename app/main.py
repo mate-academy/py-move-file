@@ -5,10 +5,9 @@ def move_file(command: str) -> None:
 
     sep_command = command.split()
     if len(sep_command) != 3:
-        raise ValueError
+        raise ValueError(f"'{command}' - invalid command")
     com, file_name, new_file_name = sep_command
 
-    update_file_name = ""
     if os.path.exists(file_name) and com == "mv":
         if os.path.isdir(new_file_name):
             directory = new_file_name
@@ -20,4 +19,4 @@ def move_file(command: str) -> None:
         if not os.path.exists(new_file_name) and directory:
             os.makedirs(directory, exist_ok=True)
 
-    os.rename(file_name, update_file_name)
+        os.rename(file_name, update_file_name)
