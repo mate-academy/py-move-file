@@ -11,11 +11,10 @@ def move_file(command: str) -> None:
         file_name, directory = os.path.split(destination_path)
 
         if not os.path.exists(source_file):
-            return
+            raise FileNotFoundError(f"File not found: {source_file}")
 
-        try:
-            if directory:
-                os.makedirs(directory, exist_ok=True)
+        if directory:
+            os.makedirs(directory, exist_ok=True)
 
             with (
                 open(source_file, "r") as source,
@@ -23,8 +22,6 @@ def move_file(command: str) -> None:
             ):
                 destination.write(source.read())
                 os.remove(source_file)
-        except PermissionError:
-            print(f"Permission denied for file: {source_file}")
 
 
 if __name__ == "__main__":
