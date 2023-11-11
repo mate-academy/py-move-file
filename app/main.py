@@ -17,6 +17,21 @@ def move_file(command: str) -> None:
         origin_file_name = origin_file_path.split(correct_slash)[-1]
         dest_file_path += origin_file_name
 
+    # If new location is not provided:
+    # Rename source file
+    if correct_slash not in command:
+        rename_file(origin_file_path, dest_file_path)
+        return
+
+
+def rename_file(old_file: str, new_file: str) -> None:
+    try:
+        os.rename(old_file, new_file)
+    except FileNotFoundError:
+        print(f"No source file with such name: {old_file}")
+    except FileExistsError:
+        print(f"{new_file} already exists")
+
 
 def is_input_data_correct(command_text: str, correct_slash: str) -> bool:
     try:
