@@ -38,6 +38,23 @@ def move_file(command: str) -> None:
         print(r'File name cannot contain the following characters: \/?*:"<>|')
         return
 
+    # Create target file, copy data to it from source file, remove source file
+    try:
+        with open(dest_file_path, "x") as dest_file:
+            dest_file.write(origin_file.read())
+    except FileNotFoundError:
+        print(f"No source file with such name: {origin_file_path}")
+        return
+    except FileExistsError:
+        print(f"{dest_file_path} already exists")
+        return
+    except OSError:
+        print(r'File name cannot contain the following characters: \/?*:"<>|')
+        return
+    else:
+        origin_file.close()
+        os.remove(origin_file_path)
+
 
 def create_folder_tree(path: str, slash: str) -> None:
     root_location = os.getcwd()
