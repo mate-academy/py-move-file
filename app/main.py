@@ -31,6 +31,29 @@ def move_file(command: str) -> None:
         print(f"No source file with such name: {origin_file_path}")
         return
 
+    # Create folder tree given in the destination path
+    try:
+        create_folder_tree(dest_file_path, correct_slash)
+    except OSError:
+        print(r'File name cannot contain the following characters: \/?*:"<>|')
+        return
+
+
+def create_folder_tree(path: str, slash: str) -> None:
+    root_location = os.getcwd()
+
+    folders = path.split(slash)[:-1]
+    for folder in folders:
+        try:
+            os.mkdir(folder)
+        except FileExistsError:
+            pass
+        except OSError:
+            return
+        os.chdir(folder)
+
+    os.chdir(root_location)
+
 
 def rename_file(old_file: str, new_file: str) -> None:
     try:
