@@ -11,6 +11,12 @@ def move_file(command: str) -> None:
     if not is_input_data_correct(command, correct_slash):
         return
 
+    # Get correct paths for source and destination files
+    origin_file_path, dest_file_path = command.split()[1:]
+    if dest_file_path.endswith(correct_slash):
+        origin_file_name = origin_file_path.split(correct_slash)[-1]
+        dest_file_path += origin_file_name
+
 
 def is_input_data_correct(command_text: str, correct_slash: str) -> bool:
     try:
