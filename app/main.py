@@ -23,6 +23,14 @@ def move_file(command: str) -> None:
         rename_file(origin_file_path, dest_file_path)
         return
 
+    # If new location is provided:
+    # Open source file for reading
+    try:
+        origin_file = open(origin_file_path, "r")
+    except FileNotFoundError:
+        print(f"No source file with such name: {origin_file_path}")
+        return
+
 
 def rename_file(old_file: str, new_file: str) -> None:
     try:
