@@ -34,7 +34,7 @@ def move_file(command: str) -> None:
 
     # Create folder tree given in the destination path
     try:
-        create_folder_tree(dest_short_path)
+        os.makedirs(dest_short_path, exist_ok=True)
     except OSError:
         print(r'File name cannot contain the following characters: \/?*:"<>|')
         return
@@ -58,28 +58,6 @@ def move_file(command: str) -> None:
     else:
         origin_file.close()
         os.remove(origin_input_path)
-
-
-def create_folder_tree(folder_path: str) -> None:
-    root_location = os.getcwd()
-
-    folder_path, folder_name = os.path.split(folder_path)
-    folders = []
-
-    while folder_name:
-        folders.append(folder_name)
-        folder_path, folder_name = os.path.split(folder_path)
-
-    for folder in reversed(folders):
-        try:
-            os.mkdir(folder)
-        except FileExistsError:
-            pass
-        except OSError:
-            return
-        os.chdir(folder)
-
-    os.chdir(root_location)
 
 
 def rename_file(old_file: str, new_file: str) -> None:
