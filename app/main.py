@@ -2,65 +2,75 @@ import os
 
 
 def move_file(command: str) -> None:
-    # Get correct slash based on OS, fix command if needed
-    correct_slash, wrong_slash = get_slash()
-    if wrong_slash in command:
-        command = command.replace(wrong_slash, correct_slash)
-
     # Check if input command format is correct
-    if not is_input_data_correct(command, correct_slash):
+    if not is_input_data_correct(command):
         return
 
     # Get correct paths for source and destination files
-    origin_file_path, dest_file_path = command.split()[1:]
-    if dest_file_path.endswith(correct_slash):
-        origin_file_name = origin_file_path.split(correct_slash)[-1]
-        dest_file_path += origin_file_name
+    origin_input_path, dest_input_path = command.split()[1:]
+    dest_short_path, dest_file_name = os.path.split(dest_input_path)
+    origin_short_path, origin_file_name = os.path.split(origin_input_path)
+    if not dest_file_name:
+        dest_full_path = os.path.join(dest_short_path, origin_file_name)
+    else:
+        dest_full_path = dest_input_path
 
     # If new location is not provided:
     # Rename source file
-    if correct_slash not in command:
-        rename_file(origin_file_path, dest_file_path)
+    if not origin_short_path and not dest_short_path:
+        rename_file(origin_file_name, dest_file_name)
         return
 
     # If new location is provided:
     # Open source file for reading
     try:
-        origin_file = open(origin_file_path, "r")
+        origin_file = open(origin_input_path, "r")
     except FileNotFoundError:
-        print(f"No source file with such name: {origin_file_path}")
+        print(f"No source file with such name: {origin_input_path}")
+        return
+    except PermissionError:
+        print(f'"{origin_file_name}" is a folder')
         return
 
     # Create folder tree given in the destination path
     try:
-        create_folder_tree(dest_file_path, correct_slash)
+        create_folder_tree(dest_short_path)
     except OSError:
         print(r'File name cannot contain the following characters: \/?*:"<>|')
         return
 
     # Create target file, copy data to it from source file, remove source file
+    dest_full_path = os.path.normpath(dest_full_path)
     try:
-        with open(dest_file_path, "x") as dest_file:
+        with open(dest_full_path, "x") as dest_file:
             dest_file.write(origin_file.read())
     except FileNotFoundError:
-        print(f"No source file with such name: {origin_file_path}")
+        print(f"Incorrect file name or path: {dest_input_path}")
         return
     except FileExistsError:
-        print(f"{dest_file_path} already exists")
+        print(f"{dest_full_path} already exists")
         return
+    except PermissionError:
+        print(f'"{dest_file_name}" is a folder')
     except OSError:
         print(r'File name cannot contain the following characters: \/?*:"<>|')
         return
     else:
         origin_file.close()
-        os.remove(origin_file_path)
+        os.remove(origin_input_path)
 
 
-def create_folder_tree(path: str, slash: str) -> None:
+def create_folder_tree(folder_path: str) -> None:
     root_location = os.getcwd()
 
-    folders = path.split(slash)[:-1]
-    for folder in folders:
+    folder_path, folder_name = os.path.split(folder_path)
+    folders = []
+
+    while folder_name:
+        folders.append(folder_name)
+        folder_path, folder_name = os.path.split(folder_path)
+
+    for folder in reversed(folders):
         try:
             os.mkdir(folder)
         except FileExistsError:
@@ -81,7 +91,7 @@ def rename_file(old_file: str, new_file: str) -> None:
         print(f"{new_file} already exists")
 
 
-def is_input_data_correct(command_text: str, correct_slash: str) -> bool:
+def is_input_data_correct(command_text: str) -> bool:
     try:
         command_name, origin_path, destination_path = command_text.split()
     except ValueError:
@@ -98,12 +108,3 @@ def is_input_data_correct(command_text: str, correct_slash: str) -> bool:
         return False
 
     return True
-
-
-def get_slash() -> str:
-    for slash in ["/", "\\"]:
-        if slash in os.getcwd():
-            correct = slash
-        else:
-            wrong = slash
-    return correct, wrong
