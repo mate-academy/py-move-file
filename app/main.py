@@ -42,7 +42,7 @@ def move_file(command: str) -> None:
     # Create target file, copy data to it from source file, remove source file
     dest_full_path = os.path.normpath(dest_full_path)
     try:
-        with open(dest_full_path, "x") as dest_file:
+        with open(dest_full_path, "w") as dest_file:
             dest_file.write(origin_file.read())
     except FileNotFoundError:
         print(f"Incorrect file name or path: {dest_input_path}")
