@@ -2,12 +2,9 @@ import os
 
 
 def make_directories(destination: str) -> None:
-    directories = destination.split("/")[:-1]
-    path = ""
-    for directory in directories:
-        path += directory + "/"
-        if not os.path.exists(path):
-            os.mkdir(path)
+    directory = os.path.split(destination)[0]
+    path = os.path.join(directory)
+    os.makedirs(path, exist_ok=True)
 
 
 def copy_file(source: str, destination: str) -> None:
