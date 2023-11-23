@@ -8,13 +8,10 @@ def move_file(command: str) -> None:
         source_file = list_commands[1]
         destination_file = list_commands[2]
 
-        destination_parts = destination_file.split("/")
-        file_name = destination_parts.pop()
+        destination_dir = os.path.dirname(destination_file)
+        file_name = os.path.basename(destination_file)
 
-        current_path = ""
-        for folder in destination_parts:
-            current_path = os.path.join(current_path, folder)
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
+        if destination_dir and not os.path.exists(destination_dir):
+            os.makedirs(destination_dir, exist_ok=True)
 
-        os.rename(source_file, os.path.join(current_path, file_name))
+        os.rename(source_file, os.path.join(destination_dir, file_name))
