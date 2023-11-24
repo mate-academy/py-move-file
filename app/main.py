@@ -5,9 +5,8 @@ def move_file(command: str) -> None:
     parts = command.split()
     if not parts or parts[0] != "mv" or len(parts) != 3:
         return
-    source_file = parts[1]
-    destination = parts[2]
-    if parts[1] == parts[2]:
+    _, source_file, destination = parts
+    if source_file == destination:
         return
     directory, file_name = os.path.split(destination)
     if directory:
