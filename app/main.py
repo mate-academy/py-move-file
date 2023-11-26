@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
     file_to_move_path, new_file_path = command_elements[1:]
     assert os.path.exists(file_to_move_path),\
         f"There is no file {file_to_move_path}"
-    new_path, new_file_name = os.path.split(new_file_path)
+    new_path = os.path.split(new_file_path)[0]
     if new_path and not os.path.exists(new_path):
         os.makedirs(new_path)
     shutil.move(file_to_move_path, new_file_path)
