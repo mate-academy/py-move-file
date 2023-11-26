@@ -7,31 +7,19 @@ def move_file(command: str) -> None:
     except ValueError:
         print("Wrong argument")
     else:
-        if mv != "mv":
-            return
-        if not os.path.exists(source):
+        if mv != "mv" or not os.path.exists(source):
             return
 
-        linux = destination.count("/")
-        windows = destination.count("\\")
-        if linux > windows:
-            dir_separator = "/"
-        else:
-            dir_separator = "\\"
+        dirs_and_file_name = destination.split(os.path.sep)
+        dirs, file_name = dirs_and_file_name[:-1], dirs_and_file_name[-1]
 
-        to_join = ""
-        dirs = destination.split(dir_separator)[:-1]
-        file_name = destination.split(dir_separator)[-1]
-
-        for directory in range(len(dirs)):
-            new_directory = os.path.join(to_join, dirs[directory])
-            if not os.path.exists(new_directory):
-                os.mkdir(new_directory)
-            to_join = new_directory
-        result_destination = os.path.join(to_join, file_name)
+        if dirs:
+            to_join = os.path.sep.join(dirs)
+            os.makedirs(to_join, exist_ok=True)
+            file_name = os.path.join(to_join, file_name)
 
         with (open(source, "r") as file_in,
-              open(result_destination, "w") as file_out):
+              open(file_name, "w") as file_out):
             text_to_copy = file_in.read()
             file_out.write(text_to_copy)
         os.remove(source)
