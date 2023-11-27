@@ -4,13 +4,11 @@ import os
 def move_file(command: str) -> None:
 
     command = command.split()
-    print(command)
 
     if len(command) < 3 or command[0] != "mv":
         raise ValueError
 
-    source_path = command[1]
-    destination_path = command[2]
+    command, source_path, destination_path = command
 
     separator = os.path.sep
 
@@ -20,11 +18,7 @@ def move_file(command: str) -> None:
         os.makedirs(dir_path, exist_ok=True)
 
     if separator not in destination_path:
-        with (open(source_path, "r") as source_file,
-              open(destination_path, "w") as destination_file):
-            destination_file.write(source_file.read())
-
-        os.remove(f"{source_file.name}")
+        os.replace(source_path, destination_path)
         return
 
     with (open(f"{source_path}", "r") as source_file,
