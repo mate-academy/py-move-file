@@ -20,6 +20,5 @@ def move_file(command: str) -> None:
 
         with (open(source, "r") as file_in,
               open(file_name, "w") as file_out):
-            text_to_copy = file_in.read()
-            file_out.write(text_to_copy)
+            file_out.write(file_in.read())
         os.remove(source)
