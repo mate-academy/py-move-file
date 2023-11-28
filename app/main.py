@@ -8,19 +8,17 @@ def move_file(command: str) -> None:
         action, file_in, file_out = command_split
 
         if action == "mv":
-            file_out_path = file_out.split("/")
+            file_out_path = file_out.split("/")[:-1]
+            file_in_content = open(file_in, "r").read()
+            os.remove(file_in)
 
-            if file_out_path[-1] != "":
-                os.rename(file_in, file_out_path[-1])
+            if len(file_out_path) > 0:
 
-            if len(file_out_path) > 1:
-                file_directory = file_out_path[:-1]
-                new_directory = "/".join(file_directory)
-
-                for i in range(len(file_directory)):
+                for i in range(1, len(file_out_path) + 1):
                     try:
-                        os.mkdir("/".join(file_directory[:i]))
+                        os.mkdir("/".join(file_out_path[:i]))
                     except FileExistsError:
-                        pass
+                        continue
 
-                os.rename(file_out_path[-1], os.path.join(new_directory, file_out_path[-1]))
+            with open(file_out, "w") as file_out:
+                file_out.write(file_in_content)
