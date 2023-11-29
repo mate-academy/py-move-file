@@ -16,7 +16,7 @@ def move_file(command: str) -> None:
 
                 for i in range(1, len(file_out_path) + 1):
                     try:
-                        os.mkdir("/".join(file_out_path[:i]))
+                        os.mkdir(os.path.join(file_out_path[:i]))
                     except FileExistsError:
                         continue
 
