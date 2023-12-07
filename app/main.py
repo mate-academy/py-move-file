@@ -1,30 +1,51 @@
-from os import mkdir, remove
+from os import remove, makedirs
 
+
+# def move_file(command: str) -> None:
+#     if command.startswith("mv "):
+#         if "/" in command:
+#             file_name = command.split()[1]
+#             paths = command.split()[2]
+#             command = ""
+#             for directory in paths.split("/"):
+#                 command += directory
+#                 if "." not in command:
+#                     try:
+#                         mkdir(command)
+#                     except FileExistsError:
+#                         pass
+#
+#                 command += "/"
+#
+#             with (open(file_name, "r") as file_to_copy,
+#                   open(paths, "w") as file_copy):
+#                 file_copy.write(file_to_copy.read())
+#             remove(file_name)
+#         else:
+#             file_name = command.split()[1]
+#             final_name = command.split()[2]
+#             with (open(file_name, "r") as file_to_copy,
+#                   open(final_name, "w") as file_copy):
+#                 file_copy.write(file_to_copy.read())
+#             remove(file_name)
 
 def move_file(command: str) -> None:
     if command.startswith("mv "):
-        if "/" in command:
-            file_name = command.split()[1]
-            paths = command.split()[2]
-            command = ""
-            for directory in paths.split("/"):
-                command += directory
-                if "." not in command:
-                    try:
-                        mkdir(command)
-                    except FileExistsError:
-                        pass
+        commands = command.split()
+        first_file_name = commands[1]
+        second_file_name = commands[2]
+        if "/" in second_file_name:
+            paths = "".join([
+                directory + "/"
+                for directory in second_file_name.split("/")
+                if "." not in directory
+            ])
+            try:
+                makedirs(paths)
+            except FileExistsError:
+                pass
+        with (open(first_file_name, "r") as file_to_copy,
+              open(second_file_name, "w") as file_copy):
+            file_copy.write(file_to_copy.read())
+        remove(first_file_name)
 
-                command += "/"
-
-            with (open(file_name, "r") as file_to_copy,
-                  open(paths, "w") as file_copy):
-                file_copy.write(file_to_copy.read())
-            remove(file_name)
-        else:
-            file_name = command.split()[1]
-            final_name = command.split()[2]
-            with (open(file_name, "r") as file_to_copy,
-                  open(final_name, "w") as file_copy):
-                file_copy.write(file_to_copy.read())
-            remove(file_name)
