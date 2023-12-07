@@ -48,4 +48,3 @@ def move_file(command: str) -> None:
               open(second_file_name, "w") as file_copy):
             file_copy.write(file_to_copy.read())
         remove(first_file_name)
-
