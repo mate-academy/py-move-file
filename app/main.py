@@ -1,24 +1,19 @@
-from os import makedirs, remove, rename
+from os import makedirs, remove, rename, path
 
 
 def move_file(command: str) -> None:
-    com, old_filename, path_and_new_filename = command.split()
-    new_filename = path_and_new_filename.split("/")[-1]
-    full_path = ""
-    for path in path_and_new_filename.split("/")[:-1]:
-        full_path += (path + "/")
 
-    if com != "mv":
+    if not command.startswith("mv"):
         return
+
+    com, old_filename, path_and_new_filename = command.split()
+    full_path, new_filename = path.split(path_and_new_filename)
 
     if path_and_new_filename == new_filename:
         rename(old_filename, new_filename)
         return
 
-    try:
-        makedirs(full_path)
-    except FileExistsError as e:
-        print(e)
+    makedirs(full_path, exist_ok=True)
 
     with (open(old_filename, "r") as old_file,
           open(path_and_new_filename, "w") as new_file):
