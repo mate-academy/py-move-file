@@ -19,9 +19,9 @@ def move_file(command: str) -> None:
 
                 with open(
                         dirs_to_create + "/" + file_to_create, "w"
-                ) as file_to_create:
-                    file_to_create.write(context)
+                ) as file:
+                    file.write(context)
 
             else:
-                with open(command[2], "w") as file_to_create:
-                    file_to_create.write(context)
+                with open(command[2], "w") as file:
+                    file.write(context)
