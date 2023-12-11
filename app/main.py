@@ -8,20 +8,11 @@ def move_file(command: str) -> None:
         with open(command[1], "r") as file_to_delete:
             context = file_to_delete.read()
 
-            os.remove(command[1])
+        os.remove(command[1])
 
-            if "/" in command[2]:
+        destination, new_file_name = os.path.split(command[2])
+        if destination:
+            os.makedirs(destination, exist_ok=True)
 
-                dirs_to_create = "/".join(command[2].split("/")[:-1])
-                file_to_create = command[2].split("/")[-1]
-
-                os.makedirs(dirs_to_create, exist_ok=True)
-
-                with open(
-                        dirs_to_create + "/" + file_to_create, "w"
-                ) as file:
-                    file.write(context)
-
-            else:
-                with open(command[2], "w") as file:
-                    file.write(context)
+        with open(command[2], "w") as file:
+            file.write(context)
