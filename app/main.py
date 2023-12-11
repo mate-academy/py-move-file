@@ -1,23 +1,22 @@
 import os
-import shutil
-from pathlib import Path
 
 
-def move_file(command: str) -> None | str:
-    command, source_file_name, path_second_file = command.split()
+def move_file(command: str) -> None:
 
-    if command != "mv":
-        return "command error"
+    separeted_command = command.split()
+    if len(separeted_command) != 3:
+        raise ValueError("Error in command")
+    com, file_name, new_file_name = separeted_command
 
-    path_arr = path_second_file.split("/")
-    if len(path_arr) == 1:
-        os.rename("./" + source_file_name, "./" + path_arr[0])
-    else:
-        aim_file_name = path_arr.pop()
-        path_arr = path_second_file.split("/")[:-1]
-        path = "./" + "/".join(path_arr)
-        if Path(path).exists():
-            shutil.move(fr"./{source_file_name}", fr"{path}/{aim_file_name}")
+    if os.path.exists(file_name) and com == "mv":
+        if os.path.isdir(new_file_name):
+            directory = new_file_name
+            update_file_name = os.path.join(new_file_name, file_name)
         else:
-            os.makedirs(path)
-            shutil.move(fr"./{source_file_name}", fr"{path}/{aim_file_name}")
+            directory = os.path.dirname(new_file_name)
+            update_file_name = new_file_name
+
+        if not os.path.exists(new_file_name) and directory:
+            os.makedirs(directory, exist_ok=True)
+
+        os.rename(file_name, update_file_name)
