@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 
 
-def move_file(command:str) -> None | str:
+def move_file(command: str) -> None | str:
     command, source_file_name, path_second_file = command.split()
 
     if command != "mv":
@@ -20,4 +20,4 @@ def move_file(command:str) -> None | str:
             shutil.move(fr"./{source_file_name}", fr"{path}/{aim_file_name}")
         else:
             os.makedirs(path)
-            shutil.move( fr"./{source_file_name}", fr"{path}/{aim_file_name}")
+            shutil.move(fr"./{source_file_name}", fr"{path}/{aim_file_name}")
