@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     command = command.split()
 
-    if len(command) == 3 and command[0] == "mv":
+    if len(command) == 3 and command[0] == "mv" and command[1] != command[2]:
         with open(command[1], "r") as file_to_delete:
             context = file_to_delete.read()
 
