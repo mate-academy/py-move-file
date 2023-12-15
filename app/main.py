@@ -11,4 +11,3 @@ def move_file(command: str) -> None:
     with open(source, "r") as file1, open(target, "w") as file2:
         file2.write(file1.read())
     os.remove(source)
-
