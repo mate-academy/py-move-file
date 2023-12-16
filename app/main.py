@@ -4,11 +4,16 @@ import os
 def move_file(command: str) -> None:
     parts = command.split()
     if len(parts) != 3:
-        return
+        raise ValueError(
+            "three variables are needed to transfer a file"
+        )
 
     command, source, target = parts
     if any((command != "mv", source == target)):
-        return
+        raise ValueError(
+            "to move the file you need to use the 'mv' command "
+            "and write the target."
+        )
     target_dir, target_file = os.path.split(target)
     if target_dir != "":
         os.makedirs(target_dir, exist_ok=True)
