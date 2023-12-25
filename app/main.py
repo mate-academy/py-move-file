@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
 
     if mode == "mv":
         if "/" in paste:
-            os.makedirs(os.getcwd() + "/" + paste.rsplit("/", 1)[0],
+            os.makedirs(os.path.join(os.getcwd(), os.path.dirname(paste)),
                         exist_ok=True)
 
         with (open(copy) as from_file,
