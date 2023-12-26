@@ -1,24 +1,17 @@
-from os import rename, mkdir, remove, path, getcwd
+import os
 
 
 def move_file(command: str) -> None:
-    if command[-1] != "/" and len(command.split()) == 3:
-        command_part, source_file, destination_path = command.split()
-        if command_part == "mv":
-            if "/" not in destination_path:
-                rename(source_file, destination_path)
-                return
-            destination_parts = destination_path.split("/")
-            destination_file = destination_parts.pop(-1)
-            check_path = getcwd()
-            for part in destination_parts:
-                check_path = path.join(check_path, part)
-                if not path.exists(check_path):
-                    mkdir(check_path)
-                print(check_path)
-            with (
-                open(source_file, "r") as old_file,
-                open(f"{check_path}/{destination_file}", "w") as new_file
-            ):
-                new_file.write(old_file.read())
-            remove(source_file)
+    command_part, source_file, destination_path = command.split()
+    if command_part != "mv":
+        return
+    destination_path, destination_file = os.path.split(destination_path)
+    if destination_path:
+        destination_path = os.path.join(os.getcwd(), destination_path)
+        os.makedirs(destination_path, exist_ok=True)
+    with (
+        open(source_file, "r") as old_file,
+        open(os.path.join(destination_path, destination_file), "w") as new_file
+    ):
+        new_file.write(old_file.read())
+    os.remove(source_file)
