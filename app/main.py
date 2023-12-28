@@ -67,4 +67,3 @@ def move_file(command: str) -> None:
                         copied_file.write(initial_file.read())
 
                 os.remove(source_file_name)
-
