@@ -14,7 +14,7 @@ def move_file(command: str) -> None:
         print(file_path, file_name)
 
         if len(file_path) == 0:
-            with (open(in_file, "r")as start_file,
+            with (open(in_file, "r") as start_file,
                   open(out_file, "w") as end_file):
                 end_file.write(start_file.read())
 
