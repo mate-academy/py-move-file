@@ -2,16 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
-    command, in_file, out_file, *_ = command.split()
+    if len(command.split()) < 3:
+        return None
+    command, in_file, out_file, = command.split()
     if command == "mv":
-        # path = out_file
         path = os.path.normpath(out_file)
-        print(path)
-
         path = path.split(os.sep)
-        print(path)
         *file_path, file_name = path
-        print(file_path, file_name)
 
         if len(file_path) == 0:
             with (open(in_file, "r") as start_file,
