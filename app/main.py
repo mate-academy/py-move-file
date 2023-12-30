@@ -2,7 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    cd, source_name, target_name, *_ = command.split()
+    command_parts = command.split()
+    if len(command_parts) < 3:
+        print("Not enough arguments")
+        return
+    cd, source_name, target_name, *_ = command_parts
     if cd != "mv":
         return
 
@@ -10,14 +14,14 @@ def move_file(command: str) -> None:
         *target_path_parts, file_name = target_name.split("/")
         current_path = ""
         for directory in target_path_parts:
-            current_path = f"{current_path}/{directory}"\
+            current_path = os.path.join(current_path, directory)\
                 if current_path else directory
             try:
                 os.mkdir(current_path)
             except FileExistsError:
                 pass
 
-        target_name = f"{current_path}/{file_name}"
+        target_name = os.path.join(current_path, file_name)
     try:
         with open(source_name, "rb") as source_file:
             with open(target_name, "wb") as target_file:
