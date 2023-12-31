@@ -14,8 +14,9 @@ def move_file(command: str) -> None:
         *target_path_parts, file_name = target_name.split("/")
         current_path = ""
         for directory in target_path_parts:
-            current_path = os.path.join(current_path, directory)\
-                if current_path else directory
+            current_path = os.path.join(
+                current_path, directory
+            ) if current_path else directory
             try:
                 os.mkdir(current_path)
             except FileExistsError:
