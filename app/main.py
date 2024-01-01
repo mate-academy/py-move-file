@@ -11,18 +11,10 @@ def move_file(command: str) -> None:
         return
 
     if "/" in target_name:
-        *target_path_parts, file_name = target_name.split("/")
-        current_path = ""
-        for directory in target_path_parts:
-            current_path = os.path.join(
-                current_path, directory
-            ) if current_path else directory
-            try:
-                os.mkdir(current_path)
-            except FileExistsError:
-                pass
+        target_dir, file_name = os.path.split(target_name)
+        os.makedirs(target_dir, exist_ok=True)
 
-        target_name = os.path.join(current_path, file_name)
+        target_name = os.path.join(target_dir, file_name)
     try:
         with open(source_name, "rb") as source_file:
             with open(target_name, "wb") as target_file:
