@@ -13,9 +13,3 @@ def move_file(command: str) -> None:
         shutil.copy(source, os.path.join(destination, filename))
 
     os.remove(source)
-
-
-if __name__ == "__main__":
-
-    move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
-    print(open("first_dir/second_dir/third_dir/file2.txt").read())
