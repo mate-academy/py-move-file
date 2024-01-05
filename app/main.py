@@ -14,4 +14,5 @@ def move_file(command: str) -> None:
               open(os.path.join(destination, filename), "w") as file_out):
             file_out.write(file_in.read())
 
-        os.remove(source)
+        if source != filename:
+            os.remove(source)
