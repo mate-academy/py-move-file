@@ -8,8 +8,8 @@ def move_file(command: str) -> None:
     destination, filename = os.path.split(parts[2])
 
     if parts[0] == "mv" and len(parts) == 3:
-        if destination and not os.path.exists(destination):
-            os.makedirs(destination)
+        if destination:
+            os.makedirs(destination, exist_ok=True)
         shutil.copy(source, os.path.join(destination, filename))
 
     os.remove(source)
