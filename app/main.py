@@ -1,27 +1,26 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
     parts = command.split()
 
     if len(parts) != 3:
-        print(
+        raise ValueError(
             "Error: Invalid command format. "
             "Use 'mv source_path destination_path'."
         )
-        return
 
-    source_path = parts[1]
-    destination_path = parts[2]
+    source_path, destination_path = parts[1], parts[2]
 
     if not os.path.exists(source_path):
-        print(f"Error: Source file '{source_path}' not found.")
-        return
+        raise ValueError(
+            f"Error: Source file '{source_path}' not found."
+        )
 
     if not destination_path:
-        print("Error: Destination path is empty.")
-        return
+        raise ValueError(
+            "Error: Destination path is empty."
+        )
 
     is_directory = destination_path.endswith("/")
 
@@ -35,11 +34,11 @@ def move_file(command: str) -> None:
         os.makedirs(destination_dir, exist_ok=True)
 
     try:
-        shutil.copy2(source_path, destination_path)
+        with open(source_path, "rb") as source_file:
+            with open(destination_path, "wb") as destination_file:
+                destination_file.write(source_file.read())
         print(f"File '{source_path}' moved to"
               f" '{destination_path}' successfully.")
         os.remove(source_path)
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-    except FileExistsError as e:
+    except Exception as e:
         print(f"Error: {e}")
