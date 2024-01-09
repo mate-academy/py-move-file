@@ -2,6 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
+    if "mv" not in command:
+        raise ValueError(
+            "Error: Invalid command. "
+            "Use 'mv source_path destination_path'."
+        )
+
     parts = command.split()
 
     if len(parts) != 3:
@@ -10,7 +16,7 @@ def move_file(command: str) -> None:
             "Use 'mv source_path destination_path'."
         )
 
-    source_path, destination_path = parts[1], parts[2]
+    mv, source_path, destination_path = parts
 
     if not os.path.exists(source_path):
         raise ValueError(
