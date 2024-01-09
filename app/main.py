@@ -2,13 +2,16 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_name, old_file, path, *_ = command.split()
+    command_name, old_file, new_path, *_ = command.split()
 
-    if command_name == "mv" and old_file != path:
-        last_slash_index = path.rfind("/")
-        path_dirs = path[:last_slash_index]
-        os.makedirs(path_dirs, exist_ok=True)
-        with open(old_file, "r") as file_out, open(path, "w") as file_in:
-            content = file_out.read()
-            file_in.write(content)
-        os.remove(old_file)
+    old_path = os.path.abspath(old_file)
+    new_path = os.path.abspath(new_path)
+
+    if command_name == "mv" and old_path != new_path:
+        new_dir = os.path.dirname(new_path)
+        os.makedirs(new_dir, exist_ok=True)
+
+        with open(old_path, "r") as file_out, open(new_path, "w") as file_in:
+            file_in.write(file_out.read())
+
+        os.remove(old_path)
