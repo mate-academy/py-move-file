@@ -10,8 +10,8 @@ def move_file(command: str) -> None:
         if directories:
             os.makedirs(directories, exist_ok=True)
 
-        with (open(split_command[1], "r") as f,
-              open(split_command[2], "w") as f2):
-            f2.write(f.read())
+        with (open(split_command[1], "r") as source,
+              open(split_command[2], "w") as destination):
+            destination.write(source.read())
 
         os.remove(split_command[1])
