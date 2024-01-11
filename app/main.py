@@ -7,7 +7,7 @@ def move_file(command: str) -> None:
         mv, file_name, new_file_name = parts
         if "/" in new_file_name:
             way, name_file = os.path.split(new_file_name)
-            os.makedirs(way)
+            os.makedirs(way, exist_ok=True)
             with (open(file_name, "r") as source,
                   open(new_file_name, "w") as new_file):
                 new_file.write(source.read())
