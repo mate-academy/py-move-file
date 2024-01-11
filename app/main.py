@@ -10,7 +10,7 @@ def move_file(command) -> None:
         if path:
             if not os.path.exists(path):
                 os.mkdir(path)
-                os.replace(source_file, new_file)
+            os.replace(source_file, new_file)
 
 
 
