@@ -2,8 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
-    mv, file_in, file_out = command.split()
-    if len(command.split()) == 3 and file_in != file_out:
+    if len(command.split()) == 3 and command.split()[1] != command.split()[2]:
+        mv, file_in, file_out = command.split()
         if mv == "mv":
             if not os.path.dirname(file_out):
                 os.replace(file_in, file_out)
