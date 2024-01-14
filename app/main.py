@@ -2,9 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3 and command.split()[1] != command.split()[2]:
+    if len(command.split()) == 3:
         mv, file_in, file_out = command.split()
-        if mv == "mv":
+        if mv == "mv" and file_in != file_out:
             if not os.path.dirname(file_out):
                 os.replace(file_in, file_out)
             else:
