@@ -8,7 +8,7 @@ class InvalidCommandError(Exception):
 
 def move_file(command: str) -> None:
     parts = command.split()
-    if not parts or parts[0] != "mv" or len(parts) != 3:
+    if len(parts) != 3 or parts[0] != "mv":
         raise InvalidCommandError(
             "Invalid move command. Please use 'mv source_file destination'"
         )
