@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     if len(new_command) == 3 and new_command[0] == "mv":
         if "/" in new_command[2]:
             new_dir = new_command[2].split("/")
-            new_dir.pop(len(new_dir) - 1)  # Delete file name from path of directory.
+            new_dir.pop(len(new_dir) - 1)  # Delete file name.
             path_of_dir = ""
             for folder in new_dir:  # Create new directory.
                 try:
