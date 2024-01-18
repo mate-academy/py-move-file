@@ -2,10 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    comm, filename, path = command.split()
+    command, filename, path = command.split()
     dirs = os.path.dirname(path)
 
-    if comm == "mv":
+    if command == "mv":
         if dirs:
             os.makedirs(dirs, exist_ok=True)
 
