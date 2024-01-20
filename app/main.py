@@ -3,14 +3,14 @@ import os
 
 def move_file(command: str) -> None:
     if len(command.split()) != 3:
-        return
+        raise ValueError("Command must to have 3 parts.")
 
     operation, file1, path_and_file2 = command.split()
     path = ""
 
     if "/" in path_and_file2:
-        path = "/".join(path_and_file2.split("/")[:-1]) + "/"
-        file_name = path + path_and_file2.split("/")[-1]
+        path = os.path.dirname(path_and_file2)
+        file_name = path + "/" + path_and_file2.split("/")[-1]
     else:
         file_name = path_and_file2
 
