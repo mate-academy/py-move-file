@@ -2,7 +2,7 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3:
+    try:
         command, file_name, path = command.split()
         if file_name == path:
             return
@@ -14,3 +14,5 @@ def move_file(command: str) -> None:
                   open(path, "w") as file_out):
                 file_out.write(file_in.read())
             os.remove(file_name)
+    except ValueError:
+        print("Something gone wrong, check input data")
