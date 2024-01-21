@@ -2,14 +2,15 @@ import os
 
 
 def move_file(command: str) -> None:
-    parts = command.split()
-    if len(parts) == 3 and parts[0] == "mv":
-        if parts[1] == parts[2]:
+    if len(command.split()) == 3:
+        command, file_name, path = command.split()
+        if file_name == path:
             return
-        directory, _ = os.path.split(parts[2])
-        if len(directory) != 0:
-            os.makedirs(directory, exist_ok=True)
-        with (open(parts[1], "r") as file_in,
-              open(parts[2], "w") as file_out):
-            file_out.write(file_in.read())
-        os.remove(parts[1])
+        if command == "mv":
+            directory, _ = os.path.split(path)
+            if len(directory) != 0:
+                os.makedirs(directory, exist_ok=True)
+            with (open(file_name, "r") as file_in,
+                  open(path, "w") as file_out):
+                file_out.write(file_in.read())
+            os.remove(file_name)
