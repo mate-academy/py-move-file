@@ -6,9 +6,12 @@ class ErrorCommand(Exception):
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3:
-        mv, source_file, destination_file = command.split()
+    separated_text = command.split()
+
+    if len(separated_text) == 3:
+        mv, source_file, destination_file = separated_text
         destination_path = path.dirname(destination_file)
+
         if destination_path != "":
             makedirs(destination_path, exist_ok=True)
         if path.exists(destination_file):
