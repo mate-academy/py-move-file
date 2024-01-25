@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
     with open(file, "r") as r:
         content = r.read()
 
-        path_without_file = "/".join(directories[:-1])
+        path_without_file = os.path.join(directories[:-1])
         if os.path.isdir(path_without_file):
             with open(path_to_move, "w") as a:
                 a.write(content)
