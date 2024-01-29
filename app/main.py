@@ -8,12 +8,13 @@ def move_file(command: str) -> None:
         _, file, path_to_move = commands
         directories, filename = os.path.split(path_to_move)
 
-        if not os.path.isdir(directories) and directories != "":
+        if directories:
             os.makedirs(directories, exist_ok=True)
 
-        with open(file, "r") as r, open(path_to_move, "a") as a:
-            content = r.read()
-
-            a.write(content)
+        with (
+            open(file, "r") as file_to_move,
+            open(path_to_move, "a") as moved_file
+        ):
+            moved_file.write(file_to_move.read())
 
         os.remove(file)
