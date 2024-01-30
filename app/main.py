@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     if len(command.split()) != 3:
-       return
+        return
     command, source_file, directory = command.split()
 
     if command != "mv" or not source_file or not directory:
