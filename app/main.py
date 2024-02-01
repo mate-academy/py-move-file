@@ -10,11 +10,9 @@ def move_file(command: str) -> None:
     source_file = parts[1]
     destination = " ".join(parts[2:])
 
-    # Check if the destination directory is 'dir' and if it exists, remove it
     if destination.startswith("dir") and os.path.exists("dir"):
         shutil.rmtree("dir")
 
-    # Check if the destination ends with a slash or is an existing directory
     if (
         destination.endswith("/")
         or (os.path.isdir(destination) and not os.path.isfile(destination))
@@ -28,14 +26,11 @@ def move_file(command: str) -> None:
             os.makedirs(parent_dir, exist_ok=True)
         dest = destination
 
-    # Move the file by copying and then deleting
     if os.path.abspath(source_file) != os.path.abspath(dest):
         try:
-            # Copy the file
             with open(source_file, "rb") as src, open(dest, "wb") as dst:
                 dst.write(src.read())
 
-            # Delete the source file
             os.remove(source_file)
             print(f"Moved '{source_file}' to '{dest}'")
         except FileNotFoundError as e:
