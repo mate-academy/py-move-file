@@ -10,19 +10,22 @@ def move_file(command) -> None:
     sourse_file = parts[1]
     destination = ' '.join(parts[2:])
 
-    if not os.path.exists(sourse_file):
-        raise FileNotFoundError("Error")
-    
-    destination_dir = os.path.dirname(destination)
-    if not os.path.exists(destination):
-        os.makedirs(destination_dir)
-    
-    if os.path.isdir(destination):
-        dest_file = os.path.join(destination, os.path.basename(sourse_file))
+    if destination.endswith("/"):
+        os.makedirs(destination, exist_ok=True)
+        destination = os.path.join(destination, os.path.basename(sourse_file))
     else:
-        dest_file = destination
-
-    os.rename(sourse_file, dest_file)
-    os.remove(sourse_file)
-
-    print(f"File moved successfully from {sourse_file} to {dest_file}")
+        if os.path.dirname(destination):
+            os.makedirs(os.path.dirname(destination), exist_ok=True)
+    
+    try:
+        with open(sourse_file, "rb") as src_file:
+            content = src_file.read()
+        with open(destination, "wb") as dst_file:
+            dst_file.write(content)
+    
+        os.remove(sourse_file)
+        print(f"Moved {sourse_file} to {destination}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"What the ...error")
