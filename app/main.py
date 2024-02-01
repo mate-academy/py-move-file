@@ -8,7 +8,7 @@ def move_file(command) -> None:
         raise ValueError("Invalid command")
     
     sourse_file = parts[1]
-    destination = parts[2]
+    destination = ' '.join(parts[2:])
 
     if not os.path.exists(sourse_file):
         raise FileNotFoundError("Error")
@@ -23,5 +23,6 @@ def move_file(command) -> None:
         dest_file = destination
 
     os.rename(sourse_file, dest_file)
+    os.remove(sourse_file)
 
     print(f"File moved successfully from {sourse_file} to {dest_file}")
