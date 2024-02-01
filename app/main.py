@@ -14,6 +14,6 @@ def move_file(command: str) -> None:
 
             os.makedirs("/".join(directories), exist_ok=True)
 
-            way_to_file = f"{"/".join(directories)}/{file_name}"
+            way_to_file = f"{'/'.join(directories)}/{file_name}"
 
             os.replace(name[1], way_to_file)
