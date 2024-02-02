@@ -3,15 +3,17 @@ import os
 
 
 def move_file(command: str) -> None:
-    address_file = command.split()
-    pathway_file = os.path.split(address_file[2])
-    if os.path.exists(address_file[1]):
-        if address_file[2].count("/") == 0:
-            os.rename(address_file[1], address_file[2])
+    parts = command.split()
+    if len(parts) != 3:
+        return
+    pathway_file = os.path.split(parts[2])
+    if os.path.exists(parts[1]):
+        if len(pathway_file[0]) == 0:
+            os.rename(parts[1], parts[2])
         else:
             if not os.path.isdir(pathway_file[0]):
                 os.makedirs(pathway_file[0])
-            with (open(address_file[1], "r") as file_in,
-                  open(f"{os.path.join(address_file[2])}", "w") as file_out):
+            with (open(parts[1], "r") as file_in,
+                  open(parts[2], "w") as file_out):
                 file_out.write(file_in.read())
-                os.remove(address_file[1])
+                os.remove(parts[1])
