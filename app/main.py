@@ -2,18 +2,14 @@ import os
 
 
 def move_file(command: str) -> None:
-    name = command.split(" ")
+    linux_command, old_file, path_to_new_file = command.split()
 
-    if len(name) == 3 and name[0] == "mv" and not name[1] == name[2]:
-        if "/" not in name[2]:
-            os.rename(name[1], name[2])
+    if len(command.split()) == 3 and linux_command == "mv" and not old_file == path_to_new_file:
+        if "/" not in path_to_new_file:
+            os.rename(old_file, path_to_new_file)
         else:
-            dir_way = name[2].split("/")
-            file_name = dir_way[-1]
-            directories = dir_way[:-1]
+            directories = os.path.dirname(path_to_new_file)
 
-            os.makedirs("/".join(directories), exist_ok=True)
+            os.makedirs(directories, exist_ok=True)
 
-            way_to_file = f"{'/'.join(directories)}/{file_name}"
-
-            os.replace(name[1], way_to_file)
+            os.replace(old_file, path_to_new_file)
