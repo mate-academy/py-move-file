@@ -13,14 +13,10 @@ def move_file(command: str) -> None:
                 if not os.path.exists(path):
                     os.makedirs(path)
 
-                with (open(source_file, "r") as source,
-                      open(os.path.join(path, destination_file), "w")
-                      as destination):
-                    destination.write(source.read())
+                full_path = os.path.join(path, destination_file)
 
-            else:
-                with (open(source_file, "r") as source,
-                      open(str(full_path), "w") as destination):
-                    destination.write(source.read())
+            with (open(source_file, "r") as source,
+                  open(full_path, "w") as destination):
+                destination.write(source.read())
 
             os.remove(source_file)
