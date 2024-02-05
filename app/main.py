@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 
 
@@ -10,7 +11,11 @@ def move_file(command: str) -> None:
     move_command, old_file_path, new_file_path = command_list
     if move_command != "mv":
         raise NameError(f"{move_command} is not a valid")
-    if new_file_path.count("/") == 0:
+    try:
+        new_file_path_components = re.split(r"[/\\]", new_file_path)
+    except TypeError:
+        raise TypeError(f"{new_file_path} is not string")
+    if len(new_file_path_components) == 1:
         try:
             shutil.copy(old_file_path, new_file_path)
             os.remove(old_file_path)
@@ -18,6 +23,7 @@ def move_file(command: str) -> None:
             raise shutil.SameFileError("The source and destination represent "
                                        "the same file.")
     else:
+        new_file_path = os.path.join(*new_file_path_components)
         new_directory = os.path.dirname(new_file_path)
         if not os.path.exists(new_directory):
             try:
