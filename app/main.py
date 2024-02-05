@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     if len(command.split(" ")) == 3:
-        command, original_file, full_path = command.split(" ")
+        command, original_file, full_path = command.split()
         if "/" in full_path:
             dir_path, new_file_name = os.path.split(full_path)
             if dir_path.endswith("/"):
