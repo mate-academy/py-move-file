@@ -1,11 +1,11 @@
 import os
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     words_of_command = command.split(" ")
-    if (len(words_of_command) == 3 and
-        words_of_command[0] == "mv" and
-        words_of_command[1] != words_of_command[2]):
+    if (len(words_of_command) == 3
+        and words_of_command[0] == "mv"
+            and words_of_command[1] != words_of_command[2]):
         if words_of_command[2].count("/") == 0:
             os.rename(words_of_command[1], words_of_command[2])
         else:
