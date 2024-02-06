@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     if (len(words_of_command) == 3
         and words_of_command[0] == "mv"
             and words_of_command[1] != words_of_command[2]):
-        if words_of_command[2].count("/") == 0:
+        if os.path.split(words_of_command[2])[0] == "":
             os.rename(words_of_command[1], words_of_command[2])
         else:
             create_directory = os.path.split(words_of_command[2])
