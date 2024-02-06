@@ -2,11 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    if len(command) == 3 and command[0] == "mv":
-        source_file, destination = command[1], command[2]
+    command_name, source_file, destination, *_ = command.split()
+    if source_file and destination and command_name == "mv":
         end_path, end_file = os.path.split(destination)
         if end_path != "":
-            if not os.path.exists(end_path):
-                os.makedirs(end_path)
+            os.makedirs(end_path, exist_ok=True)
         os.replace(source_file, destination)
