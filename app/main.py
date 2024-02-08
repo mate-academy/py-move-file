@@ -10,6 +10,9 @@ def move_file(command: str) -> None:
     first_file = command_list[1]
     final_file = command_list[2]
 
+    if command_list[0] != "mv":
+        raise ValueError("Command must be mv")
+
     file_path = os.path.dirname(final_file)
 
     if file_path:
