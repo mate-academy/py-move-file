@@ -8,14 +8,11 @@ def move_file(input_str: str) -> None:
         text_from_input_file = input_file.read()
     os.remove(list_from_input_str[1])
     if "/" in list_from_input_str[2]:
+        directories = os.path.dirname(list_from_input_str[2])
         list_dir_and_file = list_from_input_str[2].split("/")
         output_file_name = list_dir_and_file[-1]
-        for i in range(len(list_dir_and_file) - 1):
-            if os.path.exists(list_dir_and_file[i]):
-                os.chdir(list_dir_and_file[i])
-            else:
-                os.mkdir(list_dir_and_file[i])
-                os.chdir(list_dir_and_file[i])
+        os.makedirs(directories, exist_ok=True)
+        os.chdir(directories)
         with open(output_file_name, "w") as output_file:
             output_file.write(text_from_input_file)
         os.chdir(base_dir)
