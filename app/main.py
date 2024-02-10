@@ -10,25 +10,15 @@ def move_file(command: str) -> None:
     old_file_path = command_parts[1]
     new_file_path = command_parts[2]
 
-    slash_last_index = new_file_path.rfind("/")
+    new_path_parts = os.path.split(new_file_path)
 
-    if slash_last_index == -1:
+    if not new_path_parts[0]:
         os.rename(old_file_path, new_file_path)
         return
 
-    new_file_name = new_file_path[slash_last_index:]
+    new_file_name = new_path_parts[1]
 
-    dirs_path = new_file_path[0:slash_last_index]
-
-    cur_path = ""
-
-    directories = dirs_path.split("/")
-
-    for directory in directories:
-        cur_path += (directory + "/")
-
-        if not os.path.isdir(cur_path):
-            os.mkdir(cur_path)
+    os.makedirs(new_path_parts[0], exist_ok=True)
 
     with open(old_file_path, "r") as file:
         content = file.read()
