@@ -16,15 +16,12 @@ def move_file(command: str) -> None:
         os.rename(old_file_path, new_file_path)
         return
 
-    new_file_name = new_path_parts[1]
-
     os.makedirs(new_path_parts[0], exist_ok=True)
 
     with open(old_file_path, "r") as file:
         content = file.read()
 
-    path_to_move = new_file_path if new_file_name else (new_file_path
-                                                        + old_file_path)
+    path_to_move = new_file_path
 
     with open(path_to_move, "w") as new_file:
         new_file.write(content)
