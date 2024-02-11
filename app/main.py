@@ -4,7 +4,9 @@ from os.path import exists
 
 def move_file(command: str) -> None:
     arguments = command.split(" ")
-    if arguments[0] != "mv" or arguments[1] == arguments[2]:
+    if (len(arguments) == 3
+            and arguments[0] != "mv"
+            or arguments[1] == arguments[2]):
         return
 
     directories_to_create = arguments[2].split("/")[:-1]
