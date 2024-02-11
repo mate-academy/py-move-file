@@ -1,22 +1,20 @@
-from os import mkdir, remove
-from os.path import exists
+from os import makedirs, remove
+from os.path import join
 
 
 def move_file(command: str) -> None:
-    arguments = command.split(" ")
-    if (len(arguments) != 3
-            or arguments[0] != "mv"
-            or arguments[1] == arguments[2]):
+    arguments = command.split()
+
+    if len(arguments) != 3:
+        return
+    com, original_filename, copy_filename = arguments
+    if com != "mv" or original_filename == copy_filename:
         return
 
-    directories_to_create = arguments[2].split("/")[:-1]
-    created = ""
-    for directory in directories_to_create:
-        created += directory + "/"
-        if not exists(created):
-            mkdir(created)
+    new_path = join("", *arguments[2].split("/")[:-1])
+    makedirs(new_path, exist_ok=True)
 
-    with (open(arguments[1], "r") as original_file,
-          open(arguments[2], "w") as copy_file):
+    with (open(original_filename, "r") as original_file,
+          open(copy_filename, "w") as copy_file):
         copy_file.write(original_file.read())
-    remove(arguments[1])
+    remove(original_filename)
