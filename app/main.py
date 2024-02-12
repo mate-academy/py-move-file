@@ -1,10 +1,10 @@
 import os
 
 
-def move_file(parameter: str) -> None:
-    filtered_param = parameter.replace("\\", "/")
-    command, source_filename, destiny_file = filtered_param.split()
-    if command == "mv":
+def move_file(command: str) -> None:
+    filtered_command = command.replace("\\", "/")
+    param, source_filename, destiny_file = filtered_command.split()
+    if param == "mv":
         destiny_folder = f"{os.sep}".join(destiny_file.split("/")[:-1:])
         output_filename = destiny_file.split("/")[-1]
         if destiny_folder:
