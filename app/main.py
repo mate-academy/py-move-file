@@ -11,11 +11,6 @@ def move_file(command: str) -> None:
 
     mv, source_path, destination_path = parts
 
-    if destination_path.endswith(os.path.sep):
-        destination_path = os.path.join(
-            destination_path, os.path.basename(source_path)
-        )
-
     destination_dir = os.path.dirname(destination_path)
 
     if destination_dir:
