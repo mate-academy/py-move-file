@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split(" ")
-    if len(parts) < 3:
+    if len(parts) < 3 or parts[0] != "mv":
         print("Invalid command format. Usage: mv source_file destination_file")
         return
 
