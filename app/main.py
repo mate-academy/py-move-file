@@ -15,9 +15,11 @@ def move_file(command: str) -> None:
         os.makedirs(directory_path, exist_ok=True)
 
     try:
-        with open(source, "r") as source_file:
-            with open(file_path, "w") as destination_file:
-                destination_file.write(source_file.read())
+        with (
+            open(source, "r") as source_file,
+                open(file_path, "w") as destination_file
+        ):
+            destination_file.write(source_file.read())
         os.remove(source)
         print(f"File '{source}' moved to '{file_path}' successfully.")
     except Exception as e:
