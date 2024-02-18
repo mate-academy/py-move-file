@@ -8,8 +8,8 @@ def move_file(command: str) -> None:
     target_directory = ""
     if len(commands) == 3:
         if commands[0] == "mv":
-            for flooder in destination:
-                target_directory += flooder + "/"
+            for folder in destination:
+                target_directory += folder + "/"
                 if os.path.isdir(target_directory):
                     continue
                 os.mkdir(target_directory)
