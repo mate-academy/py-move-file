@@ -2,7 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    mv, file_name, destination = command.split()
+    args = command.split()
+    if len(args) != 3:
+        return
+
+    mv, file_name, destination = args
 
     if mv == "mv":
         dirs = os.path.dirname(destination)
