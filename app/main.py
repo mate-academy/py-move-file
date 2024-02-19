@@ -3,7 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     commands = command.split(" ")
-    if len(commands) == 3 and commands[0] == "mv" and os.path.exists(commands[1]):
+    if (len(commands) == 3 and commands[0] == "mv"
+            and os.path.exists(commands[1])):
         destination = commands[2]
         new_file = destination.split("/")[len(destination.split("/")) - 1]
         target_directory = os.path.join(
