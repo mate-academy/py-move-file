@@ -12,6 +12,5 @@ def move_file(command: str) -> None:
                 os.remove(destination)
             os.rename(source, destination)
         else:
-            if not os.path.exists(directory):
-                os.makedirs(directory)
+            os.makedirs(directory, exist_ok=True)
             shutil.move(source, new_destination)
