@@ -15,4 +15,3 @@ def move_file(command: str) -> None:
             if not os.path.exists(directory):
                 os.makedirs(directory)
             shutil.move(source, new_destination)
-
