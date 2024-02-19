@@ -1,6 +1,7 @@
 import os
 
-def move_file(command):
+
+def move_file(command: str) -> None:
     parts = command.split()
 
     if len(parts) == 3 and parts[0] == "mv":
@@ -15,6 +16,7 @@ def move_file(command):
             os.makedirs(destination_directory, exist_ok=True)
 
         os.replace(source_file, destination)
+
 
 
 
