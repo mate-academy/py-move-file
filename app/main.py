@@ -1,21 +1,13 @@
-import shutil
 import os
 
 
 def move_file(command: str) -> None:
     if len(command.split(" ")) != 3:
         raise ValueError("Please, input correct request")
-    cmnd, file1, file2 = command.split()
-    if cmnd == "mv" and file1 != file2:
-        file2 = file2.split("/")
-        temp = ""
-        while len(file2) > 1:
-            temp += file2[0]
-            try:
-                os.makedirs(temp)
-            except FileExistsError:
-                pass
-            temp += "/"
-            file2.pop(0)
-        file2 = temp + str(file2[0])
-        shutil.move(file1, file2)
+    if len(command.split()) == 3 and command.split()[0] == "mv":
+        mv, file1, file2 = command.split()
+        if os.path.dirname(file2):
+            os.makedirs(os.path.dirname(file2), exist_ok=True)
+        os.rename(file1, file2)
+    else:
+        raise ValueError("Used request without 'mv' command")
