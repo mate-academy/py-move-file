@@ -9,8 +9,9 @@ def move_file(command: str) -> None:
         destination = parts[2]
 
         if not os.path.exists(source_file):
-            raise FileNotFoundError\
-                (f"The file '{source_file}' does not exist.")
+            raise FileNotFoundError(
+                f"The file '{source_file}' does not exist."
+            )
 
         destination_directory = os.path.dirname(destination)
         if destination_directory:
