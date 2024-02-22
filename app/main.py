@@ -13,8 +13,13 @@ def move_file(command: str) -> None:
     if destination_dir and not os.path.exists(destination_dir):
         os.makedirs(destination_dir, exist_ok=True)
 
-    with open(source, "r") as f_src:
-        with open(destination, "w") as f_dst:
-            f_dst.write(f_src.read())
+    try:
+        with open(source, "r") as f_src:
+            with open(destination, "w") as f_dst:
+                f_dst.write(f_src.read())
+    except FileNotFoundError:
+        print(f"Source file not found: {source}")
+    except OSError as e:
+        print(f"Error moving file: {e}")
 
     os.remove(source)
