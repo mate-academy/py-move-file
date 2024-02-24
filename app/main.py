@@ -9,12 +9,13 @@ def move_file(command: str) -> None:
             file_content = file.read()
         os.remove(file_name)
 
-        file_copy_source = file_copy.split("/")
-        file_copy_name = file_copy_source.pop(-1)
+        path = file_copy.split("/")
+        file_copy_name = path.pop(-1)
 
-        path = ""
-        for source in file_copy_source:
-            path = os.path.join(path, source)
+        if not path:
+            path = ""
+        else:
+            path = os.path.join(*path)
             os.makedirs(path, exist_ok=True)
 
         with open(os.path.join(path, file_copy_name), "w") as file_copy:
