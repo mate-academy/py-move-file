@@ -16,3 +16,4 @@ def move_file(command: str) -> None:
                 os.makedirs(dest_dir, exist_ok=True)
             dest_file = dest_path
         shutil.move(src_file, dest_file)
+        os.remove(src_file)
