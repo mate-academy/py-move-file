@@ -13,10 +13,7 @@ def move_file(command: str) -> None:
     if len(command.split()) == 3:
         command, file, new_file = command.split()
         if command == "mv":
-            if "/" not in new_file:
-                copy_file_and_remove_original(file, new_file)
-            else:
-                dirs = new_file.split("/")
-                dirs.pop()
+            if "/" in new_file:
+                dirs = new_file.split("/")[:-1]
                 os.makedirs("/".join(dirs), exist_ok=True)
-                copy_file_and_remove_original(file, new_file)
+            copy_file_and_remove_original(file, new_file)
