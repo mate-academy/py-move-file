@@ -9,9 +9,7 @@ def move_file(command: str) -> None:
             and command[0] == "mv"
     ):
         _, source, destination = command
-        directory = None
-        if "/" in destination:
-            directory = "/".join(destination.split("/")[:-1])
+        directory = os.path.dirname(destination)
 
         if directory:
             os.makedirs(directory, exist_ok=True)
