@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     mv, file, path_to = command.split()
 
-    if mv == "mv" and len(command.split()) == 3 and file != path_to:
+    if mv == "mv":
         part_of_path = os.path.split(path_to)
         if part_of_path[0]:
             os.makedirs(part_of_path[0], exist_ok=True)
