@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     split_command = command.split()
-    if len(split_command) == 3 or split_command[0] == "mv":
+    if len(split_command) == 3 and split_command[0] == "mv":
         mod, original_file, moved_file = split_command
 
         directory = os.path.dirname(moved_file)
