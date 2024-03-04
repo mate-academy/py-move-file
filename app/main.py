@@ -18,6 +18,3 @@ def move_file(command: str) -> None:
 
             new_file.write(old_file.read())
         os.remove(old_filename)
-
-
-# move_file("mv file.txt 1st/file2.txt")
