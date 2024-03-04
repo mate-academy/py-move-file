@@ -1,22 +1,23 @@
-import shutil
 import os
 
 
 def move_file(command: str) -> None:
-    command_part = command.split()
+    mode, old_filename, fullpath_to_file = command.split()
+    path_to_file = os.path.split(fullpath_to_file)[0]
 
-    if command_part[0] == "mv":
-        directories = command_part[2].split("/")[:-1]
-        previous_directory = ""
+    if mode == "mv":
+        if old_filename != fullpath_to_file and path_to_file != "":
+            if not os.path.exists(path_to_file):
+                os.makedirs(path_to_file)
 
-        for directory in directories:
+        with open(
+                old_filename, "r"
+        ) as old_file, open(
+            fullpath_to_file, "w"
+        ) as new_file:
 
-            if previous_directory == "":
-                if not os.path.exists(directory):
-                    os.mkdir(directory)
-            else:
-                if not os.path.exists(previous_directory + directory):
-                    os.mkdir(previous_directory + directory)
-            previous_directory += f"{directory}/"
+            new_file.write(old_file.read())
+        os.remove(old_filename)
 
-        shutil.move(command_part[1], command_part[2])
+
+# move_file("mv file.txt 1st/file2.txt")
