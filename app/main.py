@@ -3,9 +3,7 @@ from os import remove, path, makedirs
 
 def move_file(command: str) -> None:
     command = command.split()
-    if len(command) != 3:
-        return
-    if command[0] != "mv":
+    if len(command) != 3 or command[0] != "mv":
         return
     move_to, name = path.split(command[2])
     if move_to:
