@@ -4,12 +4,11 @@ import os
 def move_file(command: str) -> None:
     command_parts = command.split()
     if len(command_parts) != 3 or command_parts[0] != "mv":
-        raise ValueError
+        raise ValueError("Invalid command format")
 
-    source_file = command_parts[1]
-    destination = command_parts[2]
+    _, source_file, destination = command_parts
 
-    directories, _ = os.path.split(destination)
+    directories = os.path.dirname(destination)
     if directories:
         os.makedirs(directories, exist_ok=True)
 
