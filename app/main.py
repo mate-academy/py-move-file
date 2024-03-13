@@ -4,9 +4,10 @@ import shutil
 
 def move_file(command: str) -> None:
     parts = command.split()
+    if len(parts) != 3 and parts[0] != "mv":
+        return
 
-    source = parts[1]
-    destination = parts[2]
+    cmd, source, destination = parts
 
     if destination.endswith("/"):
         os.makedirs(destination, exist_ok=True)
