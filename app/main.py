@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     if len(command) != 3 or command[0] != "mv":
         raise ValueError("Use: mv <source_file> <new_file>")
 
-    command, source_file, destination_file = command
+    _, source_file, destination_file = command
     destination_path = os.path.dirname(destination_file)
     if not destination_path:
         os.rename(source_file, destination_file)
