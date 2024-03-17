@@ -4,7 +4,7 @@ import shutil
 
 def move_file(command: str) -> None:
     parts = command.split()
-    if parts[0] != "mv" or len(parts) != 3:
+    if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Command should be in the format:"
                          " 'mv source_file destination_path'")
 
@@ -21,4 +21,11 @@ def move_file(command: str) -> None:
         destination_dir = os.path.dirname(destination)
         if destination_dir and not os.path.exists(destination_dir):
             os.makedirs(destination_dir, exist_ok=True)
-    shutil.move(source, destination)
+        custom_move(source, destination)
+
+
+def custom_move(source: str, destination: str) -> None:
+    with open(source, "rb") as fsrc:
+        with open(destination, "wb") as fdst:
+            shutil.copyfileobj(fsrc, fdst)
+    os.remove(source)
