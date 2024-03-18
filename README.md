@@ -1,41 +1,35 @@
-import os
-import shutil
+# Move file
 
-def move_file(command):
-    # Split the command into parts
-    parts = command.split()
+- Read [the guideline](https://github.com/mate-academy/py-task-guideline/blob/main/README.md) before starting.
 
-    # Check if the command has at least two arguments
-    if len(parts) < 3:
-        print("Invalid command. Please provide source and destination paths.")
-        return
+Write a function `move_file` that will move a file from one location to another. 
+Function takes `command`, this is very similar to Linux mv command: 
+`mv file.txt some_dir/new_file.txt` 
+(this will create `new_file.txt` in `some_dir/` and remove the source file).
 
-    # Extract source and destination paths
-    source_path = parts[1]
-    dest_path = parts[2]
-
-    # Check if the source file exists
-    if not os.path.exists(source_path):
-        print(f"Error: {source_path} does not exist.")
-        return
-
-    # Check if the destination directory exists
-    if dest_path.endswith('/'):
-        dest_dir = dest_path
-    else:
-        dest_dir = os.path.dirname(dest_path)
-    if not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
-
-    # Move the file
-    shutil.move(source_path, dest_path)
-
-# Test the function
+If name in destination path ends with / it must be considered as a directory.
+The app must support only moving of files, and no additional options (flags).
+Examples:
+- `mv file.txt file2.txt` simply renames the file.
+- `mv file.txt first_dir/second_dir/file2.txt` create directory `first_dir`
+inside current directory, then create directory `first_dir/second_dir`,
+create file2.txt inside and remove the source file.
+```python
+print(open("file.txt").read())
+# Some
+# Text
 move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
 print(open("first_dir/second_dir/third_dir/file2.txt").read())
+# Some
+# Text
+open("file.txt")
+# FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+```
 
-# Clean up: Remove the source file
-try:
-    os.remove("file.txt")
-except FileNotFoundError:
-    pass
+**Note**: You can create directory by `os.mkdir("first")` from module `os`.
+But to create `os.mkdir("first/second")`, `first` directory needs to exist.
+Function should work with different directory depth.
+Use `os.remove()` to remove the file.
+
+
+### Note: Check your code using this [checklist](checklist.md) before pushing your solution.
