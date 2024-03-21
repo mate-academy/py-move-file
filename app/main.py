@@ -3,6 +3,9 @@ import os
 
 def move_file(command: str) -> None:
     commands = command.split()
+    if len(commands) != 3:
+        raise Exception("Invalid command. Please provide input file and output file.")
+
     input_file = commands[1]
     output_file = commands[2]
     with open(input_file, "r") as input_data:
