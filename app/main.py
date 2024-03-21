@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     if len(command.split()) == 3 and command.split()[0] == "mv":
-        cmd, input_file, output_file = command.split()
+        mv, input_file, output_file = command.split()
         if "/" in output_file:
             path_to, file_name = os.path.split(output_file)
             os.mkdir(path_to)
