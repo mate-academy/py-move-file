@@ -5,7 +5,12 @@ def move_file(command: str) -> None:
     """ That will move a file from one location to another """
     # Ex: mv file.txt first_dir/second_dir/third_dir/file2.txt
 
-    cmd, file_in, file_out = command.split(" ")[0], command.split(" ")[1], command.split(" ")[2]
+    (cmd,
+     file_in,
+     file_out) = (
+        command.split(" ")[0],
+        command.split(" ")[1],
+        command.split(" ")[2])
 
     if cmd != "mv":
         raise ValueError("Command mv not found")
@@ -26,14 +31,3 @@ def move_file(command: str) -> None:
         os.remove(file_in)
     except OSError as e:
         print(f"We got Error: {e}")
-
-
-print(open("file.txt").read())
-# Some
-# Text
-move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
-print(open("first_dir/second_dir/third_dir/file2.txt").read())
-# Some
-# Text
-# open("file.txt")
-# FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
