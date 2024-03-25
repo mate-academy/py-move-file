@@ -7,22 +7,18 @@ def move_file(command: str) -> None:
 
     (cmd,
      file_in,
-     file_out) = (
-        command.split(" ")[0],
-        command.split(" ")[1],
-        command.split(" ")[2])
+     file_out) = command.split(" ")
 
     if cmd != "mv":
         raise ValueError("Command mv not found")
 
     if "/" in file_out:
         dir_path = ""
+        directories, filename = os.path.split(file_out)
 
-        for directory in os.path.dirname(file_out).split("/"):
+        for directory in directories.split("/"):
             dir_path = os.path.join(dir_path, directory)
-
-            if not os.path.exists(dir_path):
-                os.makedirs(dir_path)
+            os.makedirs(dir_path, exist_ok=True)
 
     with open(file_in, "r") as f_in, open(file_out, "w") as f_out:
         f_out.write(f_in.read())
