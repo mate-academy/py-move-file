@@ -7,16 +7,23 @@ def move_file(command: str) -> None:
     if "mv" not in command:
         print("Command mv not found")
         return
+
     dir_path = ""
     file_in = command.split(" ")[1]
     file_out = command.split(" ")[2]
+
     if "/" in file_out:
-        dir_ls = file_out.split("/")
-        for i in range(len(dir_ls) - 1):
-            dir_path += dir_ls[i] + "/"
-            if not os.path.exists(dir_path):
+        for path in file_out.split("/")[:-1]:
+            dir_path += path + "/"
+            try:
                 os.mkdir(dir_path)
+            except OSError:
+                print("Error creating directory")
+
     with open(file_in, "r") as f_in, open(file_out, "w") as f_out:
         f_out.write(f_in.read())
-    if os.path.exists(file_in):
+
+    try:
         os.remove(file_in)
+    except OSError as e:
+        print(f"We got Error: {e}")
