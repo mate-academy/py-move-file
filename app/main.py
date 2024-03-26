@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     command_list = command.split()
-    if len(command_list) == 3:
+    if len(command_list) == 3 and command_list[0] == "mv":
         cheat, source_f, copy_path = command_list
         path = ""
         for value in copy_path.split("/"):
