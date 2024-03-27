@@ -1,22 +1,22 @@
 import os
+from pathlib import Path
 
 
 def move_file(command: str) -> None:
+
     command = command.split()
 
-    if len(command) == 3 and command[0] == "mv":
-        _, old_file, path_and_new_file = command
-        path_and_new_file = path_and_new_file.split("/")
-        new_file = path_and_new_file.pop(-1)
-        file_path = ""
+    if len(command) != 3 or command[0] != "mv":
+        raise ValueError("Wrong command.")
+    _, old_file, new_path_and_file = command
+    old_file_path = Path(old_file)
+    if not old_file_path.is_file():
+        raise FileNotFoundError(f"File not found: '{old_file}'")
+    new_dir, new_file = os.path.split(new_path_and_file)
+    Path(new_dir).mkdir(parents=True, exist_ok=True)
 
-        for path in path_and_new_file:
-            file_path += f"{path}/"
-            if not os.path.exists(file_path):
-                os.mkdir(file_path)
-
-        with (open(old_file, "r") as from_file,
-              open(file_path + new_file, "w") as in_file):
-            in_file.write(from_file.read())
-
-        os.remove(old_file)
+    try:
+        old_file_path.rename(Path(new_dir, new_file))
+    except PermissionError:
+        raise PermissionError(f"No permission to access the file: "
+                              f"'{old_file}'")
