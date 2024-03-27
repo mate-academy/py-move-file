@@ -1,9 +1,8 @@
-import os
 from pathlib import Path
+import os
 
 
 def move_file(command: str) -> None:
-
     command = command.split()
 
     if len(command) != 3 or command[0] != "mv":
@@ -13,8 +12,8 @@ def move_file(command: str) -> None:
     if not old_file_path.is_file():
         raise FileNotFoundError(f"File not found: '{old_file}'")
     new_dir, new_file = os.path.split(new_path_and_file)
-    Path(new_dir).mkdir(parents=True, exist_ok=True)
-
+    if new_dir:
+        os.makedirs(new_dir, exist_ok=True)
     try:
         old_file_path.rename(Path(new_dir, new_file))
     except PermissionError:
