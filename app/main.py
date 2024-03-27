@@ -3,13 +3,14 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    command_list = command.split()
-    command_list[2] = command_list[2].split("/")
+    _, current_file, new_file_path = command.split()
+    dir_list = new_file_path.split("/")
+    new_file_name = dir_list.pop()
     new_dir = ""
 
-    for index in range(len(command_list[2]) - 1):
-        if not os.path.exists(new_dir + command_list[2][index]):
-            os.mkdir(new_dir + command_list[2][index])
-        new_dir += command_list[2][index] + "/"
-    shutil.copy(command_list[1], new_dir + command_list[2][-1])
-    os.remove(command_list[1])
+    for directory in dir_list:
+        if not os.path.exists(new_dir + directory):
+            os.mkdir(new_dir + directory)
+        new_dir += directory + "/"
+    shutil.copy(current_file, new_dir + new_file_name)
+    os.remove(current_file)
