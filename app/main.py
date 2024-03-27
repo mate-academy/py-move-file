@@ -9,8 +9,7 @@ def move_file(command: str) -> None:
     new_dir = ""
 
     for directory in dir_list:
-        if not os.path.exists(new_dir + directory):
-            os.mkdir(new_dir + directory)
+        os.makedirs(new_dir + directory, exist_ok = True)
         new_dir += directory + "/"
     shutil.copy(current_file, new_dir + new_file_name)
     os.remove(current_file)
