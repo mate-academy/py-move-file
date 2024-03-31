@@ -9,4 +9,3 @@ def move_file(command: str) -> None:
         os.makedirs(path, exist_ok=True)
 
     os.rename(start_file_name, destination_path)
-
