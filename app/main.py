@@ -15,6 +15,6 @@ def move_file(command: str) -> None:
         final_path += f"{file_dir}/"
         if not path.exists(final_path) is True:
             mkdir(final_path)
-    with open(f"{final_path}{dirs.split("/")[-1]}", "w") as copied_file:
+    with open(final_path + dirs.split("/")[-1], "w") as copied_file:
         copied_file.write(content_of_file)
         remove(command_parts[1])
