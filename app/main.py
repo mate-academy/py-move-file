@@ -3,7 +3,15 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    command_name, source_file, destination_file = command.split()
+    command_parts = command.split()
+    command_name, source_file, destination_file = command_parts
+
+    if len(command_parts) != 3:
+        raise ValueError("Invalid move command format")
+
+    if not os.path.exists(source_file):
+        raise FileNotFoundError(f"Source file not found: {source_file}")
+
     source_directory = os.path.dirname(source_file)
     destination_directory = os.path.dirname(destination_file)
 
@@ -13,4 +21,9 @@ def move_file(command: str) -> None:
         if not os.path.exists(destination_directory):
             os.makedirs(destination_directory)
 
-        shutil.move(source_file, destination_file)
+        try:
+            shutil.move(source_file, destination_file)
+        except shutil.Error as e:
+            raise shutil.Error(f"Error moving file: {e}")
+        except Exception as e:
+            raise e
