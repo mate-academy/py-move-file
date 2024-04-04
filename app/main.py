@@ -2,7 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3 and command.split()[0] == "mv":
+    command_list = command.split()
+
+    if len(command_list) == 3 and command_list[0] == "mv":
         *_, in_file, out_file = command.split(" ")
 
         current_location = os.path.dirname(in_file)
