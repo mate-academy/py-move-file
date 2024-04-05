@@ -4,6 +4,11 @@ import shutil
 
 def move_file(command: str) -> None:
     command_parts = command.split()
+
+    if len(command_parts) != 3:
+        raise ValueError("Invalid command format. "
+                         "Usage: mv file.txt some_dir/new_file.txt")
+
     command_name, source_file, destination_file = command_parts
 
     if len(command_parts) != 3:
