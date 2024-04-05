@@ -2,11 +2,10 @@ import os
 
 
 def move_file(command: str) -> str | None:
-    if not command.startswith("mv "):
+    if not command.startswith("mv ") or len(command.split()) != 3:
         return "Wrong command"
 
-    _, source_file, new_file = command.split()
-    new_file = new_file.rstrip("/")
+    _, source_file, new_file, *_ = command.split()
 
     if not os.path.exists(source_file):
         return
