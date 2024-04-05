@@ -14,18 +14,14 @@ def move_file(command: str) -> None:
     if not os.path.exists(source_file):
         raise FileNotFoundError(f"Source file not found: {source_file}")
 
-    source_directory = os.path.dirname(source_file)
     destination_directory = os.path.dirname(destination_file)
 
-    if source_directory == destination_directory:
-        os.rename(source_file, destination_file)
-    else:
-        if not os.path.exists(destination_directory):
-            os.makedirs(destination_directory)
+    if destination_directory and not os.path.exists(destination_directory):
+        os.makedirs(destination_directory, exist_ok=True)
 
-        try:
-            shutil.move(source_file, destination_file)
-        except shutil.Error as e:
-            raise shutil.Error(f"Error moving file: {e}")
-        except Exception as e:
-            raise e
+    try:
+        shutil.move(source_file, destination_file)
+    except shutil.Error as e:
+        raise shutil.Error(f"Error moving file: {e}")
+    except Exception as e:
+        raise e
