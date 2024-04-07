@@ -4,8 +4,7 @@ import os
 def move_file(command: str) -> None:
     parts = command.split()
     if len(parts) != 3:
-        print("Invalid command format.")
-        return
+        raise ValueError("Invalid command format.")
 
     key_word, source_file, destination_path = parts
 
