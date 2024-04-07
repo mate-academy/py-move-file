@@ -4,12 +4,20 @@ import os
 def move_file(command: str) -> None:
     command = command.split()
 
-    file2 = command[2].split("/")[-1]
-    dir2 = command[2].replace(file2, "")
+    if len(command) != 3:
+        return
 
-    if not os.path.exists(dir2) and dir2:
-        os.makedirs(dir2)
+    if command[0] != "mv":
+        return
 
-    with open(command[1], "r") as f1, open(command[2], "w") as f2:
-        f2.write(f1.read())
+    if command[1] == command[2]:
+        return
+
+    second_file_dir = "/".join(command[2].split("/")[:-1])
+
+    if second_file_dir:
+        os.makedirs(second_file_dir, exist_ok=True)
+
+    with open(command[1], "r") as file1, open(command[2], "w") as file2:
+        file2.write(file1.read())
     os.remove(command[1])
