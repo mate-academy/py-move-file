@@ -2,27 +2,20 @@ import os
 
 
 def move_file(command: str) -> None:
-    _, file_source, path_another_file = command.split()
-    folders = path_another_file.split("/")
-    curr_folder = ""
+    mv, file_source, path_another_file, *_ = command.split()
+    folders, new_name = os.path.split(path_another_file)
 
-    if file_source == path_another_file:
+    if mv == "mv" and folders:
+        if file_source == path_another_file:
+            return
+
+        os.makedirs(folders, exist_ok=True)
+
+        with (
+            open(file_source, "r") as source,
+            open(os.path.join(folders, new_name), "w") as moved
+        ):
+            moved.write(source.read())
+        os.remove(file_source)
         return
-
-    if len(folders) == 1:
-        os.rename(file_source, path_another_file)
-        return
-
-    for folder in folders:
-        if "." in folder:
-            break
-        curr_folder += f"{folder}/"
-        if not os.path.exists(curr_folder):
-            os.mkdir(curr_folder)
-
-    with (
-        open(file_source, "r") as source,
-        open(os.path.join(*folders), "w") as moved
-    ):
-        moved.write(source.read())
-    os.remove(file_source)
+    os.rename(file_source, path_another_file)
