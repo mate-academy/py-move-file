@@ -2,10 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    mv, file_source, path_another_file, *_ = command.split()
-    folders, new_name = os.path.split(path_another_file)
+    parts = command.split()
 
-    if mv == "mv":
+    if len(parts) == 3 and parts[0] == "mv":
+        _, file_source, path_another_file, *_ = parts
+        folders, new_name = os.path.split(path_another_file)
+
         if folders:
             if file_source == new_name:
                 return
