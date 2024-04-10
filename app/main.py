@@ -19,8 +19,8 @@ def move_file(command: str) -> None:
     if not os.path.exists(source_path):
         raise FileExistsError(f"File {source_path} not exists")
 
-    if destination_dir and not os.path.exists(destination_dir):
-        os.makedirs(destination_dir)
+    if destination_dir:
+        os.makedirs(destination_dir, exist_ok=True)
 
     with (
         open(source_path, "r") as source_file,
