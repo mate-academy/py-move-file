@@ -2,8 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3 and command.split()[0] == "mv":
-        split_command = command.split()
+    split_command = command.split()
+    if len(split_command) == 3 and split_command[0] == "mv":
         move_path = split_command[-1].split("/")
         move = ""
         for path_stage in move_path[:-1]:
