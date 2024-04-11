@@ -21,10 +21,6 @@ def move_file(command: str) -> None:
     try:
         with open(old_file_name) as old, open(new_file_name, "w") as new:
             new.write(old.read())
-    except FileNotFoundError:
-        raise
-    except PermissionError:
-        raise
     except OSError:
         raise
 
