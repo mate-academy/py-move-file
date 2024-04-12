@@ -13,7 +13,7 @@ def move_file(command: str) -> None:
         os.mkdir(dir_list[0])
         if len(dir_list) >= 2:
             for i in range(len(dir_list[0:-1])):
-                os.mkdir(f"{"/".join(file_2.split("/")[0:i + 1])}"
+                os.mkdir(f'{"/".join(file_2.split("/")[0:i + 1])}'
                          f"/{dir_list[i + 1]}")
         with open(file_1, "r") as f1, open(file_2, "w") as f2:
             f2.write(f1.read())
