@@ -1,5 +1,5 @@
 import os
-import shutil
+
 
 def move_file(command: str) -> bool:
     if len(command.split()) != 3:
