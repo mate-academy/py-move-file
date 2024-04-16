@@ -8,22 +8,12 @@ def move_file(command: str) -> None:
     except Exception:
         print("Error in cmd!")
     print(cmd, source_name, destination_name)
-    # list_dir, file_destination_name = os.path.split()
-    print(os.path.split(destination_name))
-
-    dir_str = ""
 
     if cmd == "mv":
-        if "/" in destination_name:
-            list_dir, file_destination_name = os.path.split(destination_name)
-            for i in range(len(list_dir) - 1):
-                dir_str += list_dir[i] + "/"
-
-                try:
-                    print(dir_str)
-                    os.mkdir(dir_str)
-                except Exception:
-                    print("Err_dir")
+        list_dir, file_destination_name = os.path.split(destination_name)
+        print(list_dir, file_destination_name)
+        if list_dir:
+            os.makedirs(list_dir, exist_ok=True)
 
         with (open(source_name) as f_source,
               open(destination_name, "w") as f_destination):
