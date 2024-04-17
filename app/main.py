@@ -2,12 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    cmd, source_name, destination_name = "", "", ""
-    try:
-        cmd, source_name, destination_name = command.split()
-    except Exception:
-        print("Error in cmd!")
-    print(cmd, source_name, destination_name)
+
+    if len(command.split()) != 3:
+        return
+    cmd, source_name, destination_name = command.split()
 
     if cmd == "mv":
         list_dir, file_destination_name = os.path.split(destination_name)
