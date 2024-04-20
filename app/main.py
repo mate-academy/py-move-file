@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     command = command.split()
     if len(command) != 3 or command[0] != "mv":
-        raise "Wrong command"
+        raise Exception("Wrong command")
     path_to_file = command[2].split("/")
 
     for num_dir in range(1, len(path_to_file)):
