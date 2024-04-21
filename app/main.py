@@ -3,18 +3,21 @@ import os
 
 def move_file(command: str) -> None:
     command = command.split()
-    if len(command) != 3 or command[0] != "mv":
+    mv = command[0]
+    old_file = command[1]
+    new_file = command[2]
+
+    if len(command) != 3 or mv != "mv":
         raise Exception("Wrong command")
 
-    path_to_file = command[2].split("/")
-    path_to_file = "/".join(path_to_file[:-1])    # make path without file name
-    if path_to_file == "":
-        os.rename(command[1], command[2])
+    only_path = os.path.dirname(new_file)    # make path without file name
+    if only_path == "":
+        os.rename(old_file, new_file)
     else:
-        os.makedirs(path_to_file, exist_ok=True)
+        os.makedirs(only_path, exist_ok=True)
         with (
-            open(command[1], "r") as file_in,
-            open(command[2], "w") as file_out
+            open(old_file, "r") as file_in,
+            open(new_file, "w") as file_out
         ):
             file_out.write(file_in.read())
-        os.remove(command[1])
+        os.remove(old_file)
