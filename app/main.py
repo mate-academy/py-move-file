@@ -2,6 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        print("Invalid command. Command should have three arguments.")
+        return
+
     mv, file_name, destination_path = command.split()
     if mv == "mv":
         dirs = os.path.dirname(destination_path)
