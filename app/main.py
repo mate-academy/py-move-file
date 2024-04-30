@@ -4,12 +4,12 @@ import os
 def move_file(command: str) -> None:
     parts = command.split()
 
-    source_file, destination_path = parts[1], parts[2]
+    if parts[0] == "mv":
+        cmd, source_file, destination_path = parts
 
     if os.path.exists(source_file):
         if destination_path.endswith("/"):
-            if not os.path.exists(destination_path):
-                os.makedirs(destination_path)
+            os.makedirs(destination_path, exist_ok=True)
             destination_file = os.path.join(destination_path,
                                             os.path.basename(source_file))
 
