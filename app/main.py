@@ -14,14 +14,15 @@ def move_file(command: str) -> None:
 
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
-
-    with (
-        open(source_path, "r") as source_file,
-        open(destination_path, "w") as destination_file
-    ):
-        destination_file.write(source_file.read())
-
-    os.remove(source_path)
+    try:
+        with (
+            open(source_path, "r") as source_file,
+            open(destination_path, "w") as destination_file
+        ):
+            destination_file.write(source_file.read())
+        os.remove(source_path)
+    except OSError as e:
+        print(f"The command did not work out: {e}")
 
 
 def validate_mv_data(command: str, source_path: str, extra_path: str) -> None:
