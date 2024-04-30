@@ -22,7 +22,7 @@ def move_file(command: str) -> None:
             destination_file.write(source_file.read())
         os.remove(source_path)
     except OSError as e:
-        print(f"The command did not work out: {e}")
+        raise OSError(f"The command didn't work out: {e}")
 
 
 def validate_mv_data(command: str, source_path: str, extra_path: str) -> None:
