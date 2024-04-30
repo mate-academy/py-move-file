@@ -3,21 +3,14 @@ import os
 
 
 def move_file(command: str) -> None:
-    if command[:3] != "mv ":
-        raise ValueError(
-            "Expected 'mv' as the first argument"
-        )
-
-    source_path, destination_path, *extra_path = shlex.split(command[3:])
+    command, source_path, destination_path, *extra_path = shlex.split(command)
     destination_dir, destination_file = os.path.split(destination_path)
 
-    if extra_path:
-        raise ValueError(
-            "Expected 2 arguements"
-        )
+    validate_mv_data(command, source_path, extra_path)
 
-    if not os.path.exists(source_path):
-        raise FileExistsError(f"File {source_path} not exists")
+    if not destination_file:
+        if os.path.isfile(source_path):
+            destination_path += os.path.splitext(source_path)[-1]
 
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
@@ -29,3 +22,18 @@ def move_file(command: str) -> None:
         destination_file.write(source_file.read())
 
     os.remove(source_path)
+
+
+def validate_mv_data(command: str, source_path: str, extra_path: str) -> None:
+    if command != "mv":
+        raise ValueError(
+            "Expected 'mv' as the first argument"
+        )
+
+    if extra_path:
+        raise ValueError(
+            "Expected 2 arguements"
+        )
+
+    if not os.path.exists(source_path):
+        raise FileExistsError(f"File {source_path} not exists")
