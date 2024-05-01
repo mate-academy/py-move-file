@@ -2,7 +2,6 @@ import os
 
 
 def move_file(command: str) -> None:
-    parts = command.split()
     cmd, source_file, destination_path, *_ = command.split()
     if cmd != "mv":
         return
@@ -21,6 +20,6 @@ def move_file(command: str) -> None:
                 destination_dir = os.path.dirname(destination_path)
                 if destination_dir and not os.path.exists(destination_dir):
                     os.makedirs(destination_dir, exist_ok=True)
-                
+
                 destination_file = destination_path
                 os.replace(source_file, destination_file)
