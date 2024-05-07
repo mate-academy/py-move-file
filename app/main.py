@@ -16,4 +16,3 @@ def move_file(command: str) -> None:
             destination_file.write(source_file.read())
         if os.path.exists(source):
             os.remove(source)
-
