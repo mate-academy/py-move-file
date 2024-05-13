@@ -3,8 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
-    source_file, new_file = parts[1:]
-    if len(parts) == 3 and parts[0] == "mv" and source_file != new_file:
+    if len(parts) == 3 and parts[0] == "mv" and parts[1] != parts[2]:
+        source_file, new_file = parts[1:]
         path, filename = os.path.split(new_file)
         if path:
             os.makedirs(path, exist_ok=True)
