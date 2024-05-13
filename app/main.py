@@ -10,5 +10,3 @@ def move_file(command_directory_file: str) -> None:
         with open(cdf[1], "r") as file_r, open(cdf[2], "w") as file_w:
             file_w.write(file_r.read())
         os.remove(cdf[1])
-
-
