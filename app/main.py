@@ -8,14 +8,10 @@ def move_file(command: str) -> None:
     if file_in != file_out and command_list[0] == "mv":
         if os.path.exists(file_in):
             if "/" in file_out:
-                catalogs = file_out.split("/")
-                catalogs = catalogs[0:len(catalogs) - 1]
-                current_catalog = ""
-                for catalog in catalogs:
-                    current_catalog += catalog
-                    if not os.path.exists(current_catalog):
-                        os.mkdir(current_catalog)
-                    current_catalog += "/"
+                dir_name = os.path.dirname(file_out)
+
+                if dir_name:
+                    os.makedirs(dir_name, exist_ok=True)
 
             with open(command_list[1], "r") as old_file, \
                     open(command_list[2], "w") as new_file:
