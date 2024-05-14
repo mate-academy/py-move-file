@@ -2,11 +2,11 @@ import os
 
 
 def move_file(command_directory_file: str) -> None:
-    cdf = command_directory_file.split()
-    if len(cdf) == 3 and cdf[0] == "mv" and cdf[1] != cdf[2]:
-        directory = os.path.dirname(cdf[2])
-        if os.path.dirname(directory):
+    data = command_directory_file.split()
+    if len(data) == 3 and data[0] == "mv" and data[1] != data[2]:
+        directory = os.path.dirname(data[2])
+        if not os.path.exists(directory):
             os.makedirs(directory)
-        with open(cdf[1], "r") as file_r, open(cdf[2], "w") as file_w:
+        with open(data[1], "r") as file_r, open(data[2], "w") as file_w:
             file_w.write(file_r.read())
-        os.remove(cdf[1])
+        os.remove(data[1])
