@@ -2,8 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(parts) == 3 and parts[0] == "mv":
-        command = command.split()
+    command = command.split()
+    if len(command) == 3 and command[0] == "mv":
         cmd, old_loc, new_loc = command
         new_directory = os.path.dirname(new_loc)
         if new_directory:
