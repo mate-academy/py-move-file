@@ -9,8 +9,9 @@ def copy_file(old_file_name: str, new_file_name: str) -> None:
 
 
 def move_file(command: str) -> None:
-    old_file_name = command.split(" ")[1]
-    path_and_name = command.split(" ")[2]
+    command_split = command.split(" ")
+    old_file_name = command_split[1]
+    path_and_name = command_split[2]
 
     if "/" not in path_and_name:
         os.rename(old_file_name, path_and_name)
