@@ -28,8 +28,7 @@ def move_file(command: str) -> None:
     if name:
         # path = dir/new_name.txt
         copy_file(old_file_name, path + name)
-        os.remove(old_file_name)
     else:
         # path = dir/
         copy_file(old_file_name, path + old_file_name)
-        os.remove(old_file_name)
+    os.remove(old_file_name)
