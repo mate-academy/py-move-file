@@ -2,6 +2,8 @@ import os
 
 
 def move_file(command: str) -> str | None:
+    if len(command.split()) != 3:
+        return "Not enough arguments in command"
     command, source_file_name, new_path = command.split()
     if command != "mv":
         return "Incorrect command"
