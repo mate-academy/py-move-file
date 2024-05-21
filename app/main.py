@@ -2,13 +2,14 @@ import os
 
 
 def move_file(command: str) -> str | None:
-    if len(command.split()) != 3:
+    command = command.split()
+    if len(command) != 3:
         return "Not enough arguments in command"
-    command, source_file_name, new_path = command.split()
+    command, source_file_name, new_path = command
     if command != "mv":
         return "Incorrect command"
-    new_file_name = new_path.split("/")[-1]
-    new_path = os.path.join(os.getcwd(), new_path.replace(new_file_name, ""))
+    new_path, new_file_name = os.path.split(new_path)
+    new_path = os.path.join(os.getcwd(), new_path)
     os.makedirs(new_path, exist_ok=True)
 
     with (
