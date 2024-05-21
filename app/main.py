@@ -3,7 +3,7 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    command_split = command.split(" ")
+    command_split = command.split()
     if len(command_split) != 3 or command_split[0] != "mv":
         return
     old_file_name = command_split[1]
