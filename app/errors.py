@@ -1,2 +1,0 @@
-class WrongFormat(Exception):
-    pass

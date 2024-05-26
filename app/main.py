@@ -1,27 +1,26 @@
 import os
 import shutil
 
-from app.validator import validation_command
-
 
 def move_file(command: str) -> None:
-    import shlex
-    parts = shlex.split(command)
-    validation_command(parts)
+    parts = command.split()
+    if len(parts) != 3 or parts[0] != "mv":
+        raise ValueError("Invalid command format. Use: mv source destination")
 
-    source = parts[1]
-    destination = parts[2]
+    src = parts[1]
+    dest = parts[2]
 
-    if not os.path.exists(source):
-        raise FileNotFoundError(f"No such file or directory: '{source}'")
+    if not os.path.isfile(src):
+        raise FileNotFoundError(f"No such file: '{src}'")
 
-    if not os.path.dirname(destination):
-        destination = os.path.join(os.getcwd(), destination)
-
-    if destination.endswith("/"):
-        os.makedirs(destination, exist_ok=True)
-        destination = os.path.join(destination, os.path.basename(source))
+    if dest.endswith("/"):
+        dest_dir = dest
+        dest_file = os.path.join(dest_dir, os.path.basename(src))
     else:
-        os.makedirs(os.path.dirname(destination), exist_ok=True)
+        dest_dir = os.path.dirname(dest)
+        dest_file = dest
 
-    shutil.move(source, destination)
+    if dest_dir and not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+
+    shutil.move(src, dest_file)
