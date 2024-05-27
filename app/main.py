@@ -13,13 +13,13 @@ def move_file(command: str) -> None:
         raise FileNotFoundError(f"No such file: '{source_path}'")
 
     if destination_path.endswith("/"):
-        destination_dir = dest
+        destination_dir = destination_path
         destination_file = os.path.join(destination_dir, os.path.basename(source_path))
     else:
         destination_dir = os.path.dirname(destination_path)
-        dest_file = dest
+        destination_file = destination_path
 
     if destination_dir and not os.path.exists(destination_dir):
         os.makedirs(destination_dir)
 
-    shutil.move(source_path, destination_path)
+    shutil.move(source_path, destination_file)
