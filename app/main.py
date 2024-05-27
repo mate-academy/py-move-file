@@ -7,20 +7,19 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid command format. Use: mv source destination")
 
-    src = parts[1]
-    dest = parts[2]
+    source_path, destination_path = parts[1:]
 
-    if not os.path.isfile(src):
-        raise FileNotFoundError(f"No such file: '{src}'")
+    if not os.path.isfile(source_path):
+        raise FileNotFoundError(f"No such file: '{source_path}'")
 
-    if dest.endswith("/"):
-        dest_dir = dest
-        dest_file = os.path.join(dest_dir, os.path.basename(src))
+    if destination_path.endswith("/"):
+        destination_dir = dest
+        destination_file = os.path.join(destination_dir, os.path.basename(source_path))
     else:
-        dest_dir = os.path.dirname(dest)
+        destination_dir = os.path.dirname(destination_path)
         dest_file = dest
 
-    if dest_dir and not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
+    if destination_dir and not os.path.exists(destination_dir):
+        os.makedirs(destination_dir)
 
-    shutil.move(src, dest_file)
+    shutil.move(source_path, destination_path)
