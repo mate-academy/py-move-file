@@ -4,8 +4,7 @@ BUFFER_SIZE = 256
 
 
 def move_file(command: str) -> None:
-    operators = command.split(" ")
-    first_path, second_path = operators[1::]
+    first_path, second_path = command.split(" ")[1::]
 
     # create directory if needed
     directory_path = os.path.split(second_path)[0]
