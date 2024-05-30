@@ -2,7 +2,7 @@ import os
 
 
 def move_file(command: str) -> None:
-    command, file, direct = command.split(" ")
+    command, file, direct = command.split()
     if command == "mv":
         new_direct = direct.split("/")
         if len(new_direct) > 1:
