@@ -3,13 +3,12 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    parts = command.split(" ")
-    if len(parts) != 3 or parts[0] != "mv":
+    cmd, source_file, destination = command.split()
+    
+    if cmd != "mv" or len([cmd, source_file, destination]) != 3:
         raise ValueError("Invalid command")
-
-    source_file = parts[1]
-    destination = " ".join(parts[2:])
-
+    
+    
     if destination.startswith("dir") and os.path.exists("dir"):
         shutil.rmtree("dir")
 
