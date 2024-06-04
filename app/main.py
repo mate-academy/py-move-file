@@ -14,11 +14,6 @@ def move_file(command: str) -> None:
             f"Source file {source_path} does not exist."
         )
 
-    if destination_path.endswith("/"):
-        destination_path = os.path.join(
-            destination_path, os.path.basename(source_path)
-        )
-
     destination_dir = os.path.dirname(destination_path)
     if not os.path.exists(destination_dir):
         os.makedirs(destination_dir)
