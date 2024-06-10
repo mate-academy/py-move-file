@@ -2,27 +2,23 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    if command[0] == "mv":
+    command_name, file_to_move, new_file = command.split()
+    if command_name == "mv":
         whole_data = ""
-        with open(command[1]) as file:
+        with open(file_to_move) as file:
             whole_data = file.read()
 
-        os.remove(command[1])
-        path_to_new_file = command[2].split("/")
-        if len(path_to_new_file) == 1:
-            with open(path_to_new_file[0], "w") as file:
-                file.write(whole_data)
-        else:
-            previous_path = ""
-            for directory in path_to_new_file[:-1]:
-                if not os.path.isdir(previous_path + directory):
-                    os.mkdir(previous_path + directory)
-                previous_path = previous_path + directory + "/"
+        os.remove(file_to_move)
+        path_to_new_file = new_file.split("/")
 
-            combined_path = ""
-            for path in path_to_new_file:
-                combined_path = os.path.join(combined_path, path)
+        combined_path = ""
+        for path in path_to_new_file[:-1]:
+            combined_path = os.path.join(combined_path, path)
 
-            with open(combined_path, "w") as file:
-                file.write(whole_data)
+        if (combined_path
+                and len(path_to_new_file) > 1
+                and not os.path.exists(path_to_new_file[-2])):
+            os.makedirs(combined_path)
+
+        with open(new_file, "w") as file:
+            file.write(whole_data)
