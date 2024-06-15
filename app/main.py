@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
         raise ValueError("Invalid command format. "
                          "Use: mv source_file destination_file_or_directory")
 
-    source, destination= parts[1], parts[2]
+    source, destination = parts[1], parts[2]
 
     if not os.path.isfile(source):
         raise FileNotFoundError(f"Source file '{source}' does not exist")
