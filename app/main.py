@@ -3,13 +3,15 @@ import os
 
 def move_file(command: str) -> None:
     elements = command.split()
-    if elements[0] != "mv":
-        raise ValueError
+    if len(elements) != 3 and elements[0] != "mv":
+        raise Exception("Incorrect command")
 
-    if "/" not in elements[2]:
-        os.rename(elements[1], elements[2])
+    source = elements[1]
+    destination = elements[2]
+    if "/" not in destination:
+        os.rename(source, destination)
     else:
-        dir_elements = elements[2].split("/")
+        dir_elements = destination.split("/")
         path_creator = []
         for dirs in dir_elements[:-1]:
             path_creator.append(dirs)
@@ -17,5 +19,5 @@ def move_file(command: str) -> None:
             if not os.path.exists(path):
                 os.mkdir(path)
         if dir_elements[-1] == "":
-            dir_elements.append(elements[1])
-        os.rename(elements[1], os.path.join(*dir_elements))
+            dir_elements.append(source)
+        os.rename(source, os.path.join(*dir_elements))
