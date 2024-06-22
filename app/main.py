@@ -10,13 +10,11 @@ def move_file(command: str) -> None:
     if parts[1] == parts[2]:
         print("Same file names!")
         return
-    for i, char in enumerate(parts[2]):
-        if char == "/":
-            paths = parts[2][:i]
-            if not os.path.exists(paths):
-                os.mkdir(paths)
-
-    with open(parts[1], "r") as file1, open(parts[2], "w") as file2:
-        file2.write(file1.read())
-
-    os.remove(parts[1])
+    directory, file = os.path.split(parts[2])
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+        with open(parts[1], "r") as file1, open(parts[2], "w") as file2:
+            file2.write(file1.read())
+        os.remove(parts[1])
+    else:
+        os.renames(parts[1], parts[2])
