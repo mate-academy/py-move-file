@@ -5,12 +5,14 @@ def move_file(command: str) -> None:
     cmd, src, dest = command.split()
 
     if cmd == "mv" and dest.endswith("/"):
-        os.makedirs(dest, exist_ok=True)
         dest = os.path.join(dest, os.path.basename(src))
-    else:
+    elif cmd == "mv" and not dest.endswith("/"):
+        # Checking if dir is exist
         dest_dir = os.path.dirname(dest)
         if dest_dir:
             os.makedirs(dest_dir, exist_ok=True)
+    else:
+        print("Command is invalid")
 
     with open(src, "r") as file_in:
         content = file_in.read()
