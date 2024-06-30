@@ -2,15 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    file1 = command.split(" ")[1]
-    file2_path = command.split(" ")[2]
+    command, file_out, file_in_path = command.split()
+    path, file_in = os.path.split(file_in_path)
 
-    for i in range(file2_path.count("/")):
-        path = "/".join(file2_path.split("/")[:i + 1])
-        if os.path.exists(path):
-            continue
-        os.mkdir(path)
+    if path != "":
+        os.makedirs(path, exist_ok=True)
 
-    with open(file1, "r") as f1, open(file2_path, "w") as f2:
-        f2.write(f1.read())
-    os.remove(file1)
+    with open(file_out, "r") as f_out, open(file_in_path, "w") as f_in:
+        f_in.write(f_out.read())
+    os.remove(file_out)
