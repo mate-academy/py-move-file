@@ -2,8 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    action, source_file, destination_file = command.split()
+    if len(command.split()) != 3:
+        return
 
+    action, source_file, destination_file = command.split()
     if action != "mv" or source_file == destination_file:
         return
 
