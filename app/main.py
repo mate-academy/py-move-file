@@ -38,7 +38,3 @@ class MoveFile:
 def move_file(command: str) -> None:
     with MoveFile(command):
         pass
-
-
-if __name__ == "__main__":
-    move_file("mv file.txt file2.txt")
