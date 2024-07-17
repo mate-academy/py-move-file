@@ -9,7 +9,7 @@ def move_file(command: str) -> None:
     if command_list[0] != "mv":
         raise NameError(f"No such command {command_list[0]}")
     if not path.exists(command_list[1]):
-        raise FileNotFoundError(f"File {command_list[0]} not found")
+        raise FileNotFoundError(f"File {command_list[1]} not found")
 
     directory, new_file_name = path.split(command_list[2])
     file_name = command_list[1]
