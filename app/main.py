@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     if (
             len(command_line) == 3
             and command_line[0] == "mv"
-            and command_line[2][0: -1] != command_line[1][0: -1]
+            and command_line[2] != command_line[1]
     ):
         new_path = command_line[2].split("/")
         current_path = new_path[0]
