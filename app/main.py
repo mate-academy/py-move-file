@@ -20,11 +20,10 @@ def copy_and_delete_file(file_from: str, file_to: str) -> None:
 
 
 def move_file(command: str) -> None:
-    file_names = command.split(" ")
-    if (len(file_names) != 3 or file_names[0] != "mv"
-            or not os.path.exists(file_names[1])):
+    key_word, move_from, move_to = command.split()
+    if key_word != "mv" or not os.path.exists(move_from):
         print("Invalid command or source file does not exist.")
         return
 
-    create_dirs(file_names[2])
-    copy_and_delete_file(file_names[1], file_names[2])
+    create_dirs(move_to)
+    copy_and_delete_file(move_from, move_to)
