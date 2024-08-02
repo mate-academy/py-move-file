@@ -13,7 +13,7 @@ def move_file(command: str) -> None:
             print(f"{file} does not exist")
         finally:
             return
-    end_path = new_file.split("/")
+    end_path = os.path.split(new_file)
     directory = end_path[:-1]
     file_name = end_path[-1]
     path_for_directory = os.path.join(*directory)
