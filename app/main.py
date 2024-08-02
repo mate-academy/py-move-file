@@ -3,22 +3,15 @@ import os
 
 def move_file(command: str) -> None:
     command, file_name, move_to = command.split()
-    directories = []
 
-    if "/" in move_to:
-        move_to = move_to.split("/")
-        directories = move_to[:-1]
-        move_to = move_to[-1]
+    path, new_file = os.path.split(move_to)
 
-    path = ""
-    for item in directories:
-        path += item
-        if not os.path.exists(path):
-            os.mkdir(path)
-        path += "/"
+    if path and not os.path.exists(path):
+        os.makedirs(path)
 
     try:
-        with open(file_name, "r") as file, open(path + move_to, "w") as moving:
+        with open(file_name, "r") as file, \
+                open(os.path.join(path, new_file), "w") as moving:
 
             moving.writelines(file.readlines())
 
