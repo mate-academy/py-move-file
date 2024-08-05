@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 def move_file(command: str) -> None:
@@ -6,23 +7,15 @@ def move_file(command: str) -> None:
         raise SystemError("Command 'mv' must accept 3 arguments")
 
     _, source_path, destination_path = command.split()
-    if destination_path.find("/") == -1 and destination_path.endswith(".txt"):
+    if destination_path.count("/") == 0:
         os.rename(source_path, destination_path)
 
     else:
-        if destination_path.split("/")[-1].endswith(".txt"):
-            destination_dir_path = os.path.dirname(destination_path)
-        else:
-            destination_dir_path = destination_path
+        if not os.path.exists(os.path.dirname(destination_path)):
+            if destination_path.count(".") == 0:
+                os.makedirs(destination_path)
+            else:
+                os.makedirs(os.path.dirname(destination_path))
 
-        if not os.path.exists(destination_dir_path):
-            os.makedirs(destination_dir_path)
-
-        with (
-            open(source_path) as source_file,
-            open(destination_path, "w") as destination_file
-        ):
-            for line in source_file:
-                destination_file.write(line)
-
+        shutil.copy(source_path, destination_path)
         os.remove(source_path)
