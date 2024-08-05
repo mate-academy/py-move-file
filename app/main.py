@@ -10,8 +10,8 @@ def create_dirs(path_to_create: str) -> None:
 
 def copy_and_delete_file(file_from: str, file_to: str) -> None:
     try:
-        with open(file_from, "r") as read_file, \
-                open(file_to, "x") as write_file:
+        with (open(file_from, "r") as read_file,
+              open(file_to, "x") as write_file):
             write_file.writelines(read_file.readlines())
         os.remove(file_from)
 
