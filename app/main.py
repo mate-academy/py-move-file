@@ -16,4 +16,4 @@ def move_file(command: str) -> None:
         try:
             shutil.move(file, new_file)
         except FileNotFoundError:
-            print(f"{file} does not exists")
+            print(f"{file} does not exist")
