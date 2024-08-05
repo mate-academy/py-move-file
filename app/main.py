@@ -12,16 +12,18 @@ def move_file(command: str) -> None:
         return
 
     parent_dir = ""
-    for i in range(len(directories)):
-        path = os.path.join(parent_dir, directories[i])
+    for directory in directories:
+        path = os.path.join(parent_dir, directory)
         parent_dir = str(path)
         try:
             os.mkdir(path)
         except OSError:
             pass
 
-    with (open(file_in_name, "r") as file_in,
-          open(dir_destination, "w") as file_out):
+    with (
+        open(file_in_name, "r") as file_in,
+        open(dir_destination, "w") as file_out
+    ):
         content = file_in.read()
         file_out.write(content)
 
