@@ -1,11 +1,10 @@
 import os
-import shlex
 import shutil
 
 
 def move_file(command: str) -> None:
     try:
-        command, source_path, destination_path = shlex.split(command)
+        command, source_path, destination_path = command.split()
         if command != "mv":
             raise ValueError("The command is not 'mv'")
     except ValueError as e:
