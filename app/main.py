@@ -1,5 +1,4 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
@@ -26,5 +25,8 @@ def move_file(command: str) -> None:
     else:
         full_destination_path = destination_file
 
-    shutil.copy2(full_source_path, full_destination_path)
+    with open(full_source_path, "rb") as source, open(
+        full_destination_path, "wb"
+    ) as destination:
+        destination.write(source.read())
     os.unlink(full_source_path)
