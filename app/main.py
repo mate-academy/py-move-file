@@ -24,7 +24,6 @@ def move_file(command: str) -> None:
         open(file_in_name, "r") as file_in,
         open(dir_destination, "w") as file_out
     ):
-        content = file_in.read()
-        file_out.write(content)
+        file_out.write(file_in.read())
 
     os.remove(file_in_name)
