@@ -2,26 +2,22 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_content = command.split()
-    if (
-        len(command_content) == 3
-        and command_content[0] == "mv"
-        and command_content[1] != command_content[2]
-    ):
-        path_components = command_content[2].split("/")
+    try:
+        _, source, destination = command.split()
+    except ValueError as e:
+        print("Incorrect command specified: ", e)
+    else:
+        if _ == "mv" and source != destination:
+            directory_path = os.path.dirname(destination)
 
-        if len(path_components) > 1:
-            path_components = path_components[:-1]
-            new_directory_path = os.path.join(*path_components)
+            if directory_path != "" and not os.path.exists(directory_path):
+                os.makedirs(directory_path)
 
-            if not os.path.exists(new_directory_path):
-                os.makedirs(new_directory_path)
+                with (open(source, "r") as file,
+                      open(destination, "w") as moved_file
+                      ):
+                    moved_file.write(file.read())
+                os.remove(source)
 
-            with (open(command_content[1], "r") as file,
-                  open(command_content[2], "w") as moved_file
-                  ):
-                moved_file.write(file.read())
-            os.remove(command_content[1])
-
-        else:
-            os.rename(command_content[1], command_content[2])
+            else:
+                os.rename(source, destination)
