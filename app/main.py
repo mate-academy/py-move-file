@@ -10,6 +10,6 @@ def move_file(command: str) -> None:
             or not (destination.endswith(".txt"))):
         return
 
-    if not (path.dirname(destination) == ''):
+    if not (path.dirname(destination) == ""):
         makedirs(path.dirname(destination), exist_ok=True)
     move(source, destination)
