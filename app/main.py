@@ -10,12 +10,10 @@ def move_file(command: str) -> None:
             with open(source_file_name) as source:
                 source_text = source.read()
 
-            destination_path = "/".join(destination_name.split("/"))
-            destination_folders = "/".join(destination_name.split("/")[:-1])
-
+            destination_folders = os.path.dirname(destination_name)
             makedirs(destination_folders, exist_ok=True)
 
-            with open(destination_path, "w") as destination:
+            with open(destination_name, "w") as destination:
                 destination.write(source_text)
 
             remove(source_file_name)
