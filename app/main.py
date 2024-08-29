@@ -3,8 +3,9 @@ from os import makedirs, rename, remove
 
 
 def move_file(command: str) -> None:
-    if command.split()[0] == "mv" and len(command.split()) == 3:
-        command_name, source_file_name, destination_name = command.split()
+    lst_command = command.split()
+    if command.split()[0] == "mv" and len(lst_command) == 3:
+        command_name, source_file_name, destination_name = lst_command
 
         if os.path.dirname(destination_name):
             with open(source_file_name) as source:
