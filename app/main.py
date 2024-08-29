@@ -4,7 +4,7 @@ from os import makedirs, rename, remove
 
 def move_file(command: str) -> None:
     lst_command = command.split()
-    if command.split()[0] == "mv" and len(lst_command) == 3:
+    if lst_command[0] == "mv" and len(lst_command) == 3:
         command_name, source_file_name, destination_name = lst_command
 
         if os.path.dirname(destination_name):
