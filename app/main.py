@@ -3,9 +3,9 @@ from os import makedirs
 
 
 def move_file(command: str) -> None:
-    if len(command.split(" ")) == 3:
-        list_command = command.split(" ")[1:]
-        file_origin, file_to_create = list_command
+    command = command.split()
+    if len(command) == 3:
+        _, file_origin, file_to_create = command
 
     if os.path.dirname(file_to_create):
         with open(file_origin) as f_origin:
