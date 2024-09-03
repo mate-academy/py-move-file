@@ -8,7 +8,6 @@ from app.errors import (InvalidCommandError,
 
 def move_file(command: str) -> int:
     args_list = command.split()
-    dirs_list = []
 
     if len(args_list) != 3:
         raise InvalidFileCountError("Invalid file count")
@@ -19,25 +18,22 @@ def move_file(command: str) -> int:
     elif not args_list[1].split("/")[-1]:
         raise InvalidFileError("Invalid file name")
     else:
-        dirs_list.extend(args_list[2].split("/"))
-        if dirs_list[-1]:
-            new_file_name = dirs_list[-1]
-            del dirs_list[-1]
+        path_dirs = os.path.dirname(args_list[2])
+        file_name_in_source_path = os.path.basename(args_list[1])
+        file_name_in_dest_path = os.path.basename(args_list[2])
+        if file_name_in_dest_path:
+            file_name = file_name_in_dest_path
         else:
-            new_file_name = args_list[1].split("/")[-1]
-
+            file_name = file_name_in_source_path
         try:
-            if dirs_list:
-                os.makedirs(os.path.join(*dirs_list), exist_ok=True)
-                dirs_list.append(new_file_name)
-            else:
-                dirs_list.append(new_file_name)
-            with (open(os.path.join(args_list[1]), "r") as read_file,
-                  open(os.path.join(*dirs_list) , "a") as write_file):
-                for line in read_file:
-                    write_file.write(line)
+            if path_dirs:
+                os.makedirs(path_dirs, exist_ok=True)
+            with (open(os.path.join(args_list[1]), "r") as s_file,
+                  open(os.path.join(path_dirs, file_name) , "a") as d_file):
+                for line in s_file:
+                    d_file.write(line)
         except FileNotFoundError:
-            os.removedirs(os.path.join(*dirs_list))
+            os.removedirs(os.path.join(path_dirs))
             raise
         else:
             os.remove(args_list[1])
