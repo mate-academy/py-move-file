@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
 
     command = command.split()
-    if command != 3 or command[0] != "mv":
+    if len(command) != 3 or command[0] != "mv":
         raise Exception("Invalid command")
 
     _, file_name, copy_path = command
