@@ -1,37 +1,29 @@
 import os
+import shutil
 
 
-def move_file(command: str) -> None:
-    current_dir = os.getcwd()
+def move_file(command: str) -> None | ValueError | FileExistsError:
     parts = command.split(" ")
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid format. Use: mv <source> <destination>")
 
-    out_parts, in_parts = (part.split("/") for part in parts[1:])
+    src_path, dest_path = parts[1:]
 
-    out_dirs, out_file = "/".join(out_parts[:-1]), out_parts[-1]
+    if not os.path.isfile(src_path):
+        raise FileNotFoundError(f"The file '{src_path}' does not exist.")
 
-    if len(in_parts) > 1:
-        in_dirs = "/".join(in_parts[:-1])
-        in_file = in_parts[-1] if in_parts[-1] else out_file
-        in_path = os.path.join(current_dir, in_dirs)
-        if not os.path.exists(in_path):
-            os.makedirs(in_path, exist_ok=True)
-    else:
-        in_path = current_dir
-        in_file = parts[-1]
+    dest_dir, dest_file = get_dir_and_file(dest_path)
+    dest_file = dest_file if dest_file else os.path.basename(src_path)
 
-    full_out_file = os.path.join(current_dir, out_dirs, out_file)
-    full_in_file = os.path.join(in_path, in_file)
+    if dest_dir:
+        os.makedirs(dest_dir, exist_ok=True)
 
-    simple_rename(full_out_file, full_in_file)
+    dest_path = os.path.join(dest_dir, dest_file)
+
+    shutil.move(src_path, dest_path)
 
 
-def simple_rename(out_file: str, in_file: str) -> None | FileNotFoundError:
-    if not os.path.isfile(out_file):
-        raise FileNotFoundError(f"The file '{out_file}' does not exist.")
-
-    with open(out_file, "r") as from_file, open(in_file, "w") as to_file:
-        to_file.write(from_file.read())
-
-    os.remove(out_file)
+def get_dir_and_file(path: str) -> tuple[str, str]:
+    dirs = os.path.dirname(path)
+    file_name = os.path.basename(path)
+    return dirs, file_name
