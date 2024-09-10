@@ -22,9 +22,6 @@ def move_file(command: str) -> None:
         if place_file_dir and not os.path.exists(place_file_dir):
             os.makedirs(place_file_dir, exist_ok=True)
 
-    if os.path.exists(place_file):
-        os.remove(place_file)
-
     try:
         os.rename(source_file, place_file)
         print(f"Moved file from {source_file} to {place_file}")
