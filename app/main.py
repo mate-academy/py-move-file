@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     cmd, source_file_name, destination_path = command_list
     destination_dir = os.path.dirname(destination_path)
 
-    if cmd != "mv" or len(command_list) < 2:
+    if cmd != "mv" or len(command_list) != 3:
         return
 
     if not os.path.exists(destination_dir) and "/" in destination_dir:
