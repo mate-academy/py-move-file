@@ -2,7 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    mv, source_file, result = command.split()
+    parts = command.split()
+    if len(parts) != 3:
+        raise ValueError("Command must have exactly 3 arguments")
+    mv, source_file, result = parts
     if "/" in result:
         destination, file = os.path.split(result)
     else:
