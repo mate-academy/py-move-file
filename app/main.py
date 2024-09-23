@@ -16,7 +16,7 @@ def move_file(command: str) -> None:
     directory_to_file = os.path.dirname(new_file)
     if not directory_to_file:
         os.rename(file, new_file)
-        return None
+        return
 
     name_of_new_file = os.path.basename(new_file)
     if not name_of_new_file:
