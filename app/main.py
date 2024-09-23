@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
 
     if mv_command != "mv":
         raise ValueError("We need only command 'mv'!")
-    if "/" not in new_file:
+    if os.path.dirname(new_file) == "":
         os.rename(file, new_file)
         return None
 
