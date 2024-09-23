@@ -16,10 +16,9 @@ def move_file(command: str) -> None:
         os.rename(file, new_file)
         return None
 
-    if "." in new_file.split("/")[-1]:
-        name_of_new_file = new_file.split("/")[-1]
-        directory_to_file = new_file[:new_file.rfind("/")]
-    elif "." not in new_file:
+    directory_to_file = os.path.dirname(new_file)
+    name_of_new_file = os.path.basename(new_file)
+    if not name_of_new_file:
         name_of_new_file = file
 
     os.makedirs(directory_to_file, exist_ok=True)
