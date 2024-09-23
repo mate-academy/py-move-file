@@ -2,10 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3:
-        mv_command, file, new_file = command.split()
+    elements = command.split()
+    if len(elements) == 3:
+        mv_command, file, new_file = elements
     else:
-        raise ValueError("We must have 3 elements!")
+        raise ValueError("We must have 3 elements!x")
     if mv_command != "mv":
         raise ValueError("We need only command 'mv'!")
     current_place = ""
