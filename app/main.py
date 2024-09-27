@@ -2,7 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split()) != 3:
+        raise ValueError("You need to specify the command, file name and the path where to move the file")
+
     command, file_name, location = command.split()
+
+    if command != "mv":
+        raise ValueError("Only mv command is supported")
 
     os.makedirs(location[:location.rfind("/")], exist_ok=True)
 
