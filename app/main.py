@@ -7,8 +7,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid command format")
 
-    first_dir = parts[1]
-    second_dir = parts[2]
+    _, first_dir, second_dir = parts
 
     if not os.path.isfile(first_dir):
         raise FileNotFoundError(f"Source '{first_dir}' does not exist.")
