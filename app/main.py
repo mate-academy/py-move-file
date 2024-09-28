@@ -3,16 +3,20 @@ from os import mkdir
 
 
 class CleanUpFile:
-    def __init__(self, filename: str) -> None:
+    def __init__(self, filename: str, mode: str) -> None:
         self.filename = filename
+        self.mode = mode
+        self.file = None
 
     def __enter__(self) -> None:
-        return self
+        self.file = open(self.filename, self.mode)
+        return self.file
 
     def __exit__(self,
                  exc_type: object,
                  exc_value: object,
                  traceback: object) -> None:
+        self.file.close()
         os.remove(self.filename)
 
 
@@ -36,8 +40,7 @@ def move_file(command: str) -> None:
             except FileExistsError:
                 pass
 
-    with CleanUpFile(current_location):
-        with (open(current_location, "r") as current_file,
-              open(expected_location, "w") as expected_file):
-            for line in current_file:
-                expected_file.write(line)
+    with (CleanUpFile(current_location, "r") as current_file,
+          open(expected_location, "w") as expected_file):
+        for line in current_file:
+            expected_file.write(line)
