@@ -27,7 +27,6 @@ def move_file(command: str) -> None:
     expected_location = os.path.join(*expected_way)
 
     if len(expected_way) > 1:
-        print("hello")
         directory_way = expected_way[:-1]
         current_folder = ""
         for way in directory_way:
