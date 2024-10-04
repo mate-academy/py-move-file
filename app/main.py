@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     if len(_command) != 3:
         print("Wrong command!")
         return
-    mv, source_file, new_file = command.split()
+    mv, source_file, new_file = _command
     if mv != "mv":
         print('Command should be "mv"')
         return
