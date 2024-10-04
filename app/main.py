@@ -3,7 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     mv, source_file, new_file = command.split()
-    if len(command.split()) != 3:
+    _command = command.split()
+    if len(_command) != 3:
         print("Wrong command!")
         return
     if mv != "mv":
