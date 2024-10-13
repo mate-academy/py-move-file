@@ -7,7 +7,6 @@ def move_file(command: str) -> None:
     if command[0] != "mv":
         return
     if len(route) > 1:
-        new_file_name = route[-1]
         route.pop()
     else:
         new_file_name = route[0]
@@ -25,8 +24,3 @@ def move_file(command: str) -> None:
     for _ in range(len(route)):
         os.chdir("..")
     os.rename(command[1], command[2])
-
-
-if __name__ == "__main__":
-    path = "mv file.txt file2.txt"
-    move_file(path)
