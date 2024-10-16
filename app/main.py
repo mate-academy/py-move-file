@@ -4,15 +4,18 @@ import shutil
 
 def move_file(command: str) -> None:
     parts = command.split()
+
     if len(parts) != 3 or parts[0] != "mv":
-        raise ValueError(
-            "Команда повинна бути у форматі 'mv source destination'"
-        )
-    source = parts[1]
-    destination = parts[2]
+        raise ValueError("Command must be in the format 'mv source destination'")
+
+    source = parts[1].strip()
+    destination = parts[2].strip()
+
+    if not source or not destination:
+        raise ValueError("'source' and 'destination' cannot be empty")
 
     if not os.path.exists(source):
-        raise FileNotFoundError(f"Файл {source} не існує")
+        raise FileNotFoundError(f"File {source} does not exist")
 
     if destination.endswith("/"):
         os.makedirs(destination, exist_ok=True)
