@@ -3,15 +3,15 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    parts = command.split()
+    command_parts = command.split()
 
-    if len(parts) != 3 or parts[0] != "mv":
+    if len(command_parts) != 3 or command_parts[0] != "mv":
         raise ValueError(
             "Command must be in the format 'mv source destination'"
         )
 
-    source = parts[1].strip()
-    destination = parts[2].strip()
+    source = command_parts[1]
+    destination = command_parts[2]
 
     if not source or not destination:
         raise ValueError("'source' and 'destination' cannot be empty")
