@@ -4,16 +4,19 @@ import os
 def move_file(command: str) -> None:
 
     try:
-        _, source, destination = command.split()
+        cmd, source, destination = command.split()
     except ValueError:
         print("Error!")
 
     if source == destination:
         return
 
+    if cmd != "mv":
+        raise ValueError("Incorrect command!")
+
     if destination.endswith("/"):
         os.makedirs(destination, exist_ok=True)
-        destination += source
+        destination = os.path.join(destination, source)
     else:
         dir_name = os.path.dirname(destination)
         if dir_name:
