@@ -16,12 +16,12 @@ def move_file(command: str) -> None:
 
     if destination_path.endswith("/"):
         os.makedirs(destination_path, exist_ok=True)
-        destination_path = os.path.join(     
-        destination_path, os.path.basename(source_path)
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_path)
         )
     else:
         destination_dir = os.path.dirname(destination_path)
-    if destination_dir and not os.path.exists(destination_dir):
+        if destination_dir and not os.path.exists(destination_dir):
             os.makedirs(destination_dir, exist_ok=True)
 
     os.rename(source_path, destination_path)
