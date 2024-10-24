@@ -1,4 +1,6 @@
 from os import remove, makedirs, path
+from types import TracebackType
+from typing import Optional, Type
 
 
 class MoveFileManager:
@@ -16,8 +18,8 @@ class MoveFileManager:
 
     def __exit__(
             self,
-            exc_type: str,
-            exc_val: str,
-            exc_tb: str
+            exc_type: Optional[Type[BaseException]],
+            exc_val: Optional[Type[BaseException]],
+            exc_tb: Optional[TracebackType]
     ) -> None:
         remove(self.source_file_name)
