@@ -1,4 +1,5 @@
-from os import remove, makedirs, path
+from os import remove, makedirs
+import os.path as path
 from types import TracebackType
 from typing import Optional, Type
 
@@ -7,14 +8,14 @@ class MoveFileManager:
     def __init__(
             self,
             source_file_name: str,
-            path: str
+            path_to_file: str
     ) -> None:
         self.source_file_name = source_file_name
-        self.path = path
+        self.path_to_file = path_to_file
 
     def __enter__(self) -> None:
-        if self.path and not path.exists(self.path):
-            makedirs(self.path)
+        if self.path_to_file and not path.exists(self.path_to_file):
+            makedirs(self.path_to_file)
 
     def __exit__(
             self,
