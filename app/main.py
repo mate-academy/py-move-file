@@ -5,7 +5,7 @@ from app.copy_content import manager_call
 
 def move_file(command: str) -> None:
     split_cmd = command.split()
-    if len(split_cmd) != 3 or "mv" not in split_cmd:
+    if len(split_cmd) != 3 or split_cmd[0] != "mv":
         raise ValueError("Wrong 'move' command input")
 
     cmd, source_file, moved_file = split_cmd
