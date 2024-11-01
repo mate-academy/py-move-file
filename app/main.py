@@ -12,7 +12,6 @@ def move_file(command: str) -> None:
                 pass
 
         destination_dir = os.path.dirname(destination_file)
-        print(destination_dir)
         if destination_dir and not os.path.exists(destination_dir):
             os.makedirs(destination_dir)
 
