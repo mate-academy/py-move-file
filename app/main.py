@@ -21,10 +21,11 @@ def move_file(command: str) -> None:
         if not os.path.isdir(directory):
             os.makedirs(directory)
 
-    sf = open(source_file, "r")
-    source_text = sf.read()
-    cf = open(destination, "w")
-    cf.write(source_text)
-    sf.close()
-    cf.close()
-    os.remove(source_file)
+    if not os.path.isfile(destination):
+        sf = open(source_file, "r")
+        source_text = sf.read()
+        cf = open(destination, "w")
+        cf.write(source_text)
+        sf.close()
+        cf.close()
+        os.remove(source_file)
