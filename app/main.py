@@ -8,6 +8,7 @@ def move_file(command: str) -> None:
         return
 
     mv, source_file, destination = command.split()
+    directory = ""
 
     if mv != "mv":
         return
@@ -18,18 +19,20 @@ def move_file(command: str) -> None:
 
         dir_list = destination.split("/")
         dir_list.pop()
-        directory = ""
+#        print("dir_list = ", dir_list)
         for dirs in dir_list:
-            directory += dirs
-            directory += "/"
+            directory = os.path.join(directory, dirs)
+
+#        print("directory = ", directory)
 
         if not os.path.isdir(directory):
             os.makedirs(directory)
 
+#    print("destination = ", destination, os.path.isfile(destination))
     if not os.path.isfile(destination):
         with open(source_file, "r") as sf:
             source_text = sf.read()
-        with open(destination, "w") as cf:
+        with open(destination, "a") as cf:
             cf.write(source_text)
         os.remove(source_file)
 
