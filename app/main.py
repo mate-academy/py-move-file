@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     command_list = command.split(" ")
     first_command = command_list[0]
-    if first_command == "mv" and len(command) >= 6:
+    if first_command == "mv" and len(command_list) == 3:
 
         file_old = command_list[1]
         destination = command_list[2]
