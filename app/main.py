@@ -51,11 +51,5 @@ def move_file(command: str) -> None:
                     and Check.check_path(folder_new, file_new)
             ):
                 if os.path.exists(path_old) and not os.path.exists(path_new):
-                    if os.path.exists(path_old):
-                        create_path(folder_new)
-                        os.rename(path_old, path_new)
-                        if (
-                                folder_old != folder_new
-                                and os.path.exists(path_old)
-                        ):
-                            os.remove(path_old)
+                    create_path(folder_new)
+                    os.rename(path_old, path_new)
