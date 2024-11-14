@@ -34,7 +34,7 @@ class Check:
 def create_path(folders: list[str]) -> None:
     path = ""
     for folder in folders:
-        path = folder if not path else path + "/" + folder
+        path = folder if not path else os.path.join(path, folder)
         if not os.path.exists(path):
             os.mkdir(path)
 
@@ -50,6 +50,6 @@ def move_file(command: str) -> None:
                     and Check.check_path(folder_old, file_old)
                     and Check.check_path(folder_new, file_new)
             ):
-                if os.path.exists(path_old) and not os.path.exists(path_new):
+                if not os.path.exists(path_new):
                     create_path(folder_new)
                     os.rename(path_old, path_new)
