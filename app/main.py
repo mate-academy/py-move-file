@@ -5,7 +5,8 @@ def move_file(command: str) -> None:
     commands = command.strip().split()
 
     if commands[0] != "mv" or len(commands) != 3:
-        raise(
+
+        raise (
             "Command must have 'mv' and exactly "
             "2 arguments (source and destination)"
         )
@@ -16,7 +17,7 @@ def move_file(command: str) -> None:
     if not os.path.isfile(source_file):
         raise FileNotFoundError(f"Source file {source_file} does not exist")
 
-    if destination.endswith('/'):
+    if destination.endswith("/"):
         if not os.path.exists(destination):
             os.makedirs(destination)
         destination = os.path.join(destination, os.path.basename(source_file))
