@@ -3,6 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
+    if len(parts) != 3:
+        return
 
     if parts[2].endswith("/"):
         new_path = os.path.join(parts[2], os.path.basename(parts[1]))
@@ -15,8 +17,9 @@ def move_file(command: str) -> None:
         for part in directory.split("/"):
             new_dir = os.path.join(new_dir, part)
             if not os.path.exists(new_dir):
-                if not os.path.isfile(new_dir):
-                    os.mkdir(new_dir)
+                os.mkdir(new_dir)
 
-    if os.path.exists(parts[1]):
+    try:
         os.rename(parts[1], new_path)
+    except BaseException:
+        raise
