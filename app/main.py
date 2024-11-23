@@ -3,8 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     command_parts = command.split()
-    mv_command, file_name, file_path = command_parts
-    if mv_command == "mv" and len(command_parts) == 3:
+    if command_parts[0] == "mv" and len(command_parts) == 3:
+        mv_command, file_name, file_path = command_parts
         path_parts = file_path.split("/")
         current_dir = path_parts[0]
         if len(path_parts) == 1:
