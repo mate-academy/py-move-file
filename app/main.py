@@ -12,13 +12,10 @@ def move_file(command: str) -> None:
             path = new_name_split[0]
             for index in range(1, len(new_name_split)):
                 if os.path.exists(path) is False:
-                    os.makedirs(path)
+                    os.mkdir(path)
                     path += f"/{new_name_split[index]}"
-
                 else:
                     path += f"/{new_name_split[index]}"
-            #     print(path)
-            # print(path)
         with (open(old_name, "r") as input_file,
               open(new_name, "w") as output_file):
             output_file.write(input_file.read())
