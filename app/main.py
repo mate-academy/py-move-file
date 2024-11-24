@@ -14,7 +14,8 @@ def move_file(command: str) -> None:
     if directory:
         if not os.path.exists(directory):
             os.makedirs(directory)
-        with open(source_file_name, "r") as file, open(directory + "/" + destination_file_name, "w") as d_file:
+        with (open(source_file_name, "r") as file,
+              open(directory + "/" + destination_file_name, "w") as d_file):
             d_file.write(file.read())
         os.remove(source_file_name)
 
