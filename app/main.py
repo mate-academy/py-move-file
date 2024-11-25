@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     files_name = command.split(" ")
     dir_and_file = []
     if "/" in files_name[2]:
