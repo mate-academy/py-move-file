@@ -2,20 +2,22 @@ import os
 
 
 def move_file(command: str) -> None:
-    sepp_command = command.split()
+    com, source, destination = command.split()
 
-    source = sepp_command[1]
-    destination = sepp_command[2]
+    if com != "mv":
+        return
 
     path_to_move = destination.split("/")
 
-    new_dir = ""
+    if len(path_to_move) == 1:
+        if os.path.exists(destination):
+            os.remove(destination)
+        os.rename(source, destination)
+        return
 
-    if path_to_move:
-        for path in path_to_move[:-1]:
-            new_dir += path + "/"
-            if not os.path.exists(new_dir):
-                os.mkdir(new_dir)
+    path_to_move = "/".join(path_to_move[:-1])
+
+    os.makedirs(path_to_move, exist_ok=True)
 
     with (open(source, "r") as file_out,
           open(destination, "w") as file_in):
