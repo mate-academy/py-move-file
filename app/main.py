@@ -18,3 +18,4 @@ def move_file(command: str) -> None:
         os.makedirs(dest_dir)
 
     os.rename(source_file, destination_path)
+    os.remove(source_file)
