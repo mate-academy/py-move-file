@@ -1,0 +1,28 @@
+# Напишіть функцію move_file, яка буде переміщувати файл з
+# одного місця в інше. Функція приймає command, це дуже схоже на
+# команду Linux mv: mv file.txt some_dir/new_file.txt
+# (це створить new_file.txt і some_dir/видалить вихідний файл).
+#
+# Якщо ім’я в шляху призначення закінчується на /, його слід розглядати
+# як каталог. Додаток має підтримувати лише переміщення файлів,
+# без додаткових опцій (прапорців). приклади:
+#
+# mv file.txt file2.txt просто перейменовує файл.
+# mv file.txt first_dir/second_dir/file2.txt створити каталог
+# first_dir у поточному каталозі, потім створити каталог
+# first_dir/second_dir, створити file2.txt усередині та видалити
+# вихідний файл.
+# print(open("file.txt").read())
+# # Some
+# # Text
+# move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
+# print(open("first_dir/second_dir/third_dir/file2.txt").read())
+# # Some
+# # Text
+# open("file.txt")
+# # FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+# Примітка : Ви можете створити каталог за os.mkdir("first")допомогою
+# # модуля from os. Але щоб створити os.mkdir("first/second"), first
+# каталог повинен існувати. Функція повинна працювати з різною
+# глибиною каталогу.
+# # Використовуйте os.remove()для видалення файлу.
