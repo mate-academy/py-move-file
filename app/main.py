@@ -15,9 +15,18 @@ def move_file(command: str) -> None:
             if dir_path:
                 os.makedirs(dir_path, exist_ok=True)
 
-        with open(source, "rb") as src_file:
-            content = src_file.read()
-        with open(destination, "wb") as dest_file:
-            dest_file.write(content)
+        try:
+            with open(source, "rb") as src_file:
+                content = src_file.read()
+            with open(destination, "wb") as dest_file:
+                dest_file.write(content)
 
-        os.remove(source)
+            os.remove(source)
+
+        except FileNotFoundError:
+            print("File not found!")
+        except PermissionError:
+            print("No permissions to access the file!")
+
+    else:
+        raise Exception("Inappropriate command format")
