@@ -17,11 +17,11 @@ def move_file(command: str) -> None:
                 file_out.write(file_in.read())
             os.remove(command_list[1])
         else:
-            ful_path = ""
+            full_path = ""
             for f_dir in mv_dir[:-1]:
-                ful_path += f_dir + "/"
-                if not os.path.exists(ful_path):
-                    os.mkdir(ful_path)
+                full_path += f_dir + "/"
+                if not os.path.exists(full_path):
+                    os.mkdir(full_path)
             with open(command_list[1],
                       "r") as file_in, open(command_list[-1],
                                             "w+") as file_out:
