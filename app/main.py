@@ -1,10 +1,19 @@
 import os
 
 
+class MvError(Exception):
+    pass
+
+
 def move_file(command: str) -> None:
-    com_ls = command.split()
-    path = com_ls[2]
-    sour_file = com_ls[1]
+    _, source_file, path = command.split()
+
+    if len(command.split()) != 3:
+        raise MvError(
+            "Invalid command format. "
+            "Expected: mv source_file destination_path."
+        )
+
     path_ls = path.split("/")
     current_path = ""
 
@@ -16,9 +25,9 @@ def move_file(command: str) -> None:
     new_file_path = os.path.join(current_path, path_ls[-1])
 
     if path.endswith("/"):
-        new_file_path = os.path.join(new_file_path, sour_file)
+        new_file_path = os.path.join(new_file_path, source_file)
 
-    with open(sour_file, "r") as file_in, open(new_file_path, "w") as new_file:
-        new_file.write(file_in.read())
+    with open(source_file, "r") as file_in, open(new_file_path, "w") as new_fl:
+        new_fl.write(file_in.read())
 
-    os.remove(sour_file)
+    os.remove(source_file)
