@@ -3,21 +3,21 @@ import os
 
 def move_file(command: str) -> None:
     instructions = command.split()
-    _, source, destination = instructions
 
     if len(instructions) != 3 or instructions[0] != "mv":
         raise ValueError("Incorrect command")
+    _, source, destination = instructions
 
     if os.path.exists(destination):
-        raise FileExistsError("Already exists!")
+        raise FileExistsError("File already exists!")
 
-    path = os.path.join("/".join(destination.split("/")[:-1]))
-    new_name = destination.split("/")[-1]
+    path = os.path.dirname(destination)
+    new_name = os.path.basename(destination)
 
     if path and not os.path.exists(path):
         os.makedirs(path)
     if path:
-        new_name = os.path.join(path + "/" + new_name)
+        new_name = os.path.join(path, new_name)
 
     with open(source, "r") as old, open(new_name, "w") as new:
         new.write(old.read())
