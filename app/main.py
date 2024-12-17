@@ -10,6 +10,8 @@ def move_file(command: str) -> None:
                 raise ValueError("Enter correct path and file name!")
             dirs = destination.split("/")[:-1]
             file2_name = destination.split("/")[-1]
+            if os.path.exists(destination):
+                raise FileExistsError(f"File {file2_name} already exists.")
 
             dir_path = ""
             for folder in dirs:
