@@ -1,15 +1,11 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
 
-    parts = command.split()
-    if len(parts) != 3 or parts[0] != "mv":
+    if len(command.split()) != 3 or command.split()[0] != "mv":
         raise ValueError
-
-    source_file = parts[1]
-    destination = parts[2]
+    command_name, source_file, destination = command.split()
 
     if not os.path.isfile(source_file):
         raise FileNotFoundError
@@ -22,4 +18,8 @@ def move_file(command: str) -> None:
         if dest_dir:
             os.makedirs(dest_dir, exist_ok=True)
 
-    shutil.move(source_file, destination)
+    with open(source_file, "r") as source:
+        with open(destination, "w") as dest:
+            dest.write(source.read())
+
+    os.remove(source_file)
