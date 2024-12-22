@@ -18,22 +18,36 @@ def move_file(command: str) -> None:
         print(e)
         return
 
-    if "/" in command_list[2]:
-        path_list = command_list[2].split("/")[:-1]
-
-        for directory in path_list:
-            path += os.path.join(directory + "/")
-            try:
-                os.mkdir(path)
-            except FileExistsError:
-                continue
-
     try:
-        with (
-            open(command_list[1], "r") as old_file,
-            open(path + command_list[2].split("/")[-1], "w") as new_file
-        ):
-            new_file.write(old_file.read())
+        if "/" in command_list[2]:
+            path_list = command_list[2].split("/")[:-1]
+
+            for directory in path_list:
+                path = os.path.join(path, directory)
+                try:
+                    os.mkdir(path)
+                except FileExistsError:
+                    continue
+
+            with (
+                open(
+                    command_list[1], "r"
+                ) as old_file,
+                open(
+                    f"{path}/{command_list[2].split("/")[-1]}", "w"
+                ) as new_file
+            ):
+                new_file.write(old_file.read())
+        else:
+            with (
+                open(
+                    command_list[1], "r"
+                ) as old_file,
+                open(
+                    f"{command_list[2].split("/")[-1]}", "w"
+                ) as new_file
+            ):
+                new_file.write(old_file.read())
 
         os.remove(command_list[1])
     except FileNotFoundError:
