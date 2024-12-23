@@ -3,6 +3,9 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
+    if len(parts) != 3:
+        print("Error: Invalid command format. Use 'mv file new_file'.")
+        return
     file, new_file = parts[1], parts[2]
     if not os.path.isfile(file):
         raise FileNotFoundError(f"No such file: '{file}'")
@@ -18,4 +21,7 @@ def move_file(command: str) -> None:
             f"Cannot move '{file}' to '{new_file}': file already exists."
         )
     os.rename(file, new_file)
+    print(f"Moved '{file}' to '{new_file}'")
+    if os.path.isfile(file):
+        os.remove(file)
     print(f"Moved '{file}' to '{new_file}'")
