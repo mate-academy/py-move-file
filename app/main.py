@@ -21,34 +21,32 @@ def move_file(command: str) -> None:
     if destination.endswith('/'):
         destination_dir = destination
         print(f"Creating directories: {destination_dir}")
-        try:
-            os.makedirs(destination_dir, exist_ok=True)
-        except FileExistsError:
-            print(f"Warning: {destination_dir} already exists.")
+        os.makedirs(destination_dir, exist_ok=True)
         destination = os.path.join(destination_dir, os.path.basename(source_file))
 
     else:
         if os.path.exists(destination):
-            print(f"Error: {destination} already exists.")
+            if os.path.isdir(destination):
+                print(f"Error: A file with the name {os.path.basename(source_file)} already exists in the destination directory.")
+            else:
+                print(f"Error: {destination} already exists.")
             return
 
         destination_dir = os.path.dirname(destination)
         if destination_dir and not os.path.exists(destination_dir):
             print(f"Creating directories: {destination_dir}")
-            try:
-                os.makedirs(destination_dir, exist_ok=True)
-            except FileExistsError:
-                pass
+            os.makedirs(destination_dir, exist_ok=True)
 
     try:
-        with open(source_file, "r") as src:
+        with open(source_file, "rb") as src:
             content = src.read()
-        with open(destination, "w") as dest:
+
+        with open(destination, "wb") as dest:
             dest.write(content)
         print(f"Successfully moved {source_file} to {destination}.")
+
         os.remove(source_file)
         print(f"Removed the original file {source_file}.")
 
     except Exception as e:
         print(f"Error: {e}")
-
