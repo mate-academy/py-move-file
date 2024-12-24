@@ -14,7 +14,7 @@ def move_file(command: str) -> None:
     destination_dir = os.path.dirname(destination)
     if destination_dir and not os.path.exists(destination_dir):
         os.makedirs(destination_dir)
-    with open(source, "r", encoding='utf-8') as src_file:
-        with open(destination, "w", encoding='utf-8') as dest_file:
+    with open(source, "r") as src_file:
+        with open(destination, "w") as dest_file:
             dest_file.write(src_file.read())
     os.remove(source)
