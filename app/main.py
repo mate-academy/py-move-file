@@ -1,5 +1,5 @@
-from distutils.file_util import copy_file
 import os
+import shutil
 
 
 def move_file(command: str) -> None:
@@ -8,15 +8,11 @@ def move_file(command: str) -> None:
     _, old_file, new_file = command.split(" ")
 
     if new_file.count("/") != 0:
-        path = ""
-        for i in new_file.split("/"):
-            if "." not in i:
-                path += i + "/"
-                if not os.path.isdir(path):
-                    os.mkdir(path)
-            else:
-                path += i
-            new_file = path
+        *path, new_file_name = new_file.split("/")
+        print(path)
+        new_path = os.path.join(*path)
+        if not os.path.isdir(new_path):
+            os.makedirs(new_path)
 
-    copy_file(old_file, new_file)
-    os.remove(old_file)
+        new_file = os.path.join(new_path, new_file_name)
+    shutil.move(old_file, new_file)
