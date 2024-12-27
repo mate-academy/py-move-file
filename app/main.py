@@ -2,6 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command.split(" ")) != 3 or command.split(" ")[0] != "mv":
+        print("wrong command")
+        return
+
     file_name, new_path = command.split(" ")[1:]
 
     with open(file_name, "r") as sorce:
