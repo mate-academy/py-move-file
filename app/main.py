@@ -11,29 +11,26 @@ def move_file(command: str) -> None:
         raise ValueError("You need to have 3 attributes for this to work!")
 
     src_content = ""
-    with open(src_file_path, "r") as src_file:
-        src_content = src_file.read()
+    try:
+        with open(src_file_path, "r") as src_file:
+            src_content = src_file.read()
+    except Exception as e:
+        print(f"An unexpected error occurred while reading the file: {e}")
 
-    root_dir = os.getcwd()
     if "/" in dest_file:
         dest_dirs = dest_file.split("/")
         dest_file_name = dest_dirs.pop()
+        dest_path = "/".join(dest_dirs)
 
-        if len(dest_dirs) > 1:
-            for directory in dest_dirs:
-                if not os.path.exists(directory):
-                    os.mkdir(f"{directory}")
-                os.chdir(f"{directory}")
-        else:
-            dest_file_path = dest_dirs[0]
-            if not os.path.exists(dest_file_path):
-                os.mkdir(dest_file_path)
-            os.chdir(dest_file_path)
-    else:
-        dest_file_name = dest_file
+        os.makedirs(dest_path, exist_ok=True)
 
-    with open(f"./{dest_file_name}", "w") as dest_file:
-        dest_file.write(src_content)
+    try:
+        with open(f"{dest_file}", "w") as res_file:
+            res_file.write(src_content)
+    except Exception as e:
+        print(f"An unexpected error occurred while writing the file: {e}")
 
-    os.chdir(root_dir)
-    os.remove(src_file_path)
+    try:
+        os.remove(src_file_path)
+    except Exception as e:
+        print(f"An unexpected error occurred while deleting the file: {e}")
