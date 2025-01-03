@@ -19,7 +19,7 @@ def move_file(command: str) -> None:
 
     if "/" in dest_file:
         dest_dirs = dest_file.split("/")
-        dest_file_name = dest_dirs.pop()
+        dest_dirs.pop()
         dest_path = "/".join(dest_dirs)
 
         os.makedirs(dest_path, exist_ok=True)
