@@ -9,18 +9,32 @@ def get_sys_delimiter() -> str:
     return "/"
 
 
-def change_sys_delimiter(path: str) -> str:
+# def change_sys_delimiter(path: str) -> str:
+#     cur_os_delimiter = get_sys_delimiter()
+#     other_delimiter = "/" if cur_os_delimiter == "\\" else "/"
+#     return path.replace(other_delimiter, cur_os_delimiter)
+
+
+def check_intput(command: str, src: str, dest: str) -> tuple:
+    if not command == "mv":
+        raise ValueError("Command should be mv...")
+    if len(src) == 0:
+        raise ValueError("Src is too short")
+    if len(dest) == 0:
+        raise ValueError("Destination is too short")
     cur_os_delimiter = get_sys_delimiter()
     other_delimiter = "/" if cur_os_delimiter == "\\" else "/"
-    return path.replace(other_delimiter, cur_os_delimiter)
+    if not dest.count(other_delimiter) == 0:
+        dest = dest.replace(other_delimiter, cur_os_delimiter)
+    return command, src, dest
 
 
 def move_file(command_line: str) -> None:
     command, src, dest = command_line.split(" ")
+    command, src, dest = check_intput(command, src, dest)
     sys_delimiter = get_sys_delimiter()
-    if dest.count(sys_delimiter) == 0:
-        dest = change_sys_delimiter(dest)
-    # rename file
+
+    # mv in current dir
     if dest.count(sys_delimiter) == 0:
         os.rename(src, dest)
         return
