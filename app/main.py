@@ -13,9 +13,9 @@ def move_file(command: str) -> None:
 
     if filename_out.find("/") != -1:
         if filename_out.endswith("/"):
-            filename_out += filename_in
+            filename_out = os.path.join(filename_in)
 
-        os.makedirs(filename_out[:filename_out.rfind("/")], exist_ok=True)
+        os.makedirs(os.path.dirname(filename_out), exist_ok=True)
 
     with (open(filename_in, "r") as file_in,
           open(filename_out, "w") as file_out):
