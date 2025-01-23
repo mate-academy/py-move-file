@@ -15,7 +15,7 @@ def move_file(command: str) -> None:
         print(f"Error: {source_file} does not exist.")
         return
 
-    if destination_path.endswith("/"):
+    if not os.path.basename(destination_path):
         print("Error: Destination must include a file name,"
               " not just a directory path.")
         return
