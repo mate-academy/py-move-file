@@ -5,10 +5,10 @@ def move_file(command: str) -> None:
     (linux_command,
      old_file, new_file) = command.split(" ")
     if linux_command != "mv":
-        raise f"Invalid command: {linux_command}"
+        raise ValueError(f"Invalid command: {linux_command}")
     if "/" in new_file:
         path_parts = new_file.split("/")
-        new_file_path = "/".join(path_parts[:-1])
+        new_file_path = os.path.join(*path_parts[:-1])
     else:
         os.rename(old_file, new_file)
         return
@@ -19,7 +19,8 @@ def move_file(command: str) -> None:
         except FileExistsError:
             pass
 
-    with open(old_file, "r") as old_file, open(new_file, "w") as new_file:
-        new_file.write(old_file.read())
+    with (open(old_file, "r") as old_file_obj,
+          open(new_file, "w") as new_file_obj):
+        new_file_obj.write(old_file_obj.read())
 
-    os.remove(old_file.name)
+    os.remove(old_file_obj.name)
