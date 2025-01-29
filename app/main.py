@@ -14,8 +14,9 @@ def move_file(command: str) -> None:
 
     file_name_new = command_attr[2]
 
-    if file_name == file_name_new:
-        os.rename(file_name, file_name_new)
+    if os.path.dirname(file_name) == os.path.dirname(file_name_new):
+        if file_name != file_name_new:
+            os.rename(file_name, file_name_new)
         return
 
     dir_path = os.path.dirname(file_name_new)
