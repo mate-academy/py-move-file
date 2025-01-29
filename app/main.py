@@ -7,12 +7,12 @@ def move_file(command: str) -> None:
     if len(command_attr) != 3 or command_attr[0] != "mv":
         return
 
-    file_name = command_attr[1]
+    file_name = os.path.abspath(command_attr[1])
     if not os.path.exists(file_name):
         print("File not exist")
         return
 
-    file_name_new = command_attr[2]
+    file_name_new = os.path.abspath(command_attr[2])
 
     if os.path.dirname(file_name) == os.path.dirname(file_name_new):
         if file_name != file_name_new:
@@ -22,7 +22,7 @@ def move_file(command: str) -> None:
     dir_path = os.path.dirname(file_name_new)
 
     if dir_path and not os.path.exists(dir_path):
-        os.makedirs(dir_path)
+        os.makedirs(dir_path, exist_ok=True)
 
     with (open(file_name, "r") as file_in,
           open(file_name_new, "w") as file_move):
