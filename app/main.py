@@ -9,7 +9,16 @@ def move_file(command: str) -> None:
         if dir_path:
             os.makedirs(dir_path, exist_ok=True)
 
-        with open(old_file, "r") as in_file, open(new_file, "w") as out_file:
-            out_file.write(in_file.read())
+        try:
+            with (
+                open(old_file, "r") as in_file,
+                open(new_file, "w") as out_file
+            ):
+                out_file.write(in_file.read())
+        except FileNotFoundError:
+            return
 
-        os.remove(old_file)
+        try:
+            os.remove(old_file)
+        except PermissionError:
+            return
