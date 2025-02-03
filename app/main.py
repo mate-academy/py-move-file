@@ -3,8 +3,12 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
-    source_file = parts[1]
-    dest_path = parts[2]
+    if len(parts) != 3 and parts[0] != "mv":
+        return
+    source_file, dest_path = parts[1], parts[2]
+
+    if dest_path.endswith("/"):
+        dest_path = os.path.join(dest_path, os.path.basename(source_file))
 
     if os.path.dirname(source_file) == os.path.dirname(dest_path):
         os.rename(source_file, dest_path)
