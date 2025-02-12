@@ -3,7 +3,7 @@ from pathlib import Path
 
 def move_file(command_file1_file2: str) -> None:
     data = command_file1_file2.split()
-    if len(data) != 3 and data[0] != "cmd":
+    if len(data) != 3 or data[0] != "cmd":
         print("Invalid command format. Use: mv source destination")
         return
 
