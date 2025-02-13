@@ -3,20 +3,17 @@ import os
 
 def move_file(command: str) -> None:
     command_list = command.split()
-    catalog_list = command_list[2].split("/")
+    if len(command_list) != 3 or command_list[0] != "mv":
+        raise ValueError("Invalid command format")
 
-    source = ""
-    for catalog in catalog_list:
-        if "." not in catalog:
-            source += catalog
-            try:
-                if not os.path.exists(source):
-                    os.mkdir(source)
-            except FileExistsError:
-                pass
-            source += "/"
+    source_file = command_list[1]
+    target_path = command_list[2]
 
-    with (open(command_list[1], "r") as origin_file,
-          open(command_list[2], "w") as new_file):
+    directory = os.path.dirname(target_path)
+    if directory and not os.path.exists(directory):
+        os.makedirs(directory)
+
+    with (open(source_file, "r") as origin_file,
+          open(target_path, "w") as new_file):
         new_file.write(origin_file.read())
-        os.remove(command_list[1])
+        os.remove(source_file)
