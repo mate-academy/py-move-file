@@ -2,16 +2,25 @@ import os
 
 
 def move_file(command: str) -> None:
-    file_to_delete, file_to_move = command.split(" ")[1:]
+    command_array = command.split(" ")
+    if command_array[0] == "mv" and len(command_array) == 3:
+        file_to_delete, file_to_move = command_array[1:]
+        try:
+            with open(file_to_delete, "r") as file:
+                text = file.read()
+        except FileNotFoundError:
+            assert print("The file does not exist.")
 
-    with open(file_to_delete, "r") as file:
-        text = file.read()
+        try:
+            os.remove(file_to_delete)
+        except FileNotFoundError:
+            print("The file does not exist.")
+        except PermissionError:
+            print("You do not have permission to move the file.")
 
-    path_to_move = "/".join(file_to_move.split("/")[:-1])
-    os.remove(file_to_delete)
+        dirs_path = os.path.dirname(file_to_move)
+        if dirs_path:
+            os.makedirs(dirs_path, exist_ok=True)
 
-    if path_to_move != "":
-        os.makedirs(path_to_move, exist_ok=True)
-
-    with open(file_to_move, "w") as file:
-        file.write(text)
+        with open(file_to_move, "w") as file:
+            file.write(text)
