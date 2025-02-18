@@ -7,18 +7,18 @@ def move_file(command: str) -> None:
     command = arr[0]
     source = arr[1]
     destination = arr[2]
-    if command != "mv":
-        raise NotImplementedError("Not implemented other command than mv")
-    if "/" not in source and "/" not in destination:
+
+    file1 = os.path.abspath(source).split("\\")
+    file1.pop()
+    file2 = os.path.abspath(destination).split("\\")
+    file2.pop()
+    if file1 == file2:
         os.rename(source, destination)
     else:
         folders = destination.split("/")
-        folders.remove(folders[-1])
+        folders.pop(-1)
         print(folders)
         joined_folders = os.path.join(*folders, "")
-        print("joined:")
-        print(f"joined: {joined_folders}")
         if not os.path.exists(joined_folders):
             os.makedirs(joined_folders)
-        if not os.path.isfile(destination):
-            os.replace(source, destination)
+        os.replace(source, destination)
