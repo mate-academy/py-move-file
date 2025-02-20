@@ -2,9 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    c_info = list(command.split())
-    file_default = c_info[1]
-    file_moved = c_info[2]
+    if isinstance(command, str):
+        c_info = list(command.split())
+        if len(c_info) == 3:
+            if c_info[0] == "mv":
+                file_default = c_info[1]
+                file_moved = c_info[2]
 
     with open(file_default, "r") as file_reader:
         reader = file_reader.read()
