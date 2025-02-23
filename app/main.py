@@ -7,10 +7,9 @@ def move_file(command: str) -> None:
         raise ValueError("Command must be in the format: 'move from_f to_f'")
 
     _, from_f, to_f = parts
-    current_dir = os.path.dirname(to_f)
+    current_dir = os.path.dirname(to_f) or "."
 
-    if current_dir and not os.path.exists(current_dir):
-        os.makedirs(current_dir, exist_ok=True)
+    os.makedirs(current_dir, exist_ok=True)
 
     new_file_path = os.path.join(current_dir, os.path.basename(to_f))
 
