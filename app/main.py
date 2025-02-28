@@ -1,32 +1,36 @@
 import os
+import shutil
 
 
 def move_file(command: str) -> None:
-    part_of_command = command.split()
+    command_parts = command.split()
 
-    if len(part_of_command) != 3 or part_of_command[0] != "mv":
-        print("Incorrect file format")
-        return
+    if len(command_parts) != 3:
+        raise ValueError("Invalid command format")
 
-    _, source_file, destination = part_of_command
+    operation, source_file, destination = command_parts
 
-    if "/" not in destination:
-        os.rename(source_file, destination)
-        print(f"File renamed to {destination}")
-        return
+    if operation != "mv":
+        raise ValueError("Invalid operation. Use 'mv' to move files.")
 
-    if "/" in destination:
-        path_parts = destination.split("/")
-        folder_path = "/".join(path_parts[:-1])
+    if not os.path.isfile(source_file):
+        raise FileNotFoundError(f"Source file '{source_file}' not found.")
 
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+    if os.path.isdir(destination):
+        destination = os.path.join(destination, os.path.basename(source_file))
 
-        os.rename(source_file, destination)
+    destination_folder = os.path.dirname(destination)
+    if destination_folder:
+        os.makedirs(destination_folder, exist_ok=True)
+
+    try:
+        shutil.move(source_file, destination)
         print(f"File moved to {destination}")
 
-        if not os.path.exists(source_file):
-            print(f"{source_file} successfully removed after moving.")
+        with open(destination, "r") as file:
+            print(file.read())
 
-        with open(destination, "r") as destination_object:
-            print(destination_object.read())
+    except (PermissionError, FileNotFoundError) as e:
+        print(f"Error: {e}")
+    except Exception:
+        print("An unexpected error occurred.")
