@@ -11,10 +11,12 @@ def move_file(command: str) -> None:
     source = parts[1]
     destination = parts[2]
 
-    if destination.endswith("/"):
-        destination = os.path.join(destination, os.path.basename(source))
+    if not os.path.exists(source):
+        raise FileNotFoundError(f"Source file '{source}' does not exist")
+    if not os.path.isfile(source):
+        raise ValueError(f"'{source}' is not a file")
 
-    if os.path.isdir(destination):
+    if destination.endswith("/"):
         destination = os.path.join(destination, os.path.basename(source))
 
     destination_dir = os.path.dirname(destination)
