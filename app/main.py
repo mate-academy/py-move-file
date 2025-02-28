@@ -24,7 +24,8 @@ def move_file(command: str) -> None:
         os.makedirs(destination_folder, exist_ok=True)
 
     try:
-        shutil.move(source_file, destination)
+        shutil.copy2(source_file, destination)
+        os.remove(source_file)
         print(f"File moved to {destination}")
 
         with open(destination, "r") as file:
