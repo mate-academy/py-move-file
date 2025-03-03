@@ -5,7 +5,8 @@ def move_file(command: str) -> None:
     parts = command.split()
 
     if parts[0] != "mv" or len(parts) != 3:
-        return
+        print("Invalid command")
+        return None
 
     old_file = parts[1]
     new_file = parts[2]
@@ -14,8 +15,11 @@ def move_file(command: str) -> None:
     if len(path_parts) > 1:
         os.makedirs("/".join(path_parts[:-1]), exist_ok=True)
 
-    with open(old_file, "r") as old, open(new_file, "w") as new:
-        content = old.read()
-        new.write(content)
+    try:
+        with open(old_file, "r") as old, open(new_file, "w") as new:
+            new.write(old.read())
 
-    os.remove(old_file)
+        os.remove(old_file)
+    except (OSError, PermissionError) as e:
+        print("Error ", e)
+        return None
