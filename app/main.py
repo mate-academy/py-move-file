@@ -4,13 +4,15 @@ import os
 def move_file(move_command: str) -> None:
 
     command_list = move_command.split()
+    if len(command_list) != 3:
+        print("Incorrect input info")
+        return
     file_command, file_source, file_target = command_list
 
     if file_command != "mv":
         print("Incorrect command")
         return
     with open(file_source, "r") as f_source:
-        # full_path = file_target
         create_directory(file_target)
         with open(file_target, "w") as f_target:
             for line in f_source:
@@ -29,6 +31,7 @@ def create_directory(full_path: str) -> None:
 
     path_seek = ""
     for i in range(len(path_parts) - 1):
-        path_seek += path_parts[i] + "/"
+        # path_seek += path_parts[i] + "/"
+        path_seek = os.path.join(path_seek, path_parts[i])
         if not os.path.isdir(path_seek):
             os.mkdir(path_seek)
