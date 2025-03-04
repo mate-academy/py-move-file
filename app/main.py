@@ -4,12 +4,15 @@ import os
 def move_file(command: str) -> None:
     parts = command.split()
 
-    if parts[0] != "mv" or len(parts) != 3:
-        print("Invalid command")
+    if len(parts) != 3:
+        print("Command requires `mv old_file new_file` syntax")
         return None
 
-    old_file = parts[1]
-    new_file = parts[2]
+    command_name, old_file, new_file = parts
+
+    if command_name != "mv":
+        print("Invalid command")
+        return None
 
     path_parts = new_file.split("/")
     if len(path_parts) > 1:
