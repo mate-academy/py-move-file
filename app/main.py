@@ -11,7 +11,8 @@ def move_file(command: str) -> None:
 
     mv, original_file_name, new_destination = command_split
 
-    if (mv != "mv" or os.path.abspath(original_file_name)
+    if (
+            mv != "mv" or os.path.abspath(original_file_name)
             == os.path.abspath(new_destination)
     ):
         return
