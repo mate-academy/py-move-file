@@ -11,15 +11,14 @@ def move_file(command: str) -> None:
 
     mv, original_file_name, new_destination = command_split
 
-    if mv != "mv" or original_file_name == new_destination:
+    if (mv != "mv"
+            or os.path.abspath(original_file_name) ==
+            os.path.abspath(new_destination)):
         return
-    try:
-        with open(original_file_name, "r"):
-            pass
-    except FileNotFoundError:
-        print(f"{original_file_name} does not exist")
-        return
-    print("new dest ", new_destination)
+    if not os.path.isfile(original_file_name):
+       print(f"{original_file_name} does not exist")
+       return
+
     new_destination_split = new_destination.split("/")
     new_path = ""
     new_name = original_file_name
@@ -27,13 +26,10 @@ def move_file(command: str) -> None:
     if ".txt" in new_destination_split[-1]:
         new_name = new_destination_split[-1]
         new_destination_split = new_destination_split[0:-1]
-    print("newname ", new_name)
-    print("newdestsplit ", new_destination_split)
+
     for path_part in new_destination_split:
         new_path = os.path.join(new_path, path_part)
-        print("new_path in loop ", new_path)
-        if not os.path.isdir(new_path):
-            os.mkdir(new_path)
+        os.makedirs(new_path, exist_ok=True)
 
     new_full_path = os.path.join(new_path, new_name)
 
