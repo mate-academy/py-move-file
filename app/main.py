@@ -15,6 +15,7 @@ def move_file(command: str) -> None:
             == os.path.abspath(new_destination)
     ):
         return
+
     if not os.path.isfile(original_file_name):
         print(f"{original_file_name} does not exist")
         return
