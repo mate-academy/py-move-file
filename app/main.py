@@ -3,8 +3,8 @@ import os
 
 def validate_command(command: str) -> None:
     if len(command.split(" ")) != 3:
-        raise ValueError("Splited command must have 3 elemnts")
-    if "mv" not in command:
+        raise ValueError("Split command must have 3 elements")
+    if command.split(" ")[0] != "mv":
         raise ValueError("The first word of the command must be (mv)")
     open(command.split(" ")[1], "r")
 
@@ -16,17 +16,19 @@ def move_file(command: str) -> str:
         print(ex)
         return
 
-    origin_content = []
-    orgin_file_name = command.split(" ")[1]
-    with open(orgin_file_name, "r") as orgin_file:
-        for line in orgin_file:
-            origin_content.append(line)
-    os.remove(str(orgin_file_name))
+    origin_file_name = command.split(" ")[1]
+    destination_path = str(command.split(" ")[2])
+    if destination_path[-1] == "/":
+        destination_path += origin_file_name
 
-    file_path = str(command.split(" ")[2])
-    if (correct_path := os.path.dirname(file_path)) != "":
-        os.makedirs(correct_path, exist_ok=True)
+    with open(origin_file_name, "r") as origin_file:
+        origin_content = origin_file.readlines()
+    os.remove(str(origin_file_name))
 
-    with open(file_path, "w") as file:
-        for line in origin_content:
-            file.write(line)
+    destination_dir = os.path.dirname(destination_path)
+    if destination_dir:
+        os.makedirs(destination_dir, exist_ok=True)
+
+    destination_file = os.path.join(destination_dir, os.path.basename(destination_path))  # noqa: E501
+    with open(destination_file, "w") as file:
+        file.writelines(origin_content)
