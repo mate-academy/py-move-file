@@ -15,7 +15,7 @@ def move_file(command: str) -> None:
         print(f"Source file {source_file} does not exist.")
         return
 
-    dest_dirs = "/".join(dest.split("/")[:-1])
-    if dest_dirs != "" and not os.path.exists(dest):
+    dest_dirs = os.path.dirname(dest)
+    if dest_dirs != "" and not os.path.exists(dest_dirs):
         os.makedirs(dest_dirs, exist_ok=True)
     shutil.move(source_file, dest)
