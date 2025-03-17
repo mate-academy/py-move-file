@@ -10,8 +10,7 @@ def move_file(command: str) -> None:
             "Invalid command format. Use: mv <source> <destination>"
         )
 
-    source_file_path = command_parts[1]
-    destination_file_path = command_parts[2]
+    source_file_path, destination_file_path = command_parts[1:3]
 
     if not source_file_path or not destination_file_path:
         raise ValueError("Source and destination paths cannot be empty.")
