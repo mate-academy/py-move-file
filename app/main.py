@@ -3,12 +3,15 @@ import os
 
 def move_file(command: str) -> None:
     command_data = command.split()
+
+    if len(command_data) != 3 or command_data[0] != "mv":
+        raise ValueError("Invalid move command format")
+
     source = command_data[1]
     destination = command_data[2]
 
     if not os.path.exists(source):
         raise FileNotFoundError(f"Source file {source} not found")
-
     dest_parts = destination.split("/")
 
     if destination.endswith("/"):
