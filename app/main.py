@@ -5,7 +5,8 @@ def move_file(command: str) -> None:
     # Парсинг команды: отделяем "mv" и пути
     parts = command.split()
     if len(parts) != 3 or parts[0] != "mv":
-        raise ValueError("Invalid command format. Use: mv <source> <destination>")
+        raise ValueError(
+            "Invalid command format. Use: mv <source> <destination>")
 
     source_path, destination_path = parts[1], parts[2]
 
@@ -16,7 +17,8 @@ def move_file(command: str) -> None:
     # Если destination заканчивается на "/", он является каталогом
     if destination_path.endswith("/"):
         os.makedirs(destination_path, exist_ok=True)
-        destination_path = os.path.join(destination_path, os.path.basename(source_path))
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_path))
     else:
         # Создаем промежуточные каталоги, если их нет
         destination_dir = os.path.dirname(destination_path)
