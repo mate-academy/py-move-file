@@ -4,13 +4,18 @@ import shutil
 
 def move_file(command: str) -> None:
     parts = command.split()
+
+    if len(parts) != 3 or parts[0] != "mv":
+        raise ValueError("Invalid command format. Use: 'mv source destination'")
+
     source_path, destination_path = parts[1], parts[2]
 
-    if not os.path.isfile(source_path):
-        raise FileNotFoundError(f"Not such file as {source_path}")
+    if not os.path.exists(source_path):
+        raise FileNotFoundError(f"Source file '{source_path}' does not exist.")
 
-    if destination_path.endswith("/") or os.path.isdir(destination_path):
-        os.makedirs(destination_path, exist_ok=True)
-        destination_path = os.path.join(destination_path, os.path.basename(source_path))
+    destination_dir = os.path.dirname(destination_path)
+
+    if destination_dir and not os.path.exists(destination_dir):
+        os.makedirs(destination_dir)
 
     shutil.move(source_path, destination_path)
