@@ -3,7 +3,8 @@ import os
 
 def move_file(command: str) -> None:
     if len(command.split()) != 3:
-        raise ValueError("Command should contains 3 elements separated by a space")
+        raise ValueError("Command should contains 3 elements "
+                         "separated by a space")
     elif command.split()[0] != "mv":
         raise ValueError("First element should be \'mv\'")
 
