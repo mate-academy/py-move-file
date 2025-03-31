@@ -6,8 +6,9 @@ def move_file(command: str) -> None:
         terminal_command, file_from, path_to = command.split(" ")
         check_command_mv(terminal_command)
 
-        file_to = path_to.split("/")[-1]
-        directory_to = path_to[:path_to.index(file_to)]
+        split_path_to = os.path.split(path_to)
+        file_to = split_path_to[-1]
+        directory_to = os.path.join(path_to[:path_to.index(file_to)])
 
         create_new_directory(directory_to)
 
