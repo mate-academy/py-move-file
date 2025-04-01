@@ -1,12 +1,11 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> str:
     parts = command.split()
     if len(parts) != 3 or parts[0] != "mv":
-        print("Неправильний формат команди. "
-              "Очікується: mv <вихідний_файл> <файл_призначення>")
+        print("Error: Invalid command format. "
+              "Expected: mv <source_file> <destination_path>")
         return
 
     source_file = parts[1]
@@ -26,13 +25,41 @@ def move_file(command: str) -> str:
 
     target_dir = os.path.dirname(target_path)
     if target_dir and not os.path.exists(target_dir):
-        os.makedirs(target_dir, exist_ok=True)
+        try:
+            os.makedirs(target_dir, exist_ok=False)
+        except FileExistsError:
+            print(f"Error: Directory {target_dir} already exists.")
+            return
+        except OSError as e:
+            print(f"Error: Could not create directory {target_dir}: {e}")
+            return
 
     try:
-        shutil.move(source_file, target_path)
+        os.rename(source_file, target_path)
     except FileNotFoundError:
-        print(f"Помилка: Вихідний файл {source_file} не знайдено.")
-        return
+        try:
+            with (open(source_file, "rb") as source,
+                  open(target_path, "wb") as destination):
+                while True:
+                    chunk = source.read(4096)
+                    if not chunk:
+                        break
+                    destination.write(chunk)
+            os.remove(source_file)
+        except FileNotFoundError:
+            print(f"Error: Source file {source_file} not found.")
+            return
+        except OSError as e:
+            print(f"Error: Could not move file {source_file} "
+                  f"to {target_path}: {e}")
+            return
+        except Exception as e:
+            print(f"An unexpected error occurred during file moving: {e}")
+            return
     except OSError as e:
-        print(f"Виникла помилка при переміщенні файлу: {e}")
+        print(f"Error: Could not rename file {source_file} "
+              f"to {target_path}: {e}")
+        return
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
         return
