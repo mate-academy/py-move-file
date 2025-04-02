@@ -1,6 +1,6 @@
 import os
 
-def move_file(command: str) -> None:
+def move_file(command: str) -> bool | None:
     my_split = command.split()
     if my_split[0] != "mv":
         return
@@ -8,5 +8,6 @@ def move_file(command: str) -> None:
         return
     if my_split[2].endswith("/"):
         os.makedirs(my_split[2], exist_ok=True)
-        destination = my_split[2] + os.path.basename(my_split[1])
-        os.rename(my_split[1], destination)
+        my_split[2] + os.path.basename(my_split[1])
+    if not my_split[2].endswith("/"):
+        os.rename(my_split[1], my_split[2])
