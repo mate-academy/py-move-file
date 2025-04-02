@@ -15,10 +15,10 @@ def move_file(command: str) -> None:
 
     destination_dir = os.path.dirname(destination)
 
-    if destination_dir and not os.path.exists(destination_dir):
-        try:
-            os.makedirs(destination_dir)
-        except FileExistsError:
-            pass
+    if destination_dir:
+        os.makedirs(destination_dir, exist_ok=True)
+
+    if not os.path.exists(source_file):
+        return
 
     shutil.move(source_file, destination)
