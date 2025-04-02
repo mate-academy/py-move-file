@@ -4,6 +4,9 @@ from pathlib import Path
 
 def move_file(command: str) -> None:
     try:
+        if len(command.split(" ")) != 3:
+            raise ValueError("Failed to parse command!")
+
         command, current_destination, target_destination = command.split(" ")
 
         if command != "mv":
@@ -18,12 +21,16 @@ def move_file(command: str) -> None:
             print("Target file does not exist!")
             return
 
-        target_destination = target_destination.replace("\\", "/")
+        if target_destination.endswith("/"):
+            target_destination = os.path.join(
+                target_destination, os.path.basename(current_destination)
+            )
 
-        if "/" in target_destination:
-            target_dirs = "/".join(target_destination.split("/")[:-1])
-            os.makedirs(target_dirs, exist_ok=True)
+        destination_dir = os.path.dirname(target_destination)
+
+        if destination_dir:
+            os.makedirs(destination_dir, exist_ok=True)
 
         Path(current_destination).rename(target_destination)
-    except ValueError:
-        print("Failed to parse command!")
+    except ValueError as error:
+        print(error)
