@@ -5,7 +5,7 @@ import shutil
 def move_file(command: str) -> None:
     command_str = command.split()
 
-    if len(command_str) != 3 or command[0] != "mv":
+    if len(command_str) != 3 or command_str[0] != "mv":
         raise ValueError
     source, target = command_str[1], command_str[2]
 
