@@ -14,11 +14,12 @@ def move_file(command: str) -> None:
     if not os.path.isfile(source):
         raise FileNotFoundError(f"Source file '{source}' does not exist.")
 
-    # Get the directory part of the destination path
     destination_dir = os.path.dirname(destination)
 
     if destination_dir and not os.path.exists(destination_dir):
         os.makedirs(destination_dir, exist_ok=True)
 
     # Use shutil.move to move/rename the file
-    shutil.move(source, destination)
+    destination_path = os.path.join(destination_dir,
+                                    os.path.basename(destination))
+    shutil.move(source, destination_path)
