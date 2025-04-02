@@ -3,7 +3,9 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    parts = command.split(" ")
+    parts = command.strip().split(" ")
+
+    # Ensure the command is exactly in "mv source destination" format
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid command format. Use: mv source destination")
 
@@ -12,11 +14,11 @@ def move_file(command: str) -> None:
     if not os.path.isfile(source):
         raise FileNotFoundError(f"Source file '{source}' does not exist.")
 
-    # Extract directory name if present
+    # Get the directory part of the destination path
     destination_dir = os.path.dirname(destination)
 
-    # Create directories only if destination has a directory part
-    if destination_dir:
+    if destination_dir and not os.path.exists(destination_dir):
         os.makedirs(destination_dir, exist_ok=True)
 
+    # Use shutil.move to move/rename the file
     shutil.move(source, destination)
