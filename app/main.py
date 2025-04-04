@@ -15,11 +15,12 @@ def move_file(command: str) -> None:
         raise FileNotFoundError(f"Source file '{source}' does not exist.")
 
     if destination.endswith("/"):
-        os.makedirs(destination, exist_ok=True)
+        if not os.path.exists(destination):
+            os.makedirs(destination, exist_ok=True)
         destination = os.path.join(destination, os.path.basename(source))
 
     dest_dir = os.path.dirname(destination)
     if dest_dir and not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
+        os.makedirs(os.path.join(dest_dir), exist_ok=True)
 
     shutil.move(source, destination)
