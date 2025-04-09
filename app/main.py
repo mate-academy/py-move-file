@@ -7,8 +7,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         return
 
-    values = [parts[1], parts[2]]
-    source_file, destination_path = values
+    source_file, destination_path = parts[1], parts[2]
 
     if not os.path.isfile(source_file):
         return
@@ -22,7 +21,7 @@ def move_file(command: str) -> None:
         destination_dir = os.path.dirname(destination_path)
         destination_file = destination_path
 
-    if destination_dir:
+    if destination_dir and len(destination_dir) > 0:
         os.makedirs(destination_dir, exist_ok=True)
 
     os.rename(source_file, destination_file)
