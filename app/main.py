@@ -17,30 +17,34 @@ def move_file(command: str) -> None:
     Args:
         command (str): Команда переміщення.
     """
-    parts = command.split()
-    if len(parts) != 3 or parts[0] != "mv":
+    command_parts = command.split()
+    if len(command_parts) != 3 or command_parts[0] != "mv":
         raise ValueError("Invalid command format.")
-    src = parts[1]
-    dest_input = parts[2]
-    if dest_input.endswith("/"):
-        dest = os.path.join(dest_input, os.path.basename(src))
+
+    source_path = command_parts[1]
+    destination_input = command_parts[2]
+    if destination_input.endswith("/"):
+        destination_path = os.path.join(
+            destination_input, os.path.basename(source_path)
+        )
     else:
-        dest = dest_input
+        destination_path = destination_input
 
-    dest_dir = os.path.dirname(dest)
-    if dest_dir and not os.path.exists(dest_dir):
-        os.makedirs(dest_dir, exist_ok=True)
+    destination_dir = os.path.dirname(destination_path)
+    if destination_dir and not os.path.exists(destination_dir):
+        os.makedirs(destination_dir, exist_ok=True)
 
-    with open(src, "rb") as src_file:
-        content = src_file.read()
-    with open(dest, "wb") as dest_file:
-        dest_file.write(content)
-    os.remove(src)
+    with open(source_path, "rb") as source_file:
+        content = source_file.read()
+    with open(destination_path, "wb") as destination_file:
+        destination_file.write(content)
+    os.remove(source_path)
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: python script.py mv <src> <dest>")
+        print(
+            "Usage: python script.py mv <source> <destination>"
+        )
         sys.exit(1)
-    # Формуємо команду типу "mv file.txt dest_path"
     move_file(" ".join(sys.argv[1:]))
