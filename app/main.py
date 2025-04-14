@@ -48,3 +48,4 @@ if __name__ == "__main__":
         )
         sys.exit(1)
     move_file(" ".join(sys.argv[1:]))
+    
