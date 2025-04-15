@@ -10,7 +10,7 @@ def move_file(command: str) -> None:
     if mv != "mv":
         return
 
-    second_file = second_file.split("/")
+    second_file = second_file.rsplit("/")
     if len(second_file) == 1:
         with (open(first_file, "r") as file_in,
               open("".join(second_file), "w") as file_out):
