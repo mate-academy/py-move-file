@@ -1,5 +1,6 @@
 import os
 
+
 def move_file(command: str) -> None:
     command_list = command.split()
 
@@ -14,7 +15,7 @@ def move_file(command: str) -> None:
     destination_dir = os.path.dirname(destination)
 
     if destination_dir:
-        os.makedirs(destination_dir, exist_ok=True)
+        os.path.join(destination_dir, exist_ok=True)
 
     if os.path.isdir(destination):
         raise IsADirectoryError(f"'{destination}' is a directory, not a file.")
