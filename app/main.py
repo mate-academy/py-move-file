@@ -2,25 +2,18 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_list = command.split()
+    command = command.split()
 
-    if len(command_list) != 3 or command_list[0] != "mv":
-        return
-
-    _, source, destination = command_list
-
-    if source == destination:
-        return
-
-    destination_dir = os.path.dirname(destination)
-
-    if destination_dir:
-        os.path.join(destination_dir, exist_ok=True)
-
-    if os.path.isdir(destination):
-        raise IsADirectoryError(f"'{destination}' is a directory, not a file.")
-
-    with open(source, "r") as src_file, open(destination, "w") as dst_file:
-        dst_file.write(src_file.read())
-
-    os.remove(source)
+    if len(command) != 3 or command[0] != "mv":
+        directories, file_name = os.path.split(command[2])
+        if directories:
+            os.makedirs(directories, exist_ok=True)
+            with (
+                open(command[1], "r") as src_file,
+                open(command[2], "w") as dst_file
+            ):
+                data = src_file.read()
+                dst_file.write(data)
+            os.remove(command[1])
+        else:
+            os.rename(command[1], command[2])
