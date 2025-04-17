@@ -14,14 +14,12 @@ def move_file(command: str) -> None:
     source = args[1]
     target = args[2]
 
-    if target == os.path.basename(target):
-        os.rename(source, target)
+    if os.path.dirname(target) == "":
+        perform_move(source, target)
         return
 
     if target.endswith("/") or target.endswith("\\"):
         target = os.path.join(target, os.path.basename(source))
-        perform_move(source, target)
-        return
 
     perform_move(source, target)
 
@@ -29,6 +27,8 @@ def move_file(command: str) -> None:
 
 
 def perform_move(source: str, target: str) -> None:
-    os.makedirs(os.path.dirname(target), exist_ok=True)
+    dir_name = os.path.dirname(target)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
     shutil.move(source, target)
     return
