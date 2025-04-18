@@ -4,8 +4,6 @@ import pytest
 
 from app.main import move_file  # Переконайтеся, що шлях до вашої функції move_file правильний
 
-create_file = 'file.txt'
-
 @pytest.fixture
 def create_file(tmp_path):
     file_path = tmp_path / "file.txt"
