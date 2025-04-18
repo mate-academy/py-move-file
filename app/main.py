@@ -3,8 +3,10 @@ import os
 
 def move_file(command: str) -> None:
     command_list = command.split()
+    if len(command_list) != 3:
+        return
     first_value, second_value, third_value = command_list
-    if len(command_list) != 3 or first_value != "mv":
+    if first_value != "mv":
         return
     if third_value.endswith("/"):
         os.makedirs(third_value, exist_ok=True)
