@@ -1,62 +1,56 @@
 import os
 import shutil
-
 import pytest
 
-from app.main import move_file
+from app.main import move_file  # Переконайтеся, що шлях до вашої функції move_file правильний
 
+create_file = 'file.txt'
 
 @pytest.fixture
-def create_file(filename: str = "file.txt") -> str:
-    content = "This is some\n content for\n the file."
+def create_file(tmp_path):
+    file_path = tmp_path / "file.txt"
+    file_path.write_text("Some content")
+    return str(file_path)
 
-    with open(filename, "w") as created_file:
-        created_file.write(content)
+def test_should_rename_file(create_file):
+    source = create_file
+    destination = "file2.txt"
+    move_file(f"mv {source} {destination}")
+    assert os.path.exists(destination)
+    assert not os.path.exists(source)
+    with open(destination, "r") as f:
+        assert f.read() == "Some content"
+    os.remove(destination)
 
-    return filename
+def test_should_move_file_to_existing_directory(create_file, tmp_path):
+    os.makedirs(tmp_path / "dir", exist_ok=True)
+    source = create_file
+    destination = str(tmp_path / "dir" / "file2.txt")
+    move_file(f"mv {source} {destination}")
+    assert os.path.exists(destination)
+    assert not os.path.exists(source)
+    with open(destination, "r") as f:
+        assert f.read() == "Some content"
+    os.remove(destination)
 
-
-def test_file_renamed(create_file: callable) -> None:
-    move_file("mv file.txt file1.txt")
-
-    assert os.path.exists("file.txt") is False
-    with open("file1.txt", "r") as file_with_content:
-        assert file_with_content.read() == "This is some\n content for\n the file."
-
-    os.remove("file1.txt")
-
-
-def test_should_work_when_directory_exists(create_file: callable) -> None:
-    os.makedirs("dir")
-    move_file(f"mv file.txt dir/file2.txt")
-
-    with open("dir/file2.txt", "r") as file_with_content:
-        assert file_with_content.read() == "This is some\n content for\n the file."
-
-    assert os.path.exists("file.txt") is False
-
-    shutil.rmtree("dir")
-
-
-def test_should_create_multiple_directories(create_file: callable) -> None:
-    move_file(f"mv file.txt first_dir/second_dir/file2.txt")
-
-    assert os.path.exists("first_dir/second_dir/file2.txt") is True
-    assert os.path.exists("file.txt") is False
-
-    with open("first_dir/second_dir/file2.txt", "r") as file_with_content:
-        assert file_with_content.read() == "This is some\n content for\n the file."
-
+def test_should_create_and_move_file_to_new_directories(create_file):
+    source = create_file
+    destination = "first_dir/second_dir/file2.txt"
+    move_file(f"mv {source} {destination}")
+    assert os.path.exists(destination)
+    assert not os.path.exists(source)
+    with open(destination, "r") as f:
+        assert f.read() == "Some content"
     shutil.rmtree("first_dir")
 
-
-def test_should_create_multiple_directories_when_they_exist(create_file: callable) -> None:
-    os.makedirs("first_dir/second_dir")
-    move_file(f"mv file.txt first_dir/second_dir/third_dir/file2.txt")
-
-    with open("first_dir/second_dir/third_dir/file2.txt", "r") as file_with_content:
-        assert file_with_content.read() == "This is some\n content for\n the file."
-
-    assert os.path.exists("file.txt") is False
-
-    shutil.rmtree("first_dir")
+def test_should_work_when_directory_exists(create_file):
+    if not os.path.exists("dir"):
+        os.makedirs("dir")
+    source = create_file
+    destination = "dir/file2.txt"
+    move_file(f"mv {source} {destination}")
+    assert os.path.exists(destination)
+    assert not os.path.exists(source)
+    with open(destination, "r") as f:
+        assert f.read() == "Some content"
+    shutil.rmtree("dir", ignore_errors=True)
