@@ -23,7 +23,3 @@ def move_file(command: str) -> None:
 
     # Переміщаємо файл, використовуючи os.rename (аналог os.replace)
     os.rename(src, dst)
-
-    # Якщо файл існує в старому місці, видаляємо його
-    if os.path.exists(src):
-        os.remove(src)
