@@ -21,9 +21,9 @@ def move_file(command: str) -> None:
             )
             if not os.path.exists(file_out_direct):
                 os.makedirs(file_out_direct, exist_ok=True)
-            with (open(file_in_path, "r") as file_in,
-                  open(file_out_path, "w") as file_out):
+            with (open(file_in_path, "rb") as file_in,
+                  open(file_out_path, "wb") as file_out):
                 file_out.write(file_in.read())
             os.remove(file_in_path)
     except FileNotFoundError:
-        return
+        return None
