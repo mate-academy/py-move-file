@@ -1,5 +1,6 @@
 import os
 
+
 def move_file(path: str) -> None:
     parts = path.split(" ")
     root_file = parts[1]
@@ -13,7 +14,8 @@ def move_file(path: str) -> None:
         if not os.path.isdir(current_path):
             os.mkdir(current_path, mode=0o777)
 
-    with open(root_file, "r") as source_file, open(new_path, "w") as destination_file:
+    with open(root_file, "r") as source_file, open(new_path, "w") as \
+            destination_file:
         destination_file.write(source_file.read())
 
     os.remove(root_file)
