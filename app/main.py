@@ -17,13 +17,13 @@ def move_file(command: str) -> None:
         os.makedirs("/".join(new_dir[:-1]), exist_ok=True)
 
     try:
-        with open(original_file, "r") as f:
+        with open(original_file, "rb") as f:
             content = f.read()
     except FileNotFoundError as e:
         print(e)
 
     try:
-        with open(new_file, "w") as f:
+        with open(new_file, "wb") as f:
             f.write(content)
         os.remove(original_file)
     except Exception as e:
