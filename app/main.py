@@ -1,49 +1,35 @@
 import os
 
 
-def move_file(command: str) -> None:  # mv file.txt some_dir/new_file.txt
-    comman_parts = command.strip().split()
-
-    if len(comman_parts) != 3 or comman_parts[0] != "mv":
+def move_file(command: str) -> None:
+    command_parts = command.strip().split()
+    if len(command_parts) != 3 or command_parts[0] != "mv":
         return
 
-    source = comman_parts[1]
-    destination = comman_parts[2]
+    source, destination = command_parts[1], command_parts[2]
 
     if destination.endswith("/"):
-        destination_directory = destination.rstrip("/")
-        destination_filename = ""
+        dest_dir = destination.rstrip("/")
+        dest_file = os.path.basename(source)
     else:
-        parts = destination.rsplit("/", 1)
-        if len(parts) == 2:
-            destination_directory, destination_filename = parts
-        else:
-            destination_directory = ""
-            destination_filename = parts[0]
+        dest_dir = os.path.dirname(destination)
+        dest_file = os.path.basename(destination)
 
-    if destination_directory == "":
-        try:
-            os.rename(source, destination_filename)
-            return
-        except FileNotFoundError:
-            return
+    if dest_dir:
+        os.makedirs(dest_dir, exist_ok=True)
+
+    full_dest_path = os.path.join(
+        dest_dir, dest_file
+    ) if dest_dir else dest_file
 
     try:
-        with open(source, "r") as f:
-            content = f.read()
-    except FileNotFoundError:
-        return
-
-    else:
-        if destination_filename == "":
-            destination_filename = source
-        os.makedirs(destination_directory, exist_ok=True)
-        with open(
-            os.path.join(destination_directory, destination_filename), "w"
-        ) as f:
-            f.write(content)
-
-    if os.path.exists(source):
-        os.remove(source)
-    else:
-        print("File does not exist.")
+        os.rename(source, full_dest_path)
+    except (FileNotFoundError, OSError):
+        try:
+            with open(source, "rb") as src_file:
+                content = src_file.read()
+            with open(full_dest_path, "wb") as dest_file:
+                dest_file.write(content)
+            os.remove(source)
+        except (FileNotFoundError, OSError):
+            return
