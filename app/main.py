@@ -4,10 +4,16 @@ import os
 def move_file(command: str) -> None:
     commands = command.split()
     if len(commands) != 3:
-        return None
+        raise ValueError("Неправильний формат команди."
+                         " Використовуйте: mv <input_path> <output_path>")
     action, file_in_path, file_out_path = commands
-    if file_in_path == file_out_path or action != "mv":
-        return None
+    if action != "mv":
+        raise ValueError("Помилка: Команда повинна бути 'mv'.")
+
+    if file_in_path == file_out_path:
+        raise ValueError("Помилка: Вхідний та вихідний файли "
+                         "не можуть бути однаковими.")
+
     try:
         if "/" not in file_out_path:
             if os.path.exists(file_out_path):
@@ -26,4 +32,4 @@ def move_file(command: str) -> None:
                 file_out.write(file_in.read())
             os.remove(file_in_path)
     except FileNotFoundError:
-        return None
+        raise FileNotFoundError(f"Файл '{file_in_path}' не знайдено.")
