@@ -18,9 +18,8 @@ def move_file(command: str) -> None:
                 ):
                     need_to_write = file_in.read()
                     file_out.write(need_to_write)
-            except FileNotFoundError(
-                f"[Errno 2] No such file or directory: {command_list[1]}"
-            ):
-                pass
+            except FileNotFoundError as e:
+                print(e)
+                return
 
             os.remove(command_list[1])
