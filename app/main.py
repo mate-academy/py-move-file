@@ -4,6 +4,11 @@ import os
 def move_file(command: str) -> None:
     command_list = command.split()
     path = command_list[2]
+
+    if len(command_list) < 3:
+        print("Invalid command format. Use: mv <source> <destination>")
+        return
+
     if command_list[0] == "mv":
         if not path:
             print("Рядок порожній")
