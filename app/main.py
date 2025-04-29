@@ -18,15 +18,16 @@ def move_file(command: str) -> None:
     dir_path = os.path.dirname(destination)
 
     if dir_path:
-        # Розбиваємо шлях на частини, без залежності від '/' або '\'
         path_parts = dir_path.replace("\\", "/").split("/")
-        current_path = ""
+        current_path = os.getcwd()
         for part in path_parts:
             current_path = os.path.join(current_path, part)
             if os.path.exists(current_path):
                 if os.path.isfile(current_path):
-                    os.remove(current_path)
-                    os.mkdir(current_path)
+                    raise NotADirectoryError(
+                        f"Cannot create directory '{current_path}' "
+                        f"because a file exists with the same name"
+                    )
             else:
                 os.mkdir(current_path)
 
