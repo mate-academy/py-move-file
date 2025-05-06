@@ -18,7 +18,8 @@ def move_file(command: str) -> None:
 
         os.remove(old_file_name)
 
-    if len(split_command) < 3 and split_command[0] == "mv":
+    if (len(split_command) == 3 and split_command[0] == "mv"
+            and "/" not in split_command[2]):
 
         old_file_name, new_file_name = split_command
 
