@@ -21,7 +21,7 @@ def move_file(command: str) -> None:
     if (len(split_command) == 3 and split_command[0] == "mv"
             and "/" not in split_command[2]):
 
-        old_file_name, new_file_name = split_command
+        _, old_file_name, new_file_name = split_command
 
         with (open(old_file_name, "r") as old_file,
               open(new_file_name, "w+") as new_file):
