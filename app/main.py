@@ -17,7 +17,7 @@ def move_file(command: str) -> None:
                 f.write(src_file.read())
             os.remove(first_file)
         except FileNotFoundError:
-            print(f"Error: File '{first_file}' not found.")
+            print(f"Error: File {first_file} not found.")
         except OSError as e:
             print(f"Error while working with files: {e}")
     else:
@@ -25,6 +25,6 @@ def move_file(command: str) -> None:
         try:
             os.rename(first_file, second_file)
         except FileNotFoundError:
-            print(f"Error: File '{first_file}' not found.")
+            print(f"Error: File {first_file} not found.")
         except OSError as e:
             print(f"Error while working with files: {e}")
