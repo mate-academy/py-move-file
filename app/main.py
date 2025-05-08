@@ -18,3 +18,7 @@ def move_file(command: str) -> None:
 
     except ValueError as error:
         print(error)
+    except OSError as error:
+        print(error)
+    except FileNotFoundError as error:
+        print(error)
