@@ -5,6 +5,8 @@ def move_file(command: str) -> None:
     try:
         _command, file_in, file_out = command.split()
 
+        if os.path.exists(file_in) is False:
+            raise FileNotFoundError
         if "/" in file_out:
             os.makedirs(os.path.dirname(file_out), exist_ok=True)
 
