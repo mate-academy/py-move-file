@@ -9,8 +9,8 @@ def move_file(command: str) -> None:
         os.makedirs(file_path, exist_ok=True)
         destination_file = f"{file_path}/{command_list[-1].split("/")[-1]}"
         try:
-            with (open(destination_file, "w") as f,
-                  open(first_file, "r") as src_file):
+            with (open(destination_file, "w") as f, open(
+                    first_file, "r") as src_file):
                 f.write(src_file.read())
             os.remove(first_file)
         except FileNotFoundError:
