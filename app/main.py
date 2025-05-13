@@ -14,4 +14,7 @@ def move_file(command: str) -> None:
     if dir_name:
         os.makedirs(dir_name, exist_ok=True)
 
-    shutil.move(source, destination)
+    try:
+        shutil.move(source, destination)
+    except FileNotFoundError:
+        print(f"Error: Source file '{source}' not found.")
