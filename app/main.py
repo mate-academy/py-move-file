@@ -1,5 +1,6 @@
 import os
 
+
 def move_file(command: str) -> None:
     command_list = command.split()
     first_file = command_list[1]
