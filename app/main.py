@@ -18,9 +18,10 @@ def move_file(command: str) -> None:
 
         os.remove(file_in)
 
-    except ValueError as error:
-        print(error, "Incorrect values")
-    except OSError as error:
-        print(error)
+    except ValueError:
+        print("Incorrect command format. Expected: move <source> <destination>")
     except FileNotFoundError as error:
         print(error, "File not found")
+    except OSError as error:
+        print(error)
+
