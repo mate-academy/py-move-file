@@ -19,6 +19,8 @@ def move_file(command: str) -> None:
         os.remove(file_in)
 
     except ValueError as error:
-        print(error)
+        print(error, "Incorrect values")
     except OSError as error:
         print(error)
+    except FileNotFoundError as error:
+        print(error, "File not found")
