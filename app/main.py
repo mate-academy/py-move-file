@@ -2,31 +2,24 @@ import os
 
 
 def move_file(command: str) -> None:
-    if command:
-        command_ = command.split()
+    if not command:
+        return
 
-        if len(command_) == 3 and command_[0] == "mv":
-            source_file = command_[1]
-            target_file = command_[2]
+    command_units = command.split()
 
-            if "/" in target_file and not target_file.endswith("/"):
-                target_dirs = target_file.split("/")
-                target_file_name = target_dirs.pop()
-                target_path = ""
+    if len(command_units) == 3 and command_units[0] == "mv":
+        source_file = command_units[1]
+        target_file = command_units[2]
 
-                for dir_ in target_dirs:
-                    target_path = os.path.join(target_path, dir_)
-                    try:
-                        os.mkdir(target_path)
-                    except FileExistsError:
-                        print("Directory exists:", target_path)
+        target_dir = os.path.dirname(target_file)
 
-                target_file = os.path.join(target_path, target_file_name)
+        if target_dir:
+            os.makedirs(target_dir, exist_ok=True)
 
-            if source_file != target_file:
-                with (open(source_file, "r") as file_in,
-                      open(target_file, "w") as file_out):
-                    for line in file_in:
-                        file_out.write(line)
+        if source_file != target_file:
+            with (open(source_file, "r") as file_in,
+                  open(target_file, "w") as file_out):
+                for line in file_in:
+                    file_out.write(line)
 
-                os.remove(source_file)
+            os.remove(source_file)
