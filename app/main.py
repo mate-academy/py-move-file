@@ -22,5 +22,5 @@ def move_file(command: str) -> None:
         ):
             file_out.write(file_in.read())
             os.remove(first_file)
-    except (FileExistsError, FileExistsError):
+    except (FileExistsError, FileNotFoundError):
         return
