@@ -6,13 +6,15 @@ def move_file(command: str) -> None:
         raise ValueError("Enter file name!")
 
     command_list = command.split()
-    source = command_list[1]  # изначальный файл
-    target = command_list[2]  # файл который создаем
 
     if len(command_list) != 3:
         raise ValueError("Command must be in format: mv source target!")
     if command_list[0] != "mv":
         raise ValueError("Command must been have: mv!")
+
+    command_list = command.split()
+    source = command_list[1]
+    target = command_list[2]
 
     if not os.path.isfile(source):
         raise FileNotFoundError(f"Source file '{source}' does not exist!")
