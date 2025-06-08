@@ -10,7 +10,6 @@ def move_file(command: str) -> None:
     try:
         with open(file_name, "r") as file_read:
             copy_data = file_read.read()
-        os.remove(file_name)
     except (FileNotFoundError, PermissionError):
         return None
     for index in range(len(file_move) - 1):
@@ -20,3 +19,4 @@ def move_file(command: str) -> None:
             continue
     with open("/".join(file_move), "w") as file_write:
         file_write.write(copy_data)
+        os.remove(file_name)
