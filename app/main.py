@@ -7,7 +7,7 @@ def move_file(line: str) -> None:
 
     line_list = line.strip().split()
 
-    if len(line_list) != 3 and line_list[0] != "mv":
+    if len(line_list) != 3 or line_list[0] != "mv":
         return
     file1 = line_list[1]
     file2 = line_list[2]
