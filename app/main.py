@@ -3,7 +3,12 @@ import os
 
 def move_file(command: str) -> None:
     part = command.split()
+    if len(part) != 3 or part[0] != "mv":
+        print("Invalid command format. Expected: mv source destination")
+        return
+
     old_path = part[1]
+
     if not os.path.exists(old_path):
         print(f"⚠️Source file '{old_path}' not found.")
         return
