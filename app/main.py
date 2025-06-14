@@ -2,37 +2,40 @@ import os
 
 
 def move_file(command: str) -> None:
-    part = command.split()
-    if len(part) != 3 or part[0] != "mv":
+    parts = command.split()
+    if len(parts) != 3 or parts[0] != "mv":
         print("Invalid command format. Expected: mv source destination")
         return
 
-    old_path = part[1]
+    source_path = parts[1]
+    destination_path = parts[2]
 
-    if not os.path.exists(old_path):
-        print(f"⚠️Source file '{old_path}' not found.")
+    if not os.path.exists(source_path):
+        print(f"⚠️ Source file '{source_path}' not found.")
         return
 
-    new_path = part[2]
-    filename = old_path.split("/")[-1]
-    if new_path.endswith("/"):
-        final_new_path = new_path + filename
+    filename = os.path.basename(source_path)
+    if destination_path.endswith("/") or os.path.isdir(destination_path):
+        final_destination = os.path.join(destination_path, filename)
     else:
-        final_new_path = new_path
+        final_destination = destination_path
 
-    directory_path = os.path.dirname(final_new_path)
-    parts = directory_path.replace("\\", "/").split("/")
+    directory_to_create = os.path.dirname(final_destination)
+    if not os.path.exists(directory_to_create):
+        try:
+            os.makedirs(directory_to_create)
+        except OSError as e:
+            print(f"❌ Failed to create directory '{directory_to_create}': {e}")
+            return
 
-    current_path = "."
-    for part in parts:
-        current_path = os.path.join(current_path, part)
-        if not os.path.exists(current_path):
-            os.mkdir(current_path)
+    try:
+        with open(source_path, "rb") as src:
+            content = src.read()
 
-    with open(old_path, "rb") as src:
-        content = src.read()
+        with open(final_destination, "wb") as dst:
+            dst.write(content)
 
-    with open(final_new_path, "wb") as dst:
-        dst.write(content)
-
-    os.remove(old_path)
+        os.remove(source_path)
+        print(f"✅ File moved to: {final_destination}")
+    except OSError as e:
+        print(f"❌ File operation failed: {e}")
