@@ -2,40 +2,50 @@ import os
 
 
 def move_file(command: str) -> None:
-    parts = command.split()
+    # Розділяємо команду на частини
+    parts = command.strip().split()
+
+    # Валідація формату команди
     if len(parts) != 3 or parts[0] != "mv":
-        print("Invalid command format. Expected: mv source destination")
+        print("❌ Invalid command format. Expected: mv source destination")
         return
 
-    source_path = parts[1]
-    destination_path = parts[2]
+    source = parts[1]
+    destination = parts[2]
 
-    if not os.path.exists(source_path):
-        print(f"⚠️ Source file '{source_path}' not found.")
+    # Перевірка наявності джерела
+    if not os.path.exists(source):
+        print(f"⚠️ Source path '{source}' does not exist.")
         return
 
-    filename = os.path.basename(source_path)
-    if destination_path.endswith("/") or os.path.isdir(destination_path):
-        final_destination = os.path.join(destination_path, filename)
+    # Перевірка, що джерело — саме файл
+    if not os.path.isfile(source):
+        print(f"❌ Source '{source}' is not a file.")
+        return
+
+    # Визначення імені файлу
+    filename = os.path.basename(source)
+
+    # Якщо destination закінчується на / або є директорією, додаємо ім'я файлу
+    if destination.endswith("/") or os.path.isdir(destination):
+        final_destination = os.path.join(destination, filename)
     else:
-        final_destination = destination_path
+        final_destination = destination
 
-    directory_to_create = os.path.dirname(final_destination)
-    if not os.path.exists(directory_to_create):
+    # Створюємо потрібні директорії, якщо їх немає
+    dest_dir = os.path.dirname(final_destination)
+    if dest_dir and not os.path.exists(dest_dir):
         try:
-            os.makedirs(directory_to_create)
+            os.makedirs(dest_dir)
         except OSError as e:
-            print(f"❌ Failed to create directory '{directory_to_create}': {e}")
+            print(f"❌ Failed to create directory '{dest_dir}': {e}")
             return
 
+    # Копіювання і видалення
     try:
-        with open(source_path, "rb") as src:
-            content = src.read()
-
-        with open(final_destination, "wb") as dst:
-            dst.write(content)
-
-        os.remove(source_path)
-        print(f"✅ File moved to: {final_destination}")
+        with open(source, "rb") as src_file, open(final_destination, "wb") as dst_file:
+            dst_file.write(src_file.read())
+        os.remove(source)
+        print(f"✅ File successfully moved to: {final_destination}")
     except OSError as e:
         print(f"❌ File operation failed: {e}")
