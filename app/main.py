@@ -19,7 +19,7 @@ def move_file(command: str) -> None:
             raise IsADirectoryError(msg)
 
         if (dst.suffix == "" and 
-            (str(dst).endswith(("\\", "/")) or dst.is_dir()):
+                str(dst).endswith(("\\", "/")) or dst.is_dir()):
             dst = dst / src.name
 
         if src == dst:
