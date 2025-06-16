@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     try:
         parts = command.strip().split()
         if len(parts) != 3 or parts[0].lower() != "mv":
-            msg = "Invalid command format. Use: \"mv source destination\""
+            msg = 'Invalid command format. Use: "mv source destination"'
             raise ValueError(msg)
 
         src = Path(parts[1]).absolute()
@@ -18,8 +18,8 @@ def move_file(command: str) -> None:
             msg = f"Source is a directory (only files supported): {src}"
             raise IsADirectoryError(msg)
 
-        if (dst.suffix == "" and 
-                str(dst).endswith(("\\", "/")) or dst.is_dir()):
+        if (dst.suffix == ""
+            and (str(dst).endswith(("\\", "/")) or dst.is_dir())):
             dst = dst / src.name
 
         if src == dst:
