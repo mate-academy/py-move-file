@@ -18,8 +18,9 @@ def move_file(command: str) -> None:
             msg = f"Source is a directory (only files supported): {src}"
             raise IsADirectoryError(msg)
 
-        if (dst.suffix == ""
-            and (str(dst).endswith(("\\", "/")) or dst.is_dir())):
+        if dst.suffix == "" and (
+            str(dst).endswith(("\\", "/")) or dst.is_dir()
+        ):
             dst = dst / src.name
 
         if src == dst:
