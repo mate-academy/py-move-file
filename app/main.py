@@ -2,7 +2,7 @@ import os
 import shutil
 
 
-def move_file(command: str):
+def move_file(command: str) -> None:
     parts = command.split()
 
     if len(parts) != 3 or parts[0] != "mv":
@@ -13,19 +13,17 @@ def move_file(command: str):
     destination_path_input = parts[2]
 
     if not os.path.exists(source_path_input):
-        raise FileNotFoundError(f"No such file or directory: "
+        raise FileNotFoundError(f'No such file or directory: '
                                 f'"{source_path_input}"')
     if not os.path.isfile(source_path_input):
-        raise IsADirectoryError(f"Is a directory: \"{source_path_input}\". "
-                                "Only files can be moved.")
+        raise IsADirectoryError(f'Is a directory: "{source_path_input}". '
+                                'Only files can be moved.')
 
-    final_target_path = ""
-    if destination_path_input.endswith("/") or \
-       destination_path_input.endswith("\\"):
+    final_target_path = destination_path_input
+    if (final_target_path.endswith("/") or
+            final_target_path.endswith("\\")):
         file_name = os.path.basename(source_path_input)
-        final_target_path = os.path.join(destination_path_input, file_name)
-    else:
-        final_target_path = destination_path_input
+        final_target_path = os.path.join(final_target_path, file_name)
 
     source_abs_path = os.path.abspath(source_path_input)
     final_target_abs_path = os.path.abspath(final_target_path)
@@ -42,8 +40,8 @@ def move_file(command: str):
     except Exception as e:
         if os.path.exists(final_target_abs_path):
             os.remove(final_target_abs_path)
-        raise OSError(f"Error moving file from \"{source_path_input}\" "
-                      f"to \"{final_target_abs_path}\": {e}") from e
+        raise OSError(f'Error moving file from "{source_path_input}" '
+                      f'to "{final_target_abs_path}": {e}') from e
     else:
         os.remove(source_path_input)
 
