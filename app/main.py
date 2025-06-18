@@ -3,13 +3,13 @@ import os
 
 def move_file(command: str) -> None:
     split_command = command.split(" ")
+    if len(split_command) != 3 or split_command[0] != "mv":
+        return
+
     mv, first_file, second_file = (
         split_command[0],
         split_command[1],
         split_command[2])
-
-    if len(split_command) != 3 or mv != "mv":
-        return
 
     if not os.path.exists(first_file):
         return
