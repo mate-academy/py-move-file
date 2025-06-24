@@ -13,7 +13,7 @@ def move_file(command: str) -> None:
     if not os.path.isfile(src):
         raise FileNotFoundError(f"Source file '{src}' not found.")
 
-    if dst.endswith("/"):
+    if os.path.isdir(dst) or dst.endswith("/"):
         os.makedirs(dst, exist_ok=True)
         dst = os.path.join(dst, os.path.basename(src))
     else:
