@@ -7,8 +7,10 @@ def move_file(command: str) -> None:
         if os.path.dirname(list_of_command[2]) != "":
             os.makedirs(os.path.dirname(list_of_command[2]), exist_ok=True)
             try:
-                with open(list_of_command[2], "w", encoding="utf-8") as file_to:
-                    with open(list_of_command[1], "r", encoding="utf-8") as file_from:
+                with open(list_of_command[2], "w",
+                          encoding="utf-8") as file_to:
+                    with open(list_of_command[1], "r",
+                              encoding="utf-8") as file_from:
                         file_to.write(file_from.read())
             except FileNotFoundError as e:
                 print(f"Файл не найден: {e}")
@@ -18,8 +20,10 @@ def move_file(command: str) -> None:
                 print(f"Произошла ошибка: {e}")
         else:
             try:
-                with open(list_of_command[2], "w", encoding="utf-8") as file_to:
-                    with open(list_of_command[1], "r", encoding="utf-8") as file_from:
+                with open(list_of_command[2], "w",
+                          encoding="utf-8") as file_to:
+                    with open(list_of_command[1], "r",
+                              encoding="utf-8") as file_from:
                         file_to.write(file_from.read())
             except FileNotFoundError as e:
                 print(f"Файл не найден: {e}")
