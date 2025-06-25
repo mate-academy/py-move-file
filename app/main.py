@@ -31,4 +31,11 @@ def move_file(command: str) -> None:
                 print(f"Ошибка ввода-вывода: {e}")
             except Exception as e:
                 print(f"Произошла ошибка: {e}")
-        os.remove(list_of_command[1])
+        try:
+            os.remove(list_of_command[1])
+        except FileNotFoundError as e:
+            print(f"Файл не найден: {e}")
+        except IOError as e:
+            print(f"Ошибка ввода-вывода: {e}")
+        except Exception as e:
+            print(f"Произошла ошибка: {e}")
