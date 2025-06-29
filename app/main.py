@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     command_parts = command.split()
-    if command_parts[0] != "mv":
+    if len(command_parts) != 3 or command_parts[0] != "mv":
         return
 
     if command_parts[1] == command_parts[2]:
