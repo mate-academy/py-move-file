@@ -28,11 +28,11 @@ def move_file(command: str) -> None:
         for _ in range(quantity_folders):
             folder += stroka2[number_folder]
             if not Path(folder).exists() or not Path(folder).is_dir():
-                os.mkdir(folder)
+                os.makedirs(folder, exist_ok=True)
             folder += "/"
             number_folder += 1
 
-    with open(file_in, "r") as file1, open(file_out, "w") as file2:
+    with open(file_in, "rb") as file1, open(file_out, "wb") as file2:
         lines = file1.readlines()
         file2.writelines(lines)
     os.remove(file_in)
