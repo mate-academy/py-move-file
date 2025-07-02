@@ -5,15 +5,16 @@ def move_file(command: str) -> None:
     parts: list[str] = command.strip().split(" ", maxsplit=2)
 
     if len(parts) != 3:
-        raise ValueError
+        raise ValueError("Invalid command format. "
+                         "Expected: mv <source> <destination>")
 
     cmd, source_path, dest_path = parts
 
     if cmd != "mv":
-        raise ValueError
+        raise ValueError("Command must start with 'mv'")
 
     if not os.path.isfile(source_path):
-        raise FileNotFoundError
+        raise FileNotFoundError(f"Source file does not exist: {source_path}")
 
     dest_is_dir = dest_path.endswith(os.sep) or os.path.isdir(dest_path)
 
