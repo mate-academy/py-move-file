@@ -10,12 +10,9 @@ def move_file(command: str) -> None:
         return None
 
     file_path_list = output_file_path_with_name.split("/")
-    output_file_name = file_path_list[-1]
 
     if len(file_path_list) > 1:
-        output_file_path = os.path.dirname(
-            output_file_path_with_name.rstrip(output_file_name)
-        )
+        output_file_path = os.path.dirname(output_file_path_with_name)
         os.makedirs(output_file_path, exist_ok=True)
 
     try:
