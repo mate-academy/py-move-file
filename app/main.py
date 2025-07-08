@@ -1,5 +1,6 @@
 import os
 
+
 def move_file(command: str) -> None:
     parts = command.split(maxsplit=2)
     if len(parts) != 3 or parts[0] != "mv":
@@ -8,7 +9,9 @@ def move_file(command: str) -> None:
     _, source_path, destination_path = parts
 
     if destination_path.endswith("/"):
-        destination_path = os.path.join(destination_path, os.path.basename(source_path))
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_path)
+        )
 
     destination_dir = os.path.dirname(destination_path)
 
