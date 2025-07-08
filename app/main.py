@@ -9,20 +9,16 @@ def move_file(mv_command: str) -> None:
         src = file_list[1]
         dest = file_list[2]
 
+        if not os.path.exists(src):
+            return
+
         with open(src, "r") as file_in:
             content = file_in.read()
 
-        paths = dest.split("/")[:-1]
-        current_path = ""
+        dest_dir = os.path.dirname(dest)
 
-        for path in paths:
-            current_path += path
-            try:
-                os.mkdir(current_path)
-            except FileExistsError:
-                current_path += "/"
-            else:
-                current_path += "/"
+        if dest_dir:
+            os.makedirs(dest_dir, exist_ok=True)
 
         with open(dest, "w") as file_out:
             file_out.write(content)
