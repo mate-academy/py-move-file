@@ -22,7 +22,11 @@ def create_directories(path: str) -> None:
 
 
 def move_file(command: str) -> None:
-    cmd, origin, dest = command_validation(command)
+    try:
+        cmd, origin, dest = command_validation(command)
+    except Exception as e:
+        print(f"Invalid command: {e}")
+        return
 
     try:
         create_directories(dest)
