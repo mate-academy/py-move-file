@@ -11,16 +11,16 @@ def move_file(command: str) -> None:
     if "/" in final_path:
         path_parts = final_path.split("/")
         file_name = path_parts.pop()
-        path = path_parts[0]
+        final_path = path_parts[0]
 
-        if not os.path.exists(path):
-            os.mkdir(path)
+        if not os.path.exists(final_path):
+            os.mkdir(final_path)
 
         for part in path_parts[1:]:
-            path = f"{path}/{part}"
-            if not os.path.exists(path):
-                os.mkdir(path)
-        final_path = f"{path}/{file_name}"
+            final_path = f"{final_path}/{part}"
+            if not os.path.exists(final_path):
+                os.mkdir(final_path)
+        final_path = f"{final_path}/{file_name}"
 
     with open(start_path) as curr_file, open(final_path, "w") as final_file:
         for line in curr_file:
