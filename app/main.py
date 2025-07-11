@@ -10,7 +10,7 @@ def move_file(command: str) -> None:
 
     mv_command, name_in, way = parts
     if way.endswith("/"):
-        way += "".join(name_in)
+        way = os.path.basename(name_in)
 
     only_dir = os.path.dirname(way)
     if only_dir:
