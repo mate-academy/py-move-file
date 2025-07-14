@@ -14,8 +14,8 @@ def move_file(command: str) -> None:
 
     try:
         with (
-            open(source_path, "r") as source_file,
-            open(destination_path, "w") as destination_file
+            open(source_path, "rb") as source_file,
+            open(destination_path, "wb") as destination_file
         ):
             for line in source_file:
                 destination_file.write(line)
