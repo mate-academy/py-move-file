@@ -2,25 +2,30 @@ import os
 
 
 def move_file(command: str) -> None:
-    splitted = command.split()
-    if len(splitted) != 3 or splitted[0] != "mv":
-        raise ValueError("Wrong command")
-
-    _, source_path, destination_path = splitted
-
-    directories = os.path.dirname(destination_path)
-    if directories:
-        os.makedirs(directories, exist_ok=True)
-
-    try:
-        with (
-            open(source_path, "rb") as source_file,
-            open(destination_path, "wb") as destination_file
-        ):
-            for line in source_file:
-                destination_file.write(line)
-
-    except FileNotFoundError:
+    if not command.strip():
         return
 
-    os.remove(source_path)
+    parts = command.strip().split()
+
+    if len(parts) != 3:
+        return
+
+    cmd, source, destination = parts
+
+    if cmd != "mv" or source == destination:
+        return
+
+    if destination.endswith("/"):
+        destination = os.path.join(destination, os.path.basename(source))
+
+    directory = os.path.dirname(destination)
+    if directory and not os.path.exists(directory):
+        try:
+            os.makedirs(directory)
+        except FileExistsError:
+            pass
+
+    try:
+        os.rename(source, destination)
+    except (FileNotFoundError, FileExistsError):
+        return
