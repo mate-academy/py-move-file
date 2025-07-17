@@ -17,13 +17,9 @@ def move_file(command: str) -> None:
         return
     os.remove(src_file)
 
-    path = "/".join(dest_file.split("/")[:-1])
-    try:
-        # raise FileNotFoundError if path is clear
-        # (additional dictionary is not needed)
-        os.makedirs(path, exist_ok=True)
-    except FileNotFoundError:
-        pass
+    directories, _ = os.path.split(dest_file)
+    if directories:
+        os.makedirs(directories, exist_ok=True)
 
     with open(dest_file, "w") as f:
         f.write(data)
