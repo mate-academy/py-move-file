@@ -5,7 +5,8 @@ def move_file(command: str) -> None:
     parts = command.strip().split()
 
     if len(parts) != 3 or parts[0] != "mv":
-        raise ValueError("Invalid command format. Use: mv <source> <destination>")
+        raise ValueError("Invalid command format."
+                         " Use: mv <source> <destination>")
 
     _, source, destination = parts
 
