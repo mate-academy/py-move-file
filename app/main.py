@@ -16,10 +16,8 @@ def move_file(command: str) -> None:
         os.rename(file, path[0])
         return
 
-    if not os.path.exists("/".join(path[:-1])):
-        os.makedirs("/".join(path[:-1]))
-    with open(file, "r") as file_to_remove:
-        content = file_to_remove.read()
-    os.remove(file)
-    with open("/".join(path), "w") as new_file:
-        new_file.write(content)
+    dest_dir = os.path.dirname("/".join(path))
+    if dest_dir:
+        os.makedirs(dest_dir, exist_ok=True)
+
+    os.rename(file, "/".join(path))
