@@ -10,18 +10,7 @@ def move_file(command: str) -> None:
         new_file = os.path.join(new_file, os.path.basename(source_file))
     new_dirs = os.path.dirname(new_file)
     if new_dirs:
-        new_path = ""
-        for directory in new_dirs.split(os.sep if os.sep in new_dirs else "/"):
-            if not directory:
-                continue
-            new_path = os.path.join(new_path, directory) if (
-                new_path) else directory
-            if os.path.exists(new_path):
-                if not os.path.isdir(new_path):
-                    raise FileExistsError(f"{new_path} exists "
-                                          f"and is not a directory!")
-            else:
-                os.mkdir(new_path)
+        os.makedirs(new_dirs, exist_ok=True)
     try:
         with (open(source_file, "r") as origin_file,
                 open(new_file, "w") as moved_file):
