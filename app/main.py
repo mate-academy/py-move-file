@@ -11,16 +11,17 @@ def move_file(command: str) -> None:
         return
     if old_file == directory:
         return
+    if not os.path.isfile(old_file):
+        return
 
     if "/" not in directory:
         copy_file(old_file, directory)
     else:
         directory_list = directory.split("/")
         for i in range(1, len(directory_list)):
-            try:
-                os.mkdir("/".join(directory_list[:i]))
-            except FileExistsError:
-                pass
+            current_directory = "/".join(directory_list[:i])
+            if not os.path.isdir(current_directory):
+                os.mkdir(current_directory)
         copy_file(old_file, directory)
 
 
