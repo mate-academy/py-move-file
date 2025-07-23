@@ -17,9 +17,9 @@ def move_file(command: str) -> None:
     if "/" not in directory:
         copy_file(old_file, directory)
     else:
-        directory_list = directory.split("/")
+        directory_list = os.path.dirname(directory).split("/")
         for i in range(1, len(directory_list)):
-            current_directory = "/".join(directory_list[:i])
+            current_directory = "/".join(directory_list)
             if not os.path.isdir(current_directory):
                 os.mkdir(current_directory)
         copy_file(old_file, directory)
