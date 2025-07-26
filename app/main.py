@@ -1,7 +1,9 @@
 import os
 
+from typing import Optional
 
-def move_file(command: str) -> None | str:
+
+def move_file(command: str) -> Optional[str]:
     parts = command.split()
 
     if len(parts) != 3 or parts[0] != "mv":
@@ -23,7 +25,7 @@ def move_file(command: str) -> None | str:
 
     if dest_dir and os.path.exists(dest_dir) and not os.path.isdir(dest_dir):
         raise FileExistsError(
-            f"A file named '{dest_dir}' already exists and blocks folder creation."
+            f"A file named '{dest_dir}' already exists."
         )
 
     if dest_dir:
