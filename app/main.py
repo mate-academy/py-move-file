@@ -10,6 +10,10 @@ def move_file(command: str) -> None:
 
     source, destination = parts[1], parts[2]
 
+    # Check if source file exists
+    if not os.path.exists(source):
+        return
+
     # Abort if source and destination are the same
     if source == destination:
         return
