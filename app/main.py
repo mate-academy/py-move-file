@@ -3,7 +3,7 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    parts = command.split()
+    parts = command.strip().split()
 
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError
@@ -21,6 +21,4 @@ def move_file(command: str) -> None:
         if dst_dir:
             os.makedirs(dst_dir, exist_ok=True)
 
-    shutil.copyfile(src, dst)
-
-    os.remove(src)
+    shutil.move(src, dst)
