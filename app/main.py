@@ -1,7 +1,6 @@
 import os
 import shutil
 
-
 def move_file(command: str) -> None:
     parts = command.strip().split()
 
@@ -21,4 +20,6 @@ def move_file(command: str) -> None:
         if dst_dir:
             os.makedirs(dst_dir, exist_ok=True)
 
-    shutil.move(src, dst)
+    shutil.copyfile(src, dst)
+
+    os.remove(src)
