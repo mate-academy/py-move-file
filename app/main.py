@@ -6,16 +6,19 @@ def create_folder_path(path: str) -> None:
 
     if ht[0] == "":
         if ht[1] != "":
-            try:
-                os.mkdir(ht[1])
-            except OSError:
-                print("Creation of the directory %s failed" % ht[1])
+            if not os.path.exists(ht[1]):
+                try:
+
+                    os.mkdir(ht[1])
+                except OSError:
+                    print(f"Creation of the directory {ht[1]} failed")
     else:
         create_folder_path(ht[0])
-        try:
-            os.mkdir(path)
-        except OSError:
-            print("Creation of the directory %s failed" % ht[0])
+        if not os.path.exists(path):
+            try:
+                os.mkdir(path)
+            except OSError:
+                print(f"Creation of the directory {path} failed")
 
 
 def move_file(command: str) -> None:
