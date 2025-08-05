@@ -1,36 +1,28 @@
 import os
+import shutil
 
 
 def move_file(command: str) -> None:
-    command_parts = command.strip().split(" ", 2)
-
-    if len(command_parts) != 3:
-        print("Error: The command format is incorrect")
+    if not command:
+        print("Error: empty command")
         return
-
-    command_name, source_path, destination_path = command_parts
-
-    if command_name != "mv":
-        print("Error: The command is not 'mv'")
+    parts = command.strip().split()
+    if len(parts) != 3 or parts[0] != "mv":
+        print("Error: invalid command format")
         return
-
-    if destination_path.endswith("/"):
-        file_name = os.path.basename(source_path)
-        destination_path = os.path.join(destination_path, file_name)
-
-    if "/" not in destination_path:
-        os.rename(source_path, destination_path)
+    _, source, destination = parts
+    if not os.path.isfile(source):
+        print(f"Error: source file '{source}' does not exist")
         return
-
-    destination_directory = os.path.dirname(destination_path)
-
-    if destination_directory and not os.path.exists(destination_directory):
-        os.makedirs(destination_directory)
-
-    with open(source_path, "rb") as source_file:
-        file_content = source_file.read()
-
-    with open(destination_path, "wb") as destination_file:
-        destination_file.write(file_content)
-
-    os.remove(source_path)
+    if destination.endswith("/"):
+        os.makedirs(destination, exist_ok=True)
+        destination = os.path.join(destination, os.path.basename(source))
+    else:
+        parent_dir = os.path.dirname(destination)
+        if parent_dir:
+            os.makedirs(parent_dir, exist_ok=True)
+    try:
+        shutil.move(source, destination)
+        print(f"Moved '{source}' to '{destination}'")
+    except Exception as e:
+        print(f"Error: {e}")
