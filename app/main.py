@@ -12,7 +12,7 @@ def move_file(command: str) -> None:
     if not os.path.exists(source_path):
         return None
 
-    make_dir = os.path.dirname(new_path + source_path)
+    make_dir = os.path.dirname(new_path)
 
     if make_dir:
         os.makedirs(make_dir, exist_ok=True)
