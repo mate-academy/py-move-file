@@ -7,19 +7,22 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid command format")
 
-    src = parts[1]
-    dest = parts[2]
+    _, src, dest = parts
 
-    # If destination ends with "/", treat as directory
+    # If destination ends with
     if dest.endswith("/"):
         dest = os.path.join(dest, os.path.basename(src))
 
+    # Check if source and destination refer to the same absolute path
+    if os.path.abspath(src) == os.path.abspath(dest):
+        # Same file, do nothing to avoid data loss
+        return
+
     dest_dir = os.path.dirname(dest)
     if dest_dir and not os.path.exists(dest_dir):
-        # Create all intermediate directories including dest_dir
         os.makedirs(dest_dir, exist_ok=True)
 
-    # Move the file: copy content and remove source file
+    # Copy file content and remove source file
     with open(src, "rb") as fsrc:
         content = fsrc.read()
 
