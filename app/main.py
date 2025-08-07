@@ -3,7 +3,13 @@ import shutil
 
 
 def move_file(command: str) -> None:
-    _, src, dst = command.strip().split()
+    parts = command.strip().split()
+
+    if len(parts) != 3 or parts[0] != "mv":
+        raise ValueError("Invalid command. Expected"
+                         " 'mv <source> <destination>'.")
+
+    _, src, dst = parts
 
     if not os.path.isfile(src):
         raise FileNotFoundError(f"Source file '{src}' does not exist")
