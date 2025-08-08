@@ -6,12 +6,16 @@ def move_file(command: str) -> None:
     if len(command_line) != 3 or command_line[0] != "mv":
         return
     _, source_file, destination = command_line
-    path, destination_file = os.path.split(destination)
+    if destination[-1] == "\\" or destination[-1] == "/":
+        destination_path = destination
+        destination_file = source_file
+    else:
+        destination_path, destination_file = os.path.split(destination)
     try:
-        os.makedirs(path, exist_ok=True)
+        os.makedirs(destination_path, exist_ok=True)
     except FileNotFoundError:
         pass
-    destination_path = os.path.join(path, destination_file)
+    destination_path = os.path.join(destination_path, destination_file)
     try:
         with open(source_file, "r") as source, open(
             destination_path, "w"
