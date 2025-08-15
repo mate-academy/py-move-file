@@ -11,7 +11,10 @@ def move_file(command: str) -> None:
 
     cmd, source_path, destination_path = parts
 
-    if not os.path.exists(source_path) or os.path.isdir(source_path):
+    if not os.path.exists(source_path):
+        raise FileNotFoundError(f"Source file '{source_path}' does not exist.")
+
+    if os.path.isdir(source_path):
         return
 
     if destination_path.endswith("/"):
@@ -37,10 +40,7 @@ def move_file(command: str) -> None:
     if os.path.abspath(source_path) == os.path.abspath(destination_path):
         return
 
-    with open(source_path, "r") as source_file:
-        content = source_file.read()
-
-    with open(destination_path, "w") as dest_file:
-        dest_file.write(content)
+    with open(source_path, "rb") as src, open(destination_path, "wb") as dst:
+        dst.write(src.read())
 
     os.remove(source_path)
