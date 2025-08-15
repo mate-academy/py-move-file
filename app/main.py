@@ -5,44 +5,42 @@ def move_file(command: str) -> None:
     if command == "":
         return
 
-    file_names = command.split(" ")
-    if len(file_names) != 3 or file_names[0] != "mv":
+    parts = command.split(" ")
+    if len(parts) != 3 or parts[0] != "mv":
         return
 
-    source_file = file_names[1]
-    if "/" in source_file:
+    cmd, source_path, destination_path = parts
+
+    if not os.path.exists(source_path) or os.path.isdir(source_path):
         return
 
-    target_path = file_names[2]
+    if destination_path.endswith("/"):
+        source_filename = os.path.basename(source_path)
+        destination_path = os.path.join(destination_path, source_filename)
 
-    if "/" in target_path:
-        target_dir = os.path.dirname(target_path)
+    destination_dir = os.path.dirname(destination_path)
 
-        dirs = target_dir.split("/")
-        current_path = ""
-        for dir_name in dirs:
-            if current_path:
-                current_path = current_path + "/" + dir_name
-            else:
-                current_path = dir_name
+    if destination_dir and not os.path.exists(destination_dir):
+        path_parts = []
+        current_dir = destination_dir
 
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
+        while current_dir and current_dir != ".":
+            path_parts.append(current_dir)
+            current_dir = os.path.dirname(current_dir)
 
-        if os.path.exists(source_file):
-            with open(source_file, "r") as file_in:
-                content = file_in.read()
+        path_parts.reverse()
 
-            with open(target_path, "w") as file_out:
-                file_out.write(content)
+        for dir_path in path_parts:
+            if not os.path.exists(dir_path):
+                os.mkdir(dir_path)
 
-            os.remove(source_file)
+    if os.path.abspath(source_path) == os.path.abspath(destination_path):
+        return
 
-    elif os.path.exists(source_file) and source_file != target_path:
-        with open(source_file, "r") as file_in:
-            content = file_in.read()
+    with open(source_path, "r") as source_file:
+        content = source_file.read()
 
-        with open(target_path, "w") as file_out:
-            file_out.write(content)
+    with open(destination_path, "w") as dest_file:
+        dest_file.write(content)
 
-        os.remove(source_file)
+    os.remove(source_path)
