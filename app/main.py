@@ -27,3 +27,4 @@ def move_file(command: str) -> None:
         return
 
     os.remove(file_name)
+
