@@ -1,21 +1,24 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
-    command_parts = command.split()
-    if len(command_parts) != 3 or command_parts[0] != "mv":
-        print("Invalid command")
-        return
+    parts = command.split()
+    if len(parts) != 3:
+        raise ValueError("Command must have exactly 3 arguments")
+    mv, source_file, result = parts
+    if "/" in result:
+        destination, file = os.path.split(result)
+    else:
+        destination, file = "", result
 
-    source_file = command_parts[1]
-    dest = command_parts[2]
+    if destination:
+        os.makedirs(destination, exist_ok=True)
 
-    if not os.path.exists(source_file):
-        print(f"Source file {source_file} does not exist.")
-        return
+    with (
+        open(source_file, "r") as file_in,
+        open(os.path.join(destination, file), "w")
+        as file_out
+    ):
+        file_out.write(file_in.read())
 
-    dest_dirs = os.path.dirname(dest)
-    if dest_dirs != "" and not os.path.exists(dest_dirs):
-        os.makedirs(dest_dirs, exist_ok=True)
-    shutil.move(source_file, dest)
+    os.remove(source_file)
