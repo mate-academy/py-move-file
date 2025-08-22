@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
     src, dest = parts[1], parts[2]
 
     if not os.path.isfile(src):
-        raise FileNotFoundError(f"Source file \"{src}\" not found.")
+        raise FileNotFoundError(f'Source file \"{src}\" not found.')
 
     if dest.endswith("/"):
         os.makedirs(dest, exist_ok=True)
