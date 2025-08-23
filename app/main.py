@@ -1,5 +1,6 @@
 import os
 
+
 def move_file(command: str) -> None:
     parts = command.split(" ", 2)
     if len(parts) != 3 or parts[0] != "mv":
