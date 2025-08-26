@@ -2,15 +2,26 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_parts = command.split()
-    if len(command_parts) == 3 and command_parts[0] == "mv":
-        start_file, end_file = command_parts[1], command_parts[2]
+    cmd, source_path, destination_path = command.split()
+    if cmd != "mv":
+        raise ValueError("Only 'mv' supported")
 
-        dir_path = os.path.dirname(end_file)
-        if dir_path:
-            os.makedirs(dir_path, exist_ok=True)
+    if destination_path.endswith("/"):
+        base_name = os.path.basename(source_path)
+        destination_path = os.path.join(destination_path, base_name)
 
-        with open(start_file, "r") as file_in, open(end_file, "w") as file_out:
-            file_out.write(file_in.read())
+    dir_path = os.path.dirname(destination_path)
+    if dir_path and not os.path.isdir(destination_path):
 
-        os.remove(start_file)
+        parts = dir_path.split("/")
+        current_path = "."
+
+        for part in parts:
+
+            current_path = os.path.join(current_path, part)
+            if not os.path.exists(current_path):
+                os.mkdir(current_path)
+
+    with open(source_path, "r") as file_in, open(destination_path, "w") as file_out:
+        file_out.write(file_in.read())
+    os.remove(source_path)
