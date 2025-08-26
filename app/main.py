@@ -11,7 +11,7 @@ def move_file(command: str) -> None:
         destination_path = os.path.join(destination_path, base_name)
 
     dir_path = os.path.dirname(destination_path)
-    if dir_path and not os.path.isdir(destination_path):
+    if dir_path and not os.path.isdir(dir_path):
 
         parts = dir_path.split("/")
         current_path = "."
@@ -22,6 +22,7 @@ def move_file(command: str) -> None:
             if not os.path.exists(current_path):
                 os.mkdir(current_path)
 
-    with open(source_path, "r") as file_in, open(destination_path, "w") as file_out:
+    with (open(source_path, "r") as file_in,
+          open(destination_path, "w") as file_out):
         file_out.write(file_in.read())
     os.remove(source_path)
