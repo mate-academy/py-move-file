@@ -23,5 +23,3 @@ def move_file(command: str) -> None:
         with open(commands[2], "w") as move_file:
             move_file.write(data_file)
             os.remove(commands[1])
-
-
