@@ -20,6 +20,7 @@ def move_file(command: str) -> None:
         if not os.path.exists(path):
             os.mkdir(path)
 
-    with open(origin_file) as file_or, open(f"{path}{moving_file}", "w") as file_mv:
+    with (open(origin_file) as file_or,
+          open(f"{path}{moving_file}", "w") as file_mv):
         file_mv.write(file_or.read())
     os.remove(origin_file)
