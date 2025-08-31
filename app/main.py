@@ -3,11 +3,12 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
-    if len(parts) != 3 or parts[0] != "mv":
+    if len(parts) == 3:
+        cmd, source, dest = parts
+    else:
         return
 
-    source, dest = parts[1], parts[2]
-    if dest == source or not os.path.isfile(source):
+    if cmd != "mv" or dest == source or not os.path.isfile(source):
         return
 
     if dest.endswith(os.sep):
@@ -16,8 +17,11 @@ def move_file(command: str) -> None:
     way = os.path.dirname(dest)
     if not os.path.dirname(source) and not way:
         os.rename(source, dest)
-    else:
-        os.makedirs(way, exist_ok=True)
+
+    levels = way.split(os.sep)
+    for level in levels:
+        if not os.path.isdir(level):
+            os.mkdir(level)
 
     with open(source, "r") as orig, open(dest, "w") as copied:
         copied.write(orig.read())
