@@ -27,15 +27,16 @@ def test_file_renamed(create_file: callable) -> None:
 
 
 def test_should_work_when_directory_exists(create_file: callable) -> None:
+    if os.path.exists("dir"):
+        shutil.rmtree("dir")
     os.makedirs("dir")
-    move_file(f"mv file.txt dir/file2.txt")
+
+    move_file("mv file.txt dir/file2.txt")
 
     with open("dir/file2.txt", "r") as file_with_content:
         assert file_with_content.read() == "This is some\n content for\n the file."
 
-    assert os.path.exists("file.txt") is False
-
-    shutil.rmtree("dir")
+    assert not os.path.exists("file.txt")
 
 
 def test_should_create_multiple_directories(create_file: callable) -> None:
