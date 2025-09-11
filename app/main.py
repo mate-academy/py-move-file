@@ -1,6 +1,5 @@
 import os
 
-
 def move_file(command: str) -> None:
     if command.count(" ") != 2:
         return
