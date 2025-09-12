@@ -8,22 +8,31 @@ def move_file(command: str) -> None:
     if len(command_parts) != 3:
         return
 
-    if command_parts[0] == "mv":
+    command_type, source_file_name, destination_file_name = command_parts
 
-        if command_parts[1] == command_parts[2]:
+    if command_type == "mv":
+        if source_file_name == destination_file_name:
             return
-
-        source_file_name = command_parts[1]
-        destination_file_name = command_parts[2]
 
         if not Path(source_file_name).is_file():
             return
 
-        if not Path(destination_file_name).parent.is_dir():
-            os.makedirs(Path(destination_file_name).parent)
+        is_destination_directory = (Path(destination_file_name).is_dir()
+                                    or destination_file_name.endswith(os.sep))
+
+        if is_destination_directory:
+            final_destination = os.path.join(
+                destination_file_name,
+                os.path.basename(source_file_name))
+        else:
+            final_destination = destination_file_name
+
+        parent_dir = os.path.dirname(final_destination)
+        if parent_dir and not os.path.exists(parent_dir):
+            os.makedirs(parent_dir)
 
         with (open(source_file_name, "r") as source_file_object,
-              open(destination_file_name, "w") as destination_file_object):
+              open(final_destination, "w") as destination_file_object):
             destination_file_object.write(source_file_object.read())
 
         os.remove(source_file_name)
