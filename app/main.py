@@ -8,10 +8,10 @@ def move_file(command: str) -> None:
         raise ValueError("Invalid command format")
     cmd, source_path, dest_path = parts
 
-    if not os.path.isfile(source_path):
-        raise ValueError("Source must be an existing file")
-
-    if dest_path.endswith("/"):
+    if (
+            dest_path.endswith(os.path.sep)
+            or (os.path.altsep and dest_path.endswith(os.path.altsep))
+    ):
         final_dest = os.path.join(dest_path, os.path.basename(source_path))
     else:
         final_dest = dest_path
