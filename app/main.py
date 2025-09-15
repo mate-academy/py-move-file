@@ -17,10 +17,14 @@ def move_file(command: str) -> None:
         final_dest = dest_path
 
     dir_name = os.path.dirname(final_dest)
-
     if dir_name:
-        os.makedirs(dir_name, exist_ok=True)
-    with open(source_path, "rb") as src:
+        components = dir_name.split(os.path.sep)
+        prefix = ""
+        for component in components:
+            prefix = os.path.join(prefix, component)
+            if not os.path.exists(prefix):
+                os.mkdir(prefix)
+    with open(source_path, "rb") as source:
         with open(final_dest, "wb") as dest:
-            dest.write(src.read())
+            dest.write(source.read())
     os.remove(source_path)
