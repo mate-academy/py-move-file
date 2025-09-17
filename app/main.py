@@ -8,16 +8,18 @@ def move_file(command: str) -> None:
     cmd, source_file, destination_file = parts
 
     if destination_file.endswith(os.sep):
-        destination_file = os.path.join(destination_file, os.path.basename(source_file))
+        destination_file = os.path.join(destination_file,
+                                        os.path.basename(source_file))
 
     dest_dir = os.path.dirname(destination_file)
     if dest_dir:
+        dest_dir = os.path.normpath(dest_dir)
         parts = dest_dir.split(os.sep)
-        path_accum = ""
+        path_accumulate = os.getcwd()  # стартуємо з поточної папки
         for part in parts:
-            path_accum = os.path.join(path_accum, part)
-            if not os.path.exists(path_accum):
-                os.mkdir(path_accum)
+            path_accumulate = os.path.join(path_accumulate, part)
+            if not os.path.exists(path_accumulate):
+                os.mkdir(path_accumulate)
     try:
         with (open(source_file, "rb") as src,
               open(destination_file, "wb") as dst):
