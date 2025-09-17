@@ -2,29 +2,20 @@ import os
 
 
 def move_file(command: str) -> None:
-    parts = command.split()
-
-    if len(parts) != 3 or parts[0] != "mv":
+    cmd_parts = command.split()
+    if len(cmd_parts) != 3 or cmd_parts[0] != "mv":
         raise ValueError("Invalid command format")
-    cmd, source_path, dest_path = parts
+    cmd, source_file, destination_file = cmd_parts
 
-    if (
-            dest_path.endswith(os.path.sep)
-            or (os.path.altsep and dest_path.endswith(os.path.altsep))
-    ):
-        final_dest = os.path.join(dest_path, os.path.basename(source_path))
-    else:
-        final_dest = dest_path
+    if destination_file.endswith(('/', os.sep)):
+        destination_file = os.path.join(destination_file,
+                                        os.path.basename(source_file))
 
-    dir_name = os.path.dirname(final_dest)
-    if dir_name:
-        components = dir_name.split(os.path.sep)
-        prefix = ""
-        for component in components:
-            prefix = os.path.join(prefix, component)
-            if not os.path.exists(prefix):
-                os.mkdir(prefix)
-    with open(source_path, "rb") as source:
-        with open(final_dest, "wb") as dest:
-            dest.write(source.read())
-    os.remove(source_path)
+    dest_dir = os.path.dirname(destination_file)
+    if dest_dir and not os.path.exists(dest_dir):
+        os.makedirs(dest_dir, exist_ok=True)
+    with open(source_file, "r") as src:
+        with open(destination_file, "w") as dst:
+            dst.write(src.read())
+
+    os.remove(source_file)
