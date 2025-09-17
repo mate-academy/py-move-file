@@ -7,7 +7,7 @@ def move_file(command: str) -> None:
         raise ValueError("Invalid command format")
     cmd, source_file, destination_file = cmd_parts
 
-    if destination_file.endswith(('/', os.sep)):
+    if destination_file.endswith(("/", os.sep)):
         destination_file = os.path.join(destination_file,
                                         os.path.basename(source_file))
 
