@@ -2,12 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    parts = command.strip().split()
-    if len(parts) != 3:
+    command_parts = command.strip().split()
+    if len(command_parts) != 3:
         raise ValueError("Invalid command. "
                          "Expected format: mv source destination")
 
-    mv_cmd, source_path, destination_path = parts
+    mv_cmd, source_path, destination_path = command_parts
     if mv_cmd != "mv":
         raise ValueError("Command must start with 'mv'")
 
@@ -15,24 +15,24 @@ def move_file(command: str) -> None:
         raise FileNotFoundError(f"Source file does not exist "
                                 f"or is not a file: {source_path}")
 
-    if destination_path.endswith(os.sep):
+    if destination_path.endswith(("/", os.sep)):
         destination_path = os.path.join(destination_path,
                                         os.path.basename(source_path))
 
     dest_dir = os.path.dirname(destination_path)
     if dest_dir:
         norm_dest_dir = os.path.normpath(dest_dir)
-        parts = norm_dest_dir.split(os.sep)
+        dir_parts = norm_dest_dir.split(os.sep)
         current_path = ""
 
         if os.path.isabs(norm_dest_dir):
             if os.name == "nt":
-                current_path = parts[0] + os.sep
-                parts = parts[1:]
+                current_path = dir_parts[0] + os.sep
+                dir_parts = dir_parts[1:]
             else:
                 current_path = os.sep
 
-        for part in parts:
+        for part in dir_parts:
             if not part:
                 continue
             current_path = os.path.join(current_path, part)
