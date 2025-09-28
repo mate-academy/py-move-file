@@ -29,7 +29,8 @@ def move_file(command: str) -> None:
             if path:
                 current = ""
                 for folder in path.split("/"):
-                    current = os.path.join(current, folder) if current else folder
+                    current = os.path.join(current, folder) \
+                        if current else folder
                     if not os.path.exists(current):
                         os.mkdir(current)
             with Cleaner(source_file):
