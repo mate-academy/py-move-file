@@ -7,10 +7,11 @@ def move_file(command: str) -> None:
         return
     cmd, source_file_name, destination_file_name = parts
 
-    if (destination_file_name.endswith(os.path.sep) or
-            (os.path.altsep and destination_file_name.endswith(os.path.altsep))):
+    if (destination_file_name.endswith(os.path.sep) or os.path.altsep
+            and destination_file_name.endswith(os.path.altsep)):
         destination_file_name = os.path.join(destination_file_name,
-                                             os.path.basename(source_file_name))
+                                             os.path.basename
+                                             (source_file_name))
 
     destination_file_name = os.path.normpath(destination_file_name)
 
