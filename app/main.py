@@ -2,28 +2,31 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_name, source_file_name, destination_file_name = command.split()
-    if command_name != "mv":
+    parts = (command_name, source_file_name,
+             destination_file_name) = command.split()
+
+    if len(parts) != 3 or parts[0] != "mv":
         return
+    cmd, source_file_name, destination_file_name = parts
 
-    if "/" in destination_file_name:
-        path_list = destination_file_name.split("/")[:-1]
-        check_folder = ""
+    destination_file_name = os.path.normpath(destination_file_name)
 
-        for folder in path_list:
-            check_folder = os.path.join(check_folder, folder)
-            if not os.path.exists(check_folder):
-                os.mkdir(check_folder)
+    if os.path.sep not in destination_file_name:
+        if os.path.altsep not in destination_file_name:
+            os.rename(source_file_name, destination_file_name)
+            return
+    else:
+        folder_path = os.path.dirname(destination_file_name)
+        name_patch = os.path.basename(destination_file_name)
+        os.makedirs(folder_path, exist_ok=True)
+        path = os.path.join(folder_path, name_patch)
 
         try:
             with (open(source_file_name, "r") as file_in,
-                  open(destination_file_name, "w") as file_out):
+                  open(path, "w") as file_out):
                 content = file_in.read()
                 file_out.write(content)
 
             os.remove(source_file_name)
         except FileNotFoundError:
-            return
-
-    else:
-        os.rename(source_file_name, destination_file_name)
+            raise FileNotFoundError
