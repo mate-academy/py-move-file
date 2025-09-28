@@ -16,20 +16,24 @@ class Cleaner:
                  exc_val: Optional[BaseException],
                  exc_tb: Optional[TracebackType]
                  ) -> None:
-        os.remove(self.name)
+        if exc_type is None:
+            os.remove(self.name)
 
 
 def move_file(command: str) -> None:
     parts = command.split()
     if len(parts) == 3:
-        action, source_file, destination = parts
-        if os.path.exists(source_file):
-            if not os.path.exists(destination):
-                path = os.path.dirname(destination)
-                if path:
-                    os.makedirs(path, exist_ok=True)
-            with (Cleaner(source_file)):
-                with open(source_file, "r"
-                          ) as source, open(destination, "w"
+        action, source_file, destination_file = parts
+        if action == "mv":
+            path = os.path.dirname(destination_file)
+            if path:
+                current = ""
+                for folder in path.split("/"):
+                    current = os.path.join(current, folder) if current else folder
+                    if not os.path.exists(current):
+                        os.mkdir(current)
+            with Cleaner(source_file):
+                with open(source_file, "rb"
+                          ) as source, open(destination_file, "wb"
                                             ) as destination:
                     destination.write(source.read())
