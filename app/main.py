@@ -10,7 +10,7 @@ def move_file(command: str) -> None:
 
     if path_new_file:
         for item in path_new_file:
-            active_path += f"\\{item}"
+            active_path = path.join(active_path, item)
             if not path.isdir(active_path):
                 mkdir(active_path)
 
