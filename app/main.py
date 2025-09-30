@@ -1,21 +1,26 @@
-from os import mkdir, remove, getcwd, path
+from os import remove, getcwd, path, makedirs
+
+
+class IncorrectData(Exception):
+    """"""
 
 
 def move_file(command: str) -> None:
-    active_path = getcwd()
     items_command = command.split(" ")
-    old_file = items_command[1]
-    new_file = items_command[2].split("/")[-1]
-    path_new_file = items_command[2].split("/")[0:-1]
 
-    if path_new_file:
-        for item in path_new_file:
-            active_path = path.join(active_path, item)
-            if not path.isdir(active_path):
-                mkdir(active_path)
+    if not (items_command[0] == "mv" and len(items_command) == 3):
+        raise IncorrectData("Invalid mv command")
 
-    with open(old_file, "r",) as old:
-        with open(f"{active_path}\\{new_file}", "w",) as new:
+    active_path = getcwd()
+    cm, path_old_file, path_new_file = items_command
+    new_path, new_file = path.split(path_new_file)
+    all_path_new_file = path.join(active_path, new_path)
+
+    if path_new_file and not path.isdir(all_path_new_file):
+        makedirs(all_path_new_file)
+
+    with open(path_old_file, "r",) as old:
+        with open(path_new_file, "w",) as new:
             new.write(old.read())
 
-    remove(old_file)
+    remove(path_old_file)
