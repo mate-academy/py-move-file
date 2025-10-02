@@ -10,6 +10,8 @@ def move_file(command: str) -> None:
         return
     if source_file_name == destination_file_name:
         return
+    if not os.path.exists(source_file_name):
+        return
     if destination_file_name.endswith("/"):
         final_destination = os.path.join(destination_file_name,
                                          os.path.basename(source_file_name))
