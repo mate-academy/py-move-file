@@ -5,23 +5,30 @@ def move_file(command: str) -> None:
     parts = command.split()
     if len(parts) != 3:
         return
-    command_name, source_file_name, destination_file_name = parts
-    if command_name != "mv":
+    cmd, src, dst = parts
+    if cmd != "mv" or src == dst:
         return
-    if source_file_name == destination_file_name:
+    if not os.path.isfile(src):
         return
-    if not os.path.exists(source_file_name):
-        return
-    if destination_file_name.endswith("/"):
-        final_destination = os.path.join(destination_file_name,
-                                         os.path.basename(source_file_name))
-    else:
-        final_destination = destination_file_name
-    dir_name = os.path.dirname(final_destination)
-    if dir_name:
-        os.makedirs(dir_name, exist_ok=True)
 
-    with (open(source_file_name, "r", encoding="utf-8") as file_in,
-         open(final_destination, "w", encoding="utf-8") as file_out):
-        file_out.write(file_in.read())
-    os.remove(source_file_name)
+    if dst.endswith("/") or dst.endswith(os.sep):
+        final_dst = os.path.join(dst, os.path.basename(src))
+    else:
+        final_dst = dst
+
+    dir_path = os.path.dirname(final_dst)
+    if dir_path:
+        dir_path = os.path.normpath(dir_path)
+        current = ""
+
+        for part in dir_path.replace("\\", "/").split("/"):
+            if not part:
+                continue
+            current = os.path.join(current, part) if current else part
+            if not os.path.exists(current):
+                os.mkdir(current)
+
+    with open(src, "rb") as fsrc, open(final_dst, "wb") as fdst:
+        fdst.write(fsrc.read())
+
+    os.remove(src)
