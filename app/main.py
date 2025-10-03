@@ -14,6 +14,9 @@ def move_file(command: str) -> None:
                     path_to_dir = os.path.join(path_to_dir, directories[i])
                     os.mkdir(path_to_dir)
 
-        with open(commands[1]) as file_to_read:
+        with (open(commands[1], "r") as file_in,
+              open(commands[2], "w") as file_out):
+            for line in file_in:
+                file_out.write(line)
 
-
+        os.remove(commands[1])
