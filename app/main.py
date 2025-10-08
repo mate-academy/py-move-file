@@ -69,9 +69,10 @@ def move_file(command: str) -> None:
     else:
         dest_dir = os.path.dirname(dest) or "."
         if os.path.exists(dest_dir) and not os.path.isdir(dest_dir):
-            raise NotADirectoryError(
+            msg = (
                 f"Destination exists and is not a directory: {dest_dir}"
             )
+            raise NotADirectoryError(msg)
         if dest_dir not in (".", "") and not os.path.exists(dest_dir):
             _make_dirs_one_by_one(dest_dir)
 
