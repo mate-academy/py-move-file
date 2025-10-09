@@ -58,15 +58,20 @@ def move_file(command: str) -> None:
 
     # Resolve destino final (considerando diretórios)
     if dest_original.endswith("/") or dest_original.endswith(os.path.sep):
-        # Trata como diretório
         dest_dir = dest
-        if dest_dir not in ("", ".", os.path.sep) and not os.path.exists(dest_dir):
+        if (
+            dest_dir not in ("", ".", os.path.sep)
+            and not os.path.exists(dest_dir)
+        ):
             _make_dirs_one_by_one(dest_dir)
         dest = os.path.join(dest_dir, os.path.basename(src))
     else:
         dest_dir = os.path.dirname(dest) or "."
         if os.path.exists(dest_dir) and not os.path.isdir(dest_dir):
-            msg = f"Destination exists and is not a directory: {dest_dir}"
+            msg = (
+                f"Destination exists and is not a directory: "
+                f"{dest_dir}"
+            )
             raise NotADirectoryError(msg)
         if dest_dir not in (".", "") and not os.path.exists(dest_dir):
             _make_dirs_one_by_one(dest_dir)
