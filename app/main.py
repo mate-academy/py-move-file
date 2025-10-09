@@ -3,27 +3,29 @@ import os
 
 def move_file(command: str) -> None:
     command_parts = command.split(" ")
-    if (len(command_parts) != 3
-            or command_parts[0] != "mv"
-            or not os.path.isfile(command_parts[1])):
-        return
+
+    if len(command_parts) != 3 or command_parts[0] != "mv":
+        raise ValueError("Invalid command")
+
+    if not os.path.isfile(command_parts[1]):
+        raise FileNotFoundError(f"Source file '{command_parts[1]}' "
+                                f"does not exist")
 
     _, source_path, dest_path = command_parts
 
     with open(source_path , "r") as source_file:
         content = source_file.read()
 
-    new_file_path = dest_path.split("/")
+    if os.path.dirname(dest_path) != "":
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
-    dir_path = ""
-    for idx in range(len(new_file_path)):
-        if new_file_path[idx].endswith(".txt"):
-            dir_path = os.path.join(dir_path, new_file_path[idx])
-            break
-        dir_path = os.path.join(dir_path, new_file_path[idx])
-        if not os.path.exists(dir_path):
-            os.mkdir(dir_path)
+    if os.path.basename(dest_path).find(".") == -1:
+        load_path = os.path.join(dest_path, os.path.basename(source_path))
+    else:
+        load_path = dest_path
 
-    with open(dir_path, "w") as dest_file:
+    with open(load_path, "w") as dest_file:
         dest_file.write(content)
-    os.remove(source_path)
+
+    if source_path != load_path:
+        os.remove(source_path)
