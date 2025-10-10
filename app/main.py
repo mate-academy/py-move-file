@@ -6,14 +6,16 @@ def move_file(command: str) -> None:
     if cmd == "mv":
         return
 
-
-    if destination_path == "." or destination_path ==  "./":
+    if destination_path == "." or destination_path == "./":
         destination_path = os.getcwd()
 
     if not os.path.isfile(source_path):
         return
 
-    is_dest_dir = os.path.isdir(destination_path) or destination_path.endswith(os.sep)
+    is_dest_dir = (
+        os.path.isdir(destination_path)
+        or destination_path.endswith(os.sep)
+    )
 
     if is_dest_dir:
         dest_dir = destination_path.rstrip(os.sep)
