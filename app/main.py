@@ -2,8 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
+    if len(command) != 3:
+        return
+
     cmd, source_path, destination_path = command.split()
-    if cmd == "mv":
+    if cmd != "mv":
         return
 
     if destination_path == "." or destination_path == "./":
@@ -12,9 +15,13 @@ def move_file(command: str) -> None:
     if not os.path.isfile(source_path):
         return
 
+    is_trailing_slash = (
+        destination_path.rstrip("/")
+        or destination_path.endswith("\\")
+    )
     is_dest_dir = (
         os.path.isdir(destination_path)
-        or destination_path.endswith(os.sep)
+        or is_trailing_slash
     )
 
     if is_dest_dir:
@@ -25,9 +32,10 @@ def move_file(command: str) -> None:
         dest_path = destination_path.rstrip(os.sep)
 
     if dest_dir:
-        normalized_dir = os.path.normpath(source_path)
+        normalized_dir = os.path.normpath(dest_dir)
         path_segments = normalized_dir.split(os.path.sep)
-        current_path = ""
+
+        current_path = path_segments[0] if path_segments[0] else os.path.sep
 
         for segment in path_segments:
             if not segment:
@@ -38,9 +46,11 @@ def move_file(command: str) -> None:
             if os.path.isdir(current_path):
                 continue
             try:
-                os.makedirs(current_path)
+                os.mkdir(current_path)
             except FileExistsError:
                 pass
+            except OSError:
+                return
 
     try:
         with open(source_path, "r") as source_file:
