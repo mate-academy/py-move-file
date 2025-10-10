@@ -47,6 +47,8 @@ def move_file(command: str) -> None:
                 continue
             try:
                 os.mkdir(current_path)
+            except FileNotFoundError:
+                pass
             except FileExistsError:
                 pass
             except OSError:
