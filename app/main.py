@@ -7,18 +7,24 @@ def move_file(command: str) -> None:
     split_command = command.split()
     if len(split_command) != 3:
         return
-    if split_command[0] != "mv":
+    cmd, source_path, dest_path = split_command
+    if cmd != "mv":
         return
-    if len(split_command[2].split("/")) == 1:
-        with (open(split_command[1], "r") as file_src,
-              open(split_command[2], "w") as file_dest):
+    if not os.path.dirname(dest_path):
+        with (open(source_path, "r") as file_src,
+              open(dest_path, "w") as file_dest):
             file_dest.write(file_src.read())
-        os.remove(split_command[1])
+        os.remove(source_path)
         return
-    dir_path = os.path.dirname(split_command[2])
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path, exist_ok=True)
-    with (open(split_command[1], "r") as file_src,
-          open(split_command[2], "w") as file_dest):
+    dir_path = os.path.dirname(dest_path)
+    parts = dir_path.split(os.sep)
+    current_path = ""
+    for part in parts:
+        if part:
+            current_path = os.path.join(current_path, part)
+            if not os.path.exists(current_path):
+                os.mkdir(current_path)
+    with (open(source_path, "r") as file_src,
+          open(dest_path, "w") as file_dest):
         file_dest.write(file_src.read())
-    os.remove(split_command[1])
+    os.remove(source_path)
