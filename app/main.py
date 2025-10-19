@@ -10,6 +10,9 @@ def move_file(command: str) -> None:
 
     source, destination = parts[1], parts[2]
 
+    if not os.path.isfile(source):
+        raise ValueError("The app supports moving files only.")
+
     if destination.endswith("/"):
         destination_dir = destination.rstrip("/")
         destination_filename = os.path.basename(source)
