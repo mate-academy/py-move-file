@@ -6,22 +6,31 @@ def move_file(command: str) -> None:
     if len(tokens) != 3 or tokens[0] != "mv":
         return
 
-    source, destination = tokens[1], tokens[2]
+    _, source, destination = tokens
 
     if not os.path.isfile(source):
         return
 
-    if os.path.basename(os.path.normpath(destination)) == "":
+    if (destination.endswith(os.path.sep)
+            or (os.path.altsep and destination.endswith(os.path.altsep))):
         destination = os.path.join(destination, os.path.basename(source))
 
     dst_dir = os.path.dirname(destination)
     if dst_dir:
-        os.makedirs(dst_dir, exist_ok=True)
+        parts = dst_dir.split(os.path.sep)
+        if os.path.altsep:
+            parts = [p for part in parts for p in part.split(os.path.altsep)]
+        path = ""
+        for part in parts:
+            if not part:
+                continue
+            path = os.path.join(path, part) if path else part
+            if not os.path.exists(path):
+                os.mkdir(path)
 
-    with open(source, "r") as f_src:
+    with open(source, "rb") as f_src:
         content = f_src.read()
-
-    with open(destination, "w") as f_dst:
+    with open(destination, "wb") as f_dst:
         f_dst.write(content)
 
     os.remove(source)
