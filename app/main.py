@@ -1,18 +1,36 @@
-from os import makedirs, remove
-from pathlib import Path
+import os
 
 
 def move_file(command: str) -> None:
-    command_ls = command.split()
+    tokens = command.strip().split()
+    if len(tokens) != 3 or tokens[0] != "mv":
+        return
 
-    if len(command_ls) == 3 and command_ls[0] == "mv":
-        source_filename, destination = command_ls[1], command_ls[2]
-        makedirs(Path(destination).parent, exist_ok=True)
+    _, source, destination = tokens
 
-        with (
-            open(source_filename, "r") as source_file,
-            open(destination, "w") as destination_file
-        ):
-            destination_file.write(source_file.read())
+    if not os.path.isfile(source):
+        return
 
-        remove(source_filename)
+    if (destination.endswith(os.path.sep)
+            or (os.path.altsep and destination.endswith(os.path.altsep))):
+        destination = os.path.join(destination, os.path.basename(source))
+
+    dst_dir = os.path.dirname(destination)
+    if dst_dir:
+        parts = dst_dir.split(os.path.sep)
+        if os.path.altsep:
+            parts = [p for part in parts for p in part.split(os.path.altsep)]
+        path = ""
+        for part in parts:
+            if not part:
+                continue
+            path = os.path.join(path, part) if path else part
+            if not os.path.exists(path):
+                os.mkdir(path)
+
+    with open(source, "rb") as f_src:
+        content = f_src.read()
+    with open(destination, "wb") as f_dst:
+        f_dst.write(content)
+
+    os.remove(source)
