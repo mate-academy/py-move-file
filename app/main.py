@@ -28,3 +28,5 @@ def move_file(command: str) -> None:
         os.remove(source_path)
     except FileNotFoundError:
         print(f"Error: Source file '{source_path}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
