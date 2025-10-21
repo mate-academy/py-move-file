@@ -18,10 +18,12 @@ def move_file(command: str) -> None:
     dest_dir = os.path.dirname(full_destination_path)
 
     if dest_dir:
-        os.makedirs(dest_dir,exist_ok=True)
+        os.makedirs(dest_dir, exist_ok=True)
 
     try:
-        with open(source_path, "r") as file_in, open(full_destination_path, "w") as file_out:
+        with (open(source_path, "r")
+              as file_in, open(full_destination_path, "w")
+              as file_out):
             content = file_in.read()
             file_out.write(content)
 
