@@ -14,15 +14,16 @@ Examples:
 - `mv file.txt first_dir/second_dir/file2.txt` create directory `first_dir`
 inside current directory, then create directory `first_dir/second_dir`,
 create file2.txt inside and remove the source file.
+
 ```python
-print(open("file.txt").read())
+print(open("tests/file.txt").read())
 # Some
 # Text
 move_file("mv file.txt first_dir/second_dir/third_dir/file2.txt")
 print(open("first_dir/second_dir/third_dir/file2.txt").read())
 # Some
 # Text
-open("file.txt")
+open("tests/file.txt")
 # FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
 ```
 
