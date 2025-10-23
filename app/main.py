@@ -7,7 +7,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         return
 
-    _, src, dest = parts
+    _, src, dst = parts
 
     if not os.path.isfile(src):
         return
@@ -17,7 +17,10 @@ def move_file(command: str) -> None:
 
     dir_path = os.path.dirname(dst)
     if dir_path:
-        os.makedirs(dir_path, exist_ok=True)
+        try:
+            os.makedirs(dir_path, exist_ok=True)
+        except FileExistsError:
+            pass
 
     with open(src, "r") as source_file:
         content = source_file.read()
