@@ -3,11 +3,11 @@ import os
 
 def move_file(command: str) -> None:
     divided_command = command.split()
-    if not divided_command:
+    if not divided_command and len(divided_command) != 3:
         return
     user_command, source_filename, target_file_location = divided_command
 
-    if user_command == "mv" and len(divided_command) == 3:
+    if user_command == "mv":
         with open(source_filename) as source_file:
             path = os.path.dirname(target_file_location)
             if not path:
@@ -19,7 +19,7 @@ def move_file(command: str) -> None:
             os.makedirs(path, exist_ok=True)
 
             if target_file_location.endswith("/"):
-                target_file_location += source_filename
+                os.path.join(target_file_location, source_filename)
 
             with open(target_file_location, "w") as file_out:
                 file_out.write(source_file.read())
