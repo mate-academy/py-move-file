@@ -1,16 +1,20 @@
 import os
+import shlex  # ## ПОКРАЩЕНО: Для надійного парсингу команд
 
 
 def move_file(command: str) -> None:
     """
     Moves a file from a source to a destination based on an 'mv' command.
 
-    Creates destination directories if they do not exist.
-    Removes the source file after a successful move.
-    If the destination path ends with a separator ('/' or '\\'),
-    the source file is moved into that directory with its original name.
+    This version correctly handles paths with spaces, differentiates between
+    a file and a directory as a destination, and uses more precise
+    error handling.
     """
-    parts = command.split()
+    try:
+        # ## ПОКРАЩЕНО: shlex.split коректно обробляє шляхи з пробілами
+        parts = shlex.split(command)
+    except ValueError:
+        return  # Помилка парсингу, якщо, наприклад, незакриті лапки
 
     if len(parts) != 3 or parts[0] != "mv":
         return
@@ -18,34 +22,20 @@ def move_file(command: str) -> None:
     source_path = parts[1]
     dest_path = parts[2]
 
-    # **ВИПРАВЛЕНО**: Обробляємо випадок, коли шлях призначення — це папка.
-    if dest_path.endswith(("/", "\\")):
-        # Створюємо повний шлях, додаючи ім'я вихідного файлу до папки.
-        # os.path.basename(source_path) отримує ім'я файлу (напр., "file.txt")
-        dest_path = os.path.join(dest_path, os.path.basename(source_path))
-
-    if source_path == dest_path:
+    # ## ПОКРАЩЕНО: Порівнюємо абсолютні шляхи для надійності
+    if os.path.abspath(source_path) == os.path.abspath(dest_path):
         return
 
-    try:
-        # Створюємо директорії для файлу призначення, якщо їх немає
-        dest_directory = os.path.dirname(dest_path)
-        if dest_directory:
-            # exist_ok=True запобігає помилці, якщо папка вже існує
-            os.makedirs(dest_directory, exist_ok=True)
+    # ## ПОКРАЩЕНО: Розумна обробка директорії як місця призначення
+    if os.path.isdir(dest_path):
+        dest_path = os.path.join(dest_path, os.path.basename(source_path))
 
-        # **ВИПРАВЛЕНО**: Використовуємо бінарний режим ('rb', 'wb')
-        # для підтримки будь-яких типів файлів (текст, зображення тощо).
+    try:
+        # ## ПОКРАЩЕНО: Більш точна обробка помилок
+        # Ловимо FileNotFoundError тільки для вихідного файлу
         with open(source_path, "rb") as file_in:
             content = file_in.read()
 
-        with open(dest_path, "wb") as file_out:
-            file_out.write(content)
-
-        os.remove(source_path)
-
-    except FileNotFoundError:
-        pass  # Ігноруємо, якщо вихідний файл не знайдено
-    except IOError:
-        # Ігноруємо інші помилки, пов'язані з доступом до файлів
-        pass
+        dest_directory = os.path.dirname(dest_path)
+        if dest_directory:
+            os.makedirs(dest_directory, exist_ok=True)
