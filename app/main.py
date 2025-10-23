@@ -17,26 +17,36 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         return
 
-    # ## ПОКРАЩЕНО: (Критика 1, 2)
-    # Нормалізуємо шляхи одразу, щоб уникнути проблем з '..', './', '//'
-    source_path = os.path.normpath(parts[1])
-    dest_path = os.path.normpath(parts[2])
+    source_path = parts[1]
+    dest_path = parts[2]
 
-    final_dest_path = dest_path
-    if os.path.isdir(dest_path) or dest_path.endswith((os.sep, "/")):
+    # ## ПОКРАЩЕНО: (Критика 1)
+    # Зберігаємо інформацію про те, чи є місце призначення директорією,
+    # *до* нормалізації, яка видаляє кінцевий слеш.
+    is_dest_a_directory = (
+        os.path.isdir(dest_path)
+        or dest_path.endswith((os.sep, "/"))
+    )
+
+    # Нормалізуємо шляхи, щоб уникнути проблем з '..', './', '//'
+    norm_source = os.path.normpath(source_path)
+    norm_dest = os.path.normpath(dest_path)
+
+    final_dest_path = norm_dest
+    if is_dest_a_directory:
         final_dest_path = os.path.join(
-            dest_path, os.path.basename(source_path)
+            norm_dest, os.path.basename(norm_source)
         )
 
     # Порівнюємо абсолютні шляхи, щоб уникнути самоперезапису
-    if os.path.abspath(source_path) == os.path.abspath(final_dest_path):
+    if os.path.abspath(norm_source) == os.path.abspath(final_dest_path):
         return
 
     # ## ПОКРАЩЕНО: (Критика 3)
     # Більше не "ковтаємо" FileNotFoundError.
     # Тепер функція кине виняток, якщо файл не знайдено,
     # що дозволить автоматичним тестам його зловити.
-    with open(source_path, "rb") as file_in:
+    with open(norm_source, "rb") as file_in:
         dest_directory = os.path.dirname(final_dest_path)
         if dest_directory:
             os.makedirs(dest_directory, exist_ok=True)
@@ -50,4 +60,4 @@ def move_file(command: str) -> None:
                 file_out.write(chunk)
 
     # Видаляємо оригінал лише після 100% успішного копіювання
-    os.remove(source_path)
+    os.remove(norm_source)
