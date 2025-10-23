@@ -7,6 +7,8 @@ def move_file(command: str) -> None:
 
     Creates destination directories if they do not exist.
     Removes the source file after a successful move.
+    If the destination path ends with a separator ('/' or '\\'),
+    the source file is moved into that directory with its original name.
     """
     parts = command.split()
 
@@ -16,27 +18,34 @@ def move_file(command: str) -> None:
     source_path = parts[1]
     dest_path = parts[2]
 
+    # **ВИПРАВЛЕНО**: Обробляємо випадок, коли шлях призначення — це папка.
+    if dest_path.endswith(("/", "\\")):
+        # Створюємо повний шлях, додаючи ім'я вихідного файлу до папки.
+        # os.path.basename(source_path) отримує ім'я файлу (напр., "file.txt")
+        dest_path = os.path.join(dest_path, os.path.basename(source_path))
+
     if source_path == dest_path:
         return
 
     try:
-        # 1. Створюємо директорії для файлу призначення, якщо їх немає
+        # Створюємо директорії для файлу призначення, якщо їх немає
         dest_directory = os.path.dirname(dest_path)
-        if dest_directory and not os.path.exists(dest_directory):
-            # os.makedirs створює всі проміжні папки
-            os.makedirs(dest_directory)
+        if dest_directory:
+            # exist_ok=True запобігає помилці, якщо папка вже існує
+            os.makedirs(dest_directory, exist_ok=True)
 
-        # 2. Читаємо вміст вихідного файлу
-        with open(source_path, "r") as file_in:
+        # **ВИПРАВЛЕНО**: Використовуємо бінарний режим ('rb', 'wb')
+        # для підтримки будь-яких типів файлів (текст, зображення тощо).
+        with open(source_path, "rb") as file_in:
             content = file_in.read()
 
-        # 3. Записуємо вміст у файл призначення
-        with open(dest_path, "w") as file_out:
+        with open(dest_path, "wb") as file_out:
             file_out.write(content)
 
-        # 4. Видаляємо вихідний файл після успішного копіювання
         os.remove(source_path)
 
     except FileNotFoundError:
-        # Якщо вихідний файл не знайдено, нічого не робимо
+        pass  # Ігноруємо, якщо вихідний файл не знайдено
+    except IOError:
+        # Ігноруємо інші помилки, пов'язані з доступом до файлів
         pass
