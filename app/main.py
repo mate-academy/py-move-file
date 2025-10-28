@@ -2,39 +2,24 @@ import os
 
 
 def move_file(command: str) -> None:
-    first_split = command.split()
-    if len(first_split) == 3:
-        command, original_file, dir_and_new_file = first_split
-    else:
-        return
+    command_list = command.split()
+    if command_list[0] == "mv" and len(command_list) == 3:
+        command_list = command_list[1:]
+    original_file = command_list[0]
+    file_path = command_list[1]
 
-    if (
-            command == "mv"
-            and os.path.exists(original_file)
-    ):
-        second_split = dir_and_new_file.split(os.path.sep)
-        new_file = second_split[-1]
-        second_split.remove(new_file)
+    if os.sep in file_path or "/" in file_path:
+        directory = os.path.dirname(file_path)
 
-        if original_file == new_file:
-            os.rename(original_file, new_file)
+        if directory and not os.path.exists(directory):
+            os.makedirs(directory, exist_ok=True)
+
+        if os.path.exists(original_file):
+            with open(original_file, "rb") as old_file:
+
+                with open(file_path, "wb") as new_file:
+                    new_file.write(old_file.read())
+
             os.remove(original_file)
-            return
-
-        current_path = ""
-
-        for item in second_split:
-            current_path = os.path.join(current_path, item) if current_path else item
-
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
-
-        new_file = os.path.join(current_path, new_file)
-
-        with (
-            open(original_file, "rb") as original,
-            open(new_file, "wb") as new
-        ):
-            new.write(original.read())
-
-        os.remove(original_file)
+    else:
+        os.rename(original_file, file_path)
