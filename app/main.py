@@ -7,22 +7,21 @@ def move_file(command: str) -> None:
     if len(args) != 3 or args[0] != "mv" or args[1] == args[2]:
         return
 
-    source_pah = args[1]
+    source_path = args[1]
     destination_path = args[2]
 
-    with open(source_pah, "r") as from_file:
+    with open(source_path, "r") as from_file:
         data = from_file.read()
 
-    full_path_file_list = destination_path.split("/")
-    file_name = os.path.basename(destination_path)
-    full_path_file_list.pop(-1)
-    path_file = "/".join(full_path_file_list)
+    path, file_name = os.path.split(destination_path)
+    if path != "":
+        os.makedirs(path, exist_ok=True)
 
-    if len(full_path_file_list) > 0:
-        os.makedirs(path_file, exist_ok=True)
-        file_name = os.path.join(path_file, file_name)
+    if file_name == "":
+        file_name = os.path.basename(source_path)
 
-    with open(file_name, "w") as to_file:
+    full_path = os.path.join(path, file_name)
+    with open(full_path, "w") as to_file:
         to_file.write(data)
 
-    os.remove(source_pah)
+    os.remove(source_path)
