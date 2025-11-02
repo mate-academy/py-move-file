@@ -25,6 +25,3 @@ def move_file(command: str) -> None:
                     remove(file_in)
             except FileNotFoundError:
                 pass
-
-
-move_file("mv new/dir/test.txt /")
