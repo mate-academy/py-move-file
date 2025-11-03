@@ -21,16 +21,10 @@ def move_file(command: str) -> None:
     - Prints operation results to the console.
     """
 
-    parts = command.split()
-    if len(parts) != 3 or parts[0] != "mv":
-        print("Invalid command. Usage: mv <source> <destination>")
-        return
-
-    input_name, output_name = parts[1], parts[2]
-
     # Do nothing if source and destination are identical
-    if input_name == output_name:
-        print("Source and destination are the same. Nothing to do.")
+    cmd, input_name, output_name = command.split()
+    if cmd != "mv" or input_name == output_name:
+        print("Invalid command or identical source and destination.")
         return
 
     # If destination ends with '/', treat it as directory
@@ -50,5 +44,7 @@ def move_file(command: str) -> None:
                 output_file.write(line)
         os.remove(input_name)
         print(f"Moved: '{input_name}' → '{output_name}'")
-    except Exception as e:
+    except ValueError as e:
         print(f"Error while moving '{input_name}' → '{output_name}': {e}")
+    except FileNotFoundError as e:
+        print(f"File not found: {e}")
