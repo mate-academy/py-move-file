@@ -5,7 +5,7 @@ def move_file(command: str) -> None:
     if (
             len(cmd_chain := command.split(" ")) == 3
             and cmd_chain[0] == "mv"
-            and os.path.exists(cmd_chain[1])
+            and os.path.isfile(cmd_chain[1])
             and not cmd_chain[2].startswith("-")
     ):
         source, destination = cmd_chain[1], cmd_chain[2]
