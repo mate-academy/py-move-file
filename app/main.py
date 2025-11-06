@@ -16,14 +16,13 @@ def move_file(command: str) -> None:
             destination_file_name.endswith("/")
             or destination_file_name.endswith("\\")
     ):
-        source_file_name = os.path.basename(source_file_name)
+        source_base_name = os.path.basename(source_file_name)
         destination_file_name = os.path.join(
             destination_file_name,
-            source_file_name
+            source_base_name
         )
 
     try:
-        os.path.join(destination_file_name)
         destination_dir = os.path.dirname(destination_file_name)
         if destination_dir:
             os.makedirs(destination_dir, exist_ok=True)
