@@ -1,5 +1,4 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
@@ -20,4 +19,8 @@ def move_file(command: str) -> None:
     if dir_path and not os.path.exists(dir_path):
         os.makedirs(dir_path, exist_ok=True)
 
-    shutil.move(src, dst)
+    with open(src, "r") as file_in, open(dst, "w") as file_out:
+        content = file_in.read()
+        file_out.write(content)
+
+    os.remove(src)
