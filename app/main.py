@@ -2,42 +2,35 @@ from os import remove, rename, makedirs, path
 
 
 def move_file(command: str) -> None:
-    command_list = command.split(" ")
-    if len(command_list) == 3:
-        command = command_list[0]
-        file_to_copy = command_list[1]
-        directory = ""
-        new_file = command_list[2]
-        if file_to_copy == new_file:
-            return
+    commands = command.split()
+    if len(commands) == 3 and commands[0] == "mv":
+        command, file_to_copy, new_file = commands[0], commands[1], commands[2]
 
-        if "/" in command_list[2]:
-            cleared_path = command_list[2].split("/")
-            directory = "/".join(cleared_path[:-1])
-            if not cleared_path[-1]:
-                new_file = file_to_copy
-            else:
-                new_file = cleared_path[-1]
+        cleared_path = commands[2].split("/")
+        directory = "/".join(cleared_path[:-1])
+        if not cleared_path[-1]:
+            new_file = file_to_copy
+        else:
+            new_file = cleared_path[-1]
 
         full_path = path.join(directory, new_file)
 
-        if command == "mv":
-            if not directory:
-                try:
-                    rename(file_to_copy, new_file)
-                    return
-                except FileExistsError:
-                    raise FileExistsError
-
-            makedirs(directory, exist_ok=True)
-
+        if not directory:
             try:
-                with open(file_to_copy, mode="r") as file_read:
-                    file_data = file_read.readlines()
+                rename(file_to_copy, new_file)
+                return
+            except FileExistsError:
+                raise FileExistsError
 
-                with open(full_path, mode="w") as file_write:
-                    file_write.write("".join(file_data))
+        makedirs(directory, exist_ok=True)
 
-                remove(file_to_copy)
-            except FileNotFoundError:
-                raise FileNotFoundError("[Errno 2] No such file or directory")
+        try:
+            with open(file_to_copy, "r") as to_copy, \
+                 open(full_path, "w") as to_write:
+                file_data = to_copy.readlines()
+                to_write.write("".join(file_data))
+
+            remove(file_to_copy)
+
+        except FileNotFoundError:
+            raise FileNotFoundError("[Errno 2] No such file or directory")
