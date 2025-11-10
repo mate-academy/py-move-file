@@ -9,7 +9,7 @@ def move_file(command: str) -> None:
     if cmd_name != "mv":
         return
 
-    abs_source_file_name = os.path.realpath(source_file_name)
+    abs_source_file_name = os.path.abspath(source_file_name)
     abs_destination_path = os.path.abspath(destination_path)
 
     if abs_source_file_name == abs_destination_path:
