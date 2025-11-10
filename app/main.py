@@ -28,8 +28,10 @@ def move_file(command: str) -> None:
     except PermissionError:
         print(f"Permission denied: "
               f"Unable to create '{destination_file_path}'.")
+        return
     except Exception as e:
         print(f"An error occurred: {e}")
+        return
 
     try:
         with (open(source_file_name, "r") as source_file_object,
@@ -44,5 +46,5 @@ def move_file(command: str) -> None:
         print("Permission denied")
         return
     except IsADirectoryError:
-        print("Destination directory not found")
+        print(f"Destination directory: {destination_file_path} not found")
         return
