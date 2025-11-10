@@ -26,6 +26,19 @@ def test_file_renamed(create_file: callable) -> None:
     os.remove("file1.txt")
 
 
+def test_should_move_file_into_existing_directory_with_slash(create_file: callable) -> None:
+    os.makedirs("target_dir")
+
+    move_file("mv file.txt target_dir/")
+    assert os.path.exists("target_dir/file.txt") is True
+    assert not os.path.exists("file.txt")
+
+    with open("target_dir/file.txt", "r") as f:
+        assert f.read() == "This is some\n content for\n the file."
+
+    shutil.rmtree("target_dir")
+
+
 def test_should_work_when_directory_exists(create_file: callable) -> None:
     os.makedirs("dir", exist_ok=True)
     move_file(f"mv file.txt dir/file2.txt")
