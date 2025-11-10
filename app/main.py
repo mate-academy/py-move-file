@@ -40,3 +40,9 @@ def move_file(command: str) -> None:
     except FileNotFoundError:
         print("Source file not found")
         return
+    except PermissionError:
+        print("Permission denied")
+        return
+    except IsADirectoryError:
+        print("Destination directory not found")
+        return
