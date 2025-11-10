@@ -9,7 +9,8 @@ def move_file(command: str) -> None:
     file_command, old_file_name, new_file_path = parts
     if file_command != "mv":
         return
-
+    if os.path.abspath(old_file_name) == os.path.abspath(new_file_path):
+        return
     if new_file_path.endswith("/"):
         os.makedirs(new_file_path, exist_ok=True)
         new_file_path = (os.path.join
