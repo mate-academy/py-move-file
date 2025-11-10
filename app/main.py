@@ -4,9 +4,13 @@ import os
 def move_file(command: str) -> None:
     split_command = command.split(" ")
 
+    if len(split_command) != 3:
+        print("Invalid command")
+        return
+
     first_word, source_file_name, destination_file_path = split_command
 
-    if first_word != "mv" or len(split_command) != 3:
+    if first_word != "mv":
         print("Invalid command")
         return
 
