@@ -10,7 +10,7 @@ def move_file(command: str) -> None:
         return
 
     abs_source_file_name = os.path.realpath(source_file_name)
-    abs_destination_path = os.path.realpath(destination_path)
+    abs_destination_path = os.path.abspath(destination_path)
 
     if abs_source_file_name == abs_destination_path:
         return
