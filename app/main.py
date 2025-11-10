@@ -18,4 +18,8 @@ def move_file(command: str) -> None:
     if dest_dir:
         os.makedirs(dest_dir, exist_ok=True)
 
-    os.rename(file_name_origin, destination)
+    with (open(file_name_origin) as old_file,
+          open(destination, "w") as new_file):
+        content = old_file.read()
+        new_file.write(content)
+    os.remove(file_name_origin)
