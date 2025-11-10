@@ -5,8 +5,7 @@ def move_file(command: str) -> None:
     command_parts = command.split()
     if len(command_parts) != 3 or command_parts[0] != "mv":
         return
-    file_name_origin = command_parts[1]
-    destination = command_parts[2]
+    _, file_name_origin, destination = command_parts
 
     if destination.endswith("/"):
         destination = os.path.join(
