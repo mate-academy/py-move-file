@@ -7,15 +7,16 @@ def move_file(command: str) -> None:
     if len(result) != 3 or result[0] != "mv":
         raise ValueError
 
-    src = result[1]
-    dst = result[2]
+    source_path = result[1]
+    destination_path = result[2]
 
-    if dst.endswith("/"):
-        dst = os.path.join(dst, os.path.basename(src))
+    if destination_path.endswith("/"):
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_path))
 
-    dst_dir = os.path.dirname(dst)
+    dst_dir = os.path.dirname(destination_path)
     if dst_dir:
         os.makedirs(dst_dir, exist_ok=True)
 
-    shutil.copy2(src, dst)
-    os.remove(src)
+    shutil.copy2(source_path, destination_path)
+    os.remove(source_path)
