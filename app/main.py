@@ -2,7 +2,8 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) != 3:
+    splited = command.split()
+    if len(splited) != 3:
         return
 
     mv, src, dest = command.split()
