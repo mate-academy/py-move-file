@@ -2,7 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    _, src, dest = command.split()
+    if len(command.split()) != 3:
+        return
+
+    mv, src, dest = command.split()
+    if mv != "mv":
+        return
 
     if dest.endswith("/"):
         os.makedirs(dest, exist_ok=True)
