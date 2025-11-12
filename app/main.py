@@ -6,7 +6,7 @@ def move_file(command: str) -> None:
     if len(splited) != 3:
         return
 
-    mv, src, dest = command.split()
+    mv, src, dest = splited
     if mv != "mv":
         return
 
