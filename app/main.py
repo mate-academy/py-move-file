@@ -27,4 +27,5 @@ def move_file(command: str) -> None:
     if dir_to_create:
         os.makedirs(dir_to_create, exist_ok=True)
 
-    shutil.move(source, destination)
+    shutil.copy(source, destination)
+    os.remove(source)
