@@ -13,12 +13,11 @@ def move_file(command: str) -> None:
         #  Full directory path is everything except the new filename
         dir_path = os.path.dirname(destination)
         #  Create full directory structure if it doesn't exist
-        if not os.path.exists(dir_path):
-            os.makedirs(dir_path)
+        os.makedirs(dir_path, exist_ok=True)
 
     to_save_name = destination
     if to_save_name[-1] == "/":
-        to_save_name += file_name
+        to_save_name = os.path.join(to_save_name, file_name)
 
     with (open(file_name, "r") as file_to_move,
           open(to_save_name, "w") as file_to_save):
