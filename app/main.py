@@ -7,17 +7,18 @@ def move_file(command: str) -> None:
         return
     if command_list[0] != "mv":
         return
-    file_name = command_list[1]
-    destination = command_list[2]
+    _, file_name, destination = command_list
 
     if "/" in destination:
         #  Full directory path is everything except the new filename
         dir_path = os.path.dirname(destination)
         #  Create full directory structure if it doesn't exist
         if not os.path.exists(dir_path):
-            os.makedirs(dir_path, True)
+            os.makedirs(dir_path)
 
     to_save_name = destination
+    if to_save_name[-1] == "/":
+        to_save_name += file_name
 
     with (open(file_name, "r") as file_to_move,
           open(to_save_name, "w") as file_to_save):
