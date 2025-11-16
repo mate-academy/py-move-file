@@ -23,4 +23,4 @@ def move_file(command: str) -> None:
         os.remove(dst_path)
 
     shutil.copy(src, dst_path)
-    shutil.remove(src)
+    os.remove(src)
