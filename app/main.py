@@ -14,8 +14,7 @@ def move_file(command: str) -> str:
         if parts[0] != "mv":
             return "Error: Command must start with 'mv'"
 
-        source_path = parts[1]
-        destination_path = parts[2]
+        _, source_path, destination_path = parts
 
         if not source_path or not destination_path:
             return ("Error: Source and destination paths "
