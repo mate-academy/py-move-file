@@ -12,7 +12,11 @@ def move_file(command: str) -> None:
     if not os.path.isfile(src):
         raise FileNotFoundError(f"Source file not found: {src}")
 
-    if dst.endswith(os.sep):
+    if dst == os.sep:
+        dir_path = os.sep
+        file_name = os.path.basename(src)
+
+    elif dst.endswith(os.sep):
         dir_path = dst.rstrip(os.sep)
         file_name = os.path.basename(src)
     else:
