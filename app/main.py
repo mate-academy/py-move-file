@@ -12,7 +12,7 @@ def move_file(command: str) -> str:
                     "mv source destination")
 
         if parts[0] != "mv":
-            return "Error: Command must start with 'mv'"
+            return "Error: Command must start with \"mv\""
 
         _, source_path, destination_path = parts
 
@@ -22,10 +22,10 @@ def move_file(command: str) -> str:
 
         if not os.path.exists(source_path):
             return (f"Error: Source file "
-                    f"'{source_path}' does not exist")
+                    f"\"{source_path}\" does not exist")
 
         if not os.path.isfile(source_path):
-            return f"Error: '{source_path}' is not a file"
+            return f"Error: \"{source_path}\" is not a file"
 
         destination_is_directory = destination_path.endswith("/")
 
@@ -44,7 +44,7 @@ def move_file(command: str) -> str:
                 os.makedirs(destination_dir, exist_ok=True)
             except OSError as e:
                 return (f"Error: Failed to create "
-                        f"directories '{destination_dir}': {e}")
+                        f"directories \"{destination_dir}\": {e}")
 
         if destination_is_directory:
             final_destination_path = (
@@ -56,8 +56,8 @@ def move_file(command: str) -> str:
 
         os.remove(source_path)
 
-        return (f"Success: Moved '{source_path}' "
-                f"to '{final_destination_path}'")
+        return (f"Success: Moved \"{source_path}\" "
+                f"to \"{final_destination_path}\"")
 
     except Exception as e:
         return f"Error: Unexpected error occurred: {e}"
