@@ -6,9 +6,10 @@ def move_file(command: str) -> None:
     if len(command_split) != 3 or command_split[0] != "mv":
         return
     command_name, source_file, destination = command_split
-    destination_file = (destination) \
-        if os.path.basename(destination) != "" \
-        else os.path.join(destination, source_file)
+    destination_file = (
+        os.path.basename(destination)) if (
+            os.path.basename(destination) != "") \
+        else source_file
     destination_path = os.path.dirname(destination)
     if destination_path != "":
         if not os.path.exists(destination_path):
