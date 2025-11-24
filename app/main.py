@@ -13,7 +13,6 @@ def move_file(command: str) -> None:
     if destination_path != "":
         os.makedirs(destination_path, exist_ok=True)
     try:
-        print("destination_file =", destination_file)
         with (open(
                 source_file,
                 "r",
@@ -29,3 +28,4 @@ def move_file(command: str) -> None:
         os.remove(source_file)
     except FileNotFoundError:
         return
+
