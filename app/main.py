@@ -25,7 +25,7 @@ def move_file(command: str) -> None:
             os.makedirs(dir_path, exist_ok=True)
 
     # Копіюємо файл вручну
-    with open(src, "rb") as f_src, open(dst, "wb") as f_dst:
+    with open(src, "r") as f_src, open(dst, "w") as f_dst:
         f_dst.write(f_src.read())
 
     # Видаляємо старий
