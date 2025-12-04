@@ -1,6 +1,5 @@
 import os
 
-
 def move_file(command: str) -> None:
     parts = command.split(" ")
 
@@ -13,9 +12,13 @@ def move_file(command: str) -> None:
     if not os.path.exists(src):
         return
 
-    dir_path = os.path.dirname(dest)
-    if dir_path:
-        os.makedirs(dir_path, exist_ok=True)
+    if dest.endswith("/"):
+        os.makedirs(dest, exist_ok=True)
+        dest = os.path.join(dest, os.path.basename(src))
+    else:
+        dir_path = os.path.dirname(dest)
+        if dir_path:
+            os.makedirs(dir_path, exist_ok=True)
 
     with open(src, "r") as f_src, open(dest, "w") as f_dest:
         f_dest.write(f_src.read())
