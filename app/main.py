@@ -6,10 +6,9 @@ def move_file(command: str) -> None:
     if parts[0] != "mv" or len(parts) != 3 or parts[1] == parts[2]:
         return
 
-    src = parts[1]
-    dest = parts[2]
+    _, src, dest = parts
 
-    if not os.path.exists(src):
+    if not os.path.isfile(src):
         return
 
     if dest.endswith("/"):
