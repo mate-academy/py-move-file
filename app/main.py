@@ -16,10 +16,10 @@ def move_file(command: str) -> None:
 
     if destination_name.endswith("/"):
         os.makedirs(destination_name, exist_ok=True)
-        source_name = os.path.basename(source_name)
-        final_path = os.path.join(destination_name, source_name)
+        source_basename = os.path.basename(source_name)
+        final_path = os.path.join(destination_name, source_basename)
 
-    elif "/" in destination_name:
+    elif os.path.dirname(destination_name):
         file_name = os.path.basename(destination_name)
         path = os.path.dirname(destination_name)
         os.makedirs(path, exist_ok=True)
@@ -27,4 +27,5 @@ def move_file(command: str) -> None:
 
     with open(final_path, "w") as destination_file:
         destination_file.write(data)
-        os.remove(source_name)
+
+    os.remove(source_name)
