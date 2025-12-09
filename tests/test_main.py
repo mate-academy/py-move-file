@@ -60,3 +60,34 @@ def test_should_create_multiple_directories_when_they_exist(create_file: callabl
     assert os.path.exists("file.txt") is False
 
     shutil.rmtree("first_dir")
+
+
+# Novos testes para validação de erros
+
+
+def test_invalid_command_raises_value_error() -> None:
+    with pytest.raises(ValueError, match="Invalid command format"):
+        move_file("cp file.txt file2.txt")
+
+
+def test_missing_arguments_raises_value_error() -> None:
+    with pytest.raises(ValueError, match="Invalid command format"):
+        move_file("mv file.txt")
+
+
+def test_non_existent_source_raises_file_not_found_error() -> None:
+    with pytest.raises(FileNotFoundError, match="Source file not found"):
+        move_file("mv non_existent.txt destination.txt")
+
+
+def test_move_to_directory_with_trailing_slash(create_file: callable) -> None:
+    os.makedirs("target_dir")
+    move_file("mv file.txt target_dir/")
+
+    assert os.path.exists("target_dir/file.txt") is True
+    assert os.path.exists("file.txt") is False
+
+    with open("target_dir/file.txt", "r") as file_with_content:
+        assert file_with_content.read() == "This is some\n content for\n the file."
+
+    shutil.rmtree("target_dir")
