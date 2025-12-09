@@ -1,6 +1,7 @@
 import os
 
-def move_file(command: str):
+
+def move_file(command: str) -> None:
     parts = command.split()
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Comando inválido")
@@ -21,10 +22,10 @@ def move_file(command: str):
     if dst_dir:
         path_parts = dst_dir.split("/")
         current = ""
-        for p in path_parts:
-            if p == "":
+        for paths in path_parts:
+            if paths == "":
                 continue
-            current = os.path.join(current, p)
+            current = os.path.join(current, paths)
             if not os.path.exists(current):
                 os.mkdir(current)
 
