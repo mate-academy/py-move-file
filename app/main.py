@@ -4,7 +4,8 @@ import os
 def move_file(command: str) -> None:
     commands = command.split(maxsplit=2)
     if len(commands) != 3 or commands[0] != "mv":
-        raise ValueError("Invalid command format: expected 'mv <source> <destination>'")
+        raise ValueError("Invalid command format:"
+                         " expected 'mv <source> <destination>'")
 
     _, src, dst = commands
 
@@ -12,7 +13,7 @@ def move_file(command: str) -> None:
         raise FileNotFoundError(f"Source file not found: {src}")
 
     # Verificar se destino termina com / (é um diretório)
-    if dst.endswith('/') or dst.endswith(os.sep):
+    if dst.endswith("/") or dst.endswith(os.sep):
         dest_path = os.path.join(dst, os.path.basename(src))
     else:
         dest_path = dst
@@ -32,11 +33,11 @@ def move_file(command: str) -> None:
                     pass
 
     # Copiar o arquivo em blocos
-    BLOCK_SIZE = 4096
+    block_size = 4096
     with open(src, "rb") as fsrc:
         with open(dest_path, "wb") as fdst:
             while True:
-                block = fsrc.read(BLOCK_SIZE)
+                block = fsrc.read(block_size)
                 if not block:
                     break
                 fdst.write(block)
