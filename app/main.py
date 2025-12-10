@@ -8,7 +8,8 @@ def move_file(command: str) -> None:
     source_file = file_names[1]
     destination_path = file_names[2]
     if destination_path.endswith(os.sep) or os.path.isdir(destination_path):
-        destination_path = os.path.join(destination_path, os.path.basename(source_file))
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_file))
     normalized_path = os.path.normpath(destination_path)
     path_parts = normalized_path.split(os.sep)
     current_path = ""
