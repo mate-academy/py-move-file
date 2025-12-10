@@ -9,7 +9,8 @@ def move_file(command: str) -> None:
     if cmd != "mv":
         return
     if destination_path.endswith(os.sep) or os.path.isdir(destination_path):
-        destination_path = os.path.join(destination_path, os.path.basename(source_file))
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_file))
     parent_dir = os.path.dirname(destination_path)
     if parent_dir:
         os.makedirs(parent_dir, exist_ok=True)
