@@ -3,13 +3,16 @@ import os
 
 def move_file(command: str) -> None:
     split_command = command.split()
+    if len(split_command) != 3:
+        return
+
     action, original_file, moved_file_path = split_command
     if original_file == moved_file_path or action != "mv":
         return
 
-    parts = moved_file_path.split("/")[:-1]
+    parts = os.path.dirname(moved_file_path).split("/")
+    parts = [p for p in parts if p]
     acc = []
-
     for part in parts:
         acc.append(part)
         current_path = os.path.join(*acc)
@@ -30,3 +33,6 @@ def move_file(command: str) -> None:
         return
     else:
         os.remove(original_file)
+
+
+print(os.path.dirname("first_dir/second_dir/third_dir/file2.txt").split("/"))
