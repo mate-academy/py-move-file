@@ -2,42 +2,27 @@ import os
 
 
 def move_file(command: str) -> None:
-    split_command = command.split()
-    if len(split_command) != 3:
+    parts = command.split()
+    if len(parts) != 3:
         return
 
-    action, original_file, moved_file_path = split_command
-    if original_file == moved_file_path or action != "mv":
+    action, source_path, destination_path = parts
+    if action != "mv" or source_path == destination_path:
         return
 
-    dirpath = os.path.dirname(moved_file_path)
-    if dirpath:
-        parts = [p for p in dirpath.split("/") if p]
-    else:
-        parts = []
+    if destination_path.endswith(os.sep):
+        filename = os.path.basename(source_path)
+        destination_path = os.path.join(destination_path, filename)
 
-    acc = []
-
-    for part in parts:
-        acc.append(part)
-        current_path = os.path.join(*acc)
-        if os.path.exists(current_path):
-            if os.path.isdir(current_path):
-                continue
-            else:
-                raise FileExistsError
-
-        try:
-            os.mkdir(current_path)
-        except FileExistsError:
-            pass
-
+    destination_dir = os.path.dirname(destination_path)
+    if destination_dir:
+        os.makedirs(destination_dir, exist_ok=True)
     try:
-        with (open(original_file, "rb") as file_in,
-              open(moved_file_path, "wb") as file_out):
-            file_out.write(file_in.read())
+        with (open(source_path, "rb") as src,
+              open(destination_path, "wb") as dst):
+            dst.write(src.read())
 
     except OSError:
         return
     else:
-        os.remove(original_file)
+        os.remove(source_path)
