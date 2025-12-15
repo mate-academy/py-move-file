@@ -10,15 +10,23 @@ def move_file(command: str) -> None:
     if original_file == moved_file_path or action != "mv":
         return
 
-    parts = os.path.dirname(moved_file_path).split("/")
-    parts = [p for p in parts if p]
+    dirpath = os.path.dirname(moved_file_path)
+    if dirpath:
+        parts = [p for p in dirpath.split("/") if p]
+    else:
+        parts = []
+
     acc = []
+
     for part in parts:
         acc.append(part)
         current_path = os.path.join(*acc)
-        if (os.path.exists(current_path)
-                or os.path.isdir(current_path)):
-            continue
+        if os.path.exists(current_path):
+            if os.path.isdir(current_path):
+                continue
+            else:
+                raise FileExistsError
+
         try:
             os.mkdir(current_path)
         except FileExistsError:
@@ -33,6 +41,3 @@ def move_file(command: str) -> None:
         return
     else:
         os.remove(original_file)
-
-
-print(os.path.dirname("first_dir/second_dir/third_dir/file2.txt").split("/"))
