@@ -3,26 +3,22 @@ import os
 
 def move_file(command: str) -> None:
     list_command = command.split(" ")
-
-    try:
-        new_file = list_command[2]
-        old_file = list_command[1]
+    if list_command[0] == "mv" and len(list_command) == 3:
         try:
-            if "/" in new_file:
-                list_new_file = new_file.split("/")
-                path = os.path.join(*list_new_file)
-                os.makedirs(os.path.dirname(path), exist_ok=True)
-            elif "\\" in new_file:
-                list_new_file = new_file.split("\\")
-                path = os.path.join(*list_new_file)
-                os.makedirs(os.path.dirname(path), exist_ok=True)
-            else:
-                path = new_file
+            mv, old_file, new_file = list_command
+            try:
+                dir_path = os.path.dirname(new_file)
+                if dir_path:
+                    os.makedirs(dir_path, exist_ok=True)
+                else:
+                    pass
 
-            with open(old_file, "r") as old, open(path, "w") as new:
-                new.write(old.read())
-                os.remove(old_file)
-        except FileNotFoundError:
+                with open(old_file, "r") as old, open(new_file, "w") as new:
+                    new.write(old.read())
+                    os.remove(old_file)
+            except FileNotFoundError:
+                pass
+        except IndexError:
             pass
-    except IndexError:
+    else:
         pass
