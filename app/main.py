@@ -13,9 +13,11 @@ def move_file(command: str) -> None:
     if not os.path.isfile(file_src):
         return
 
-    *dirs, _ = dst.split("/")
+    dirs = os.path.dirname(dst)
     if dirs:
-        os.makedirs(os.path.join(*dirs), exist_ok=True)
+        os.makedirs(os.path.join(dirs), exist_ok=True)
+    if dirs == dst:
+        dst += file_src
     with open(file_src) as f_src:
         with open(dst, "w") as f_dst:
             f_dst.write(f_src.read())
