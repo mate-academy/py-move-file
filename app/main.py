@@ -3,6 +3,10 @@ import os
 
 def move_file(command: str) -> None:
     command = command.split()
+
+    if command[0] != "mv" or len(command) != 3:
+        raise ValueError("Invalid command")
+
     old_file, new_file = command[1], command[2]
     has_trailing_sep = new_file.endswith(os.sep)
     normalized = new_file.rstrip(os.sep)
@@ -24,4 +28,11 @@ def move_file(command: str) -> None:
     else:
         dest = new_file
 
-    os.rename(old_file, dest)
+    with open(old_file, "rb") as src, open(dest, "wb") as dst:
+        while True:
+            chunk = src.read(4096)
+            if not chunk:
+                break
+            dst.write(chunk)
+
+    os.remove(old_file)
