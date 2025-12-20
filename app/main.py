@@ -1,5 +1,4 @@
 import os
-from os import mkdir
 
 
 def move_file(command: str) -> None:
@@ -23,11 +22,7 @@ def move_file(command: str) -> None:
 
     dir_path = os.path.dirname(destination_path)
     if dir_path:
-        current = ""
-        for folder in dir_path.split(os.sep):
-            current = os.path.join(current, folder)
-            if not os.path.exists(current):
-                mkdir(current)
+        os.makedirs(dir_path, exist_ok=True)
 
     with open(src, "r") as f_src, open(destination_path, "w") as f_dst:
         f_dst.write(f_src.read())
