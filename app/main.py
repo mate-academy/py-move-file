@@ -1,29 +1,19 @@
 import os
+import shutil
 
-
-def move_file(command) -> None:
+def move_file(command: str) -> None:
     parts = command.split()
-    src = parts[1]
-    dest = parts[2]
+    if len(parts) != 3 or parts[0] != "mv":
+        return
 
-    if dest.endswith('/'):
+    _, src, dest = parts
+
+    if dest.endswith(os.sep) or os.path.isdir(dest):
         dest = os.path.join(dest, os.path.basename(src))
 
     dest_dir = os.path.dirname(dest)
-
     if dest_dir:
-        path_acc = ""
-        for folder in dest_dir.split('/'):
-            if not folder:
-                continue
-            path_acc = os.path.join(path_acc, folder)
-            if not os.path.exists(path_acc):
-                os.mkdir(path_acc)
+        os.makedirs(dest_dir, exist_ok=True)
 
-    with open(src, 'r') as f_src:
-        content = f_src.read()
-
-    with open(dest, 'w') as f_dest:
-        f_dest.write(content)
-
-    os.remove(src)
+    if os.path.exists(src):
+        shutil.move(src, dest)
