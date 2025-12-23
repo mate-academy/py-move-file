@@ -1,7 +1,7 @@
 import os
 
 
-def move_file(command):
+def move_file(command) -> None:
     parts = command.split()
     src = parts[1]
     dest = parts[2]
