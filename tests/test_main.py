@@ -1,4 +1,33 @@
 import os
+
+def move_file(command: str) -> None:
+    # Split the command string into its components
+    parts = command.split()
+
+    # Check if the command is formatted correctly
+    if len(parts) != 3 or parts[0] != 'mv':
+        print("Invalid command format. Please use 'mv source_file destination_path'.")
+        return
+
+    source_file, destination_path = parts[1], parts[2]
+
+    # Check if the destination path ends with '/'
+    if destination_path.endswith('/'):
+        # If it does, consider it as a directory
+        destination_file = os.path.join(destination_path, os.path.basename(source_file))
+    else:
+        destination_file = destination_path
+
+    # Create the parent directories if they don't exist
+    destination_directory = os.path.dirname(destination_file)
+    if not os.path.exists(destination_directory):
+        os.makedirs(destination_directory, exist_ok=True)
+
+    # Move the file
+    os.rename(source_file, destination_file)
+
+    print(f"File '{source_file}' moved to '{destination_file}' successfully.")
+import os
 import shutil
 
 import pytest
