@@ -14,7 +14,7 @@ def move_file(command: str) -> None:
 
     if destination.endswith("/"):
         destination = os.path.join(destination, os.path.basename(source))
-        
+
     dest_dir = os.path.dirname(destination)
 
     if dest_dir:
