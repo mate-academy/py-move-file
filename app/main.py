@@ -3,11 +3,13 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
+    if len(parts) != 3:
+        raise ValueError("Command must contain exactly 3 elements")
+    if parts[0] != "mv":
+        raise ValueError(f"{parts[0]} is not a valid command")
     command_name, source_path, destination_path = parts
-    if command_name != "mv" or len(parts[1:]) != 2:
-        raise ValueError(f"{command_name} is not a valid command")
-    if not os.path.exists(source_path) or not os.path.isfile(source_path):
-        raise FileNotFoundError(f"Source path {source_path} does not exist")
+    if not os.path.isfile(source_path):
+        raise FileNotFoundError("Source file not found")
     if destination_path[-1] == "/":
         destination_path = os.path.join(
             destination_path, os.path.basename(source_path)
