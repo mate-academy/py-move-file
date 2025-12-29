@@ -17,6 +17,12 @@ def move_file(command: str) -> None:
     if dest_dir:
         os.makedirs(dest_dir, exist_ok=True)
 
+    source_abs = os.path.abspath(source)
+    destination_abs = os.path.abspath(destination)
+
+    if source_abs == destination_abs:
+        return
+
     with open(source, "r") as src, open(destination, "w") as target:
         target.write(src.read())
 
