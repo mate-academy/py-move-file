@@ -2,7 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    comm, source, dest = command.split()
+    com_ch = command.split()
+    if len(com_ch) != 3:
+        return
+    else:
+        comm, source, dest = com_ch[0], com_ch[1], com_ch[2]
 
     if comm != "mv" or not os.path.isfile(source):
         return
