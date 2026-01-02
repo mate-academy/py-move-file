@@ -7,25 +7,22 @@ def move_file(command: str) -> None:
         mv, source, path_destination = commands
         if not os.path.isfile(source):
             raise FileNotFoundError(f"File not found: {source}")
-        # if path_destination[-1] == "/" or path_destination[-1] == os.sep:
         if (path_destination.endswith(("/", os.sep))
                 or os.path.isdir(path_destination)):
-            os.makedirs(path_destination, exist_ok=True)
-            with (open(source, "rb") as original_file,
-                  open(os.path.join(path_destination,
-                                    os.path.basename(source)),
-                       "wb") as new_file):
-                for line in original_file:
-                    new_file.write(line)
-            os.remove(source)
+
+            final_dir = path_destination
+            final_name = os.path.join(path_destination,
+                                      os.path.basename(source))
 
         else:
-            final_path = os.path.dirname(path_destination)
-            if final_path:
-                os.makedirs(final_path, exist_ok=True)
+            final_dir = os.path.dirname(path_destination)
+            final_name = path_destination
 
-            with (open(source, "rb") as original_file,
-                  open(path_destination, "wb") as new_file):
-                for line in original_file:
-                    new_file.write(line)
-            os.remove(source)
+        if final_dir:
+            os.makedirs(final_dir, exist_ok=True)
+
+        with (open(source, "rb") as original_file,
+              open(final_name, "wb") as new_file):
+            for line in original_file:
+                new_file.write(line)
+        os.remove(source)
