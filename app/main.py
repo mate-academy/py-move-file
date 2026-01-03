@@ -11,24 +11,14 @@ def move_file(command: str) -> None:
     source_filename: str = parts[1]
 
     if parts[2].endswith("/"):
-        parts[2] += source_filename
-
-    destination_path: list[str] = parts[2].split("/")
-    destination_filename: str = destination_path.pop()
-    directory_to_create: str = ""
+        destination_filename = source_filename
+        destination_path = parts[2].rstrip("/")
+    else:
+        destination_path = os.path.dirname(parts[2])
+        destination_filename = parts[2]
 
     if destination_path:
-        for folder in destination_path:
-            if directory_to_create:
-                directory_to_create = os.path.join(directory_to_create, folder)
-            else:
-                directory_to_create = folder
-            if not os.path.exists(directory_to_create):
-                os.mkdir(directory_to_create)
-
-        destination_filename = (
-            os.path.join(directory_to_create, destination_filename)
-        )
+        os.makedirs(destination_path, exist_ok=True)
 
     with (
         open(source_filename, "r") as source_file,
