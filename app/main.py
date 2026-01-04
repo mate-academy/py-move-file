@@ -8,14 +8,17 @@ def move_file(command: str) -> None:
         raise ValueError(
             "Invalid command format. Use: mv <source> <destination>"
         )
-    source_filename: str = parts[1]
+    _, source_filename, destination = parts
 
-    if parts[2].endswith("/"):
-        destination_filename = source_filename
-        destination_path = parts[2].rstrip("/")
+    if destination.endswith("/"):
+        destination_path = destination.rstrip("/")
+        destination_filename = os.path.join(
+            destination_path,
+            os.path.basename(source_filename)
+        )
     else:
-        destination_path = os.path.dirname(parts[2])
-        destination_filename = parts[2]
+        destination_path = os.path.dirname(destination)
+        destination_filename = destination
 
     if destination_path:
         os.makedirs(destination_path, exist_ok=True)
