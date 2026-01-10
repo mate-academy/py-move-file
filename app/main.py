@@ -19,16 +19,19 @@ class CleanUpFile:
 
 def move_file(command: str) -> None:
     commands = command.split(" ")
-    if commands[0] != "mv":
+    if len(commands) != 3:
         return
-    if commands[1] == "" or commands[1] == "":
+    elif commands[0] != "mv":
+        return
+    elif commands[1] == "":
+        return
+    elif commands[2] == "":
         return
 
-    previous_dir = ""
-    for directory in commands[2].split("/")[:-1]:
-        if not os.path.isdir(os.path.join(previous_dir, directory)):
-            os.mkdir(os.path.join(previous_dir, directory))
-        previous_dir += directory + "/"
+    try:
+        os.makedirs(os.path.split(commands[2])[0], exist_ok=True)
+    except FileNotFoundError:
+        pass
 
     with CleanUpFile(commands[1]) as source_file:
         with open(commands[2], "w") as target_file:
