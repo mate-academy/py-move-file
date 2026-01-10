@@ -1,1 +1,57 @@
-# write your code here
+import os
+
+
+def move_file(command: str) -> None:
+    command_parts = command.strip().split()
+    if len(command_parts) != 3:
+        raise ValueError("Invalid command. Expected format: "
+                         "mv source destination")
+
+    mv_cmd, source_path, destination_path = command_parts
+    if mv_cmd != "mv":
+        raise ValueError("Command must start with 'mv'")
+
+    if not os.path.isfile(source_path):
+        raise FileNotFoundError(f"Source file does not exist "
+                                f"or is not a file: {source_path}")
+
+    if destination_path.endswith(("/", os.sep)):
+        destination_path = os.path.join(destination_path,
+                                        os.path.basename(source_path))
+
+    dest_dir = os.path.dirname(destination_path)
+    if dest_dir:
+        norm_dest_dir = os.path.normpath(dest_dir)
+        dir_parts = norm_dest_dir.split(os.sep)
+        current_path = ""
+
+        if os.path.isabs(norm_dest_dir):
+            drive, tail = os.path.splitdrive(norm_dest_dir)
+            if drive:
+                current_path = drive + os.sep  # e.g. 'C:\\'
+                tail_parts = tail.lstrip(os.sep).split(os.sep)
+            else:
+                current_path = os.sep
+                tail_parts = tail.lstrip(os.sep).split(os.sep)
+
+            for part in tail_parts:
+                if not part:
+                    continue
+                current_path = os.path.join(current_path, part)
+                if not os.path.exists(current_path):
+                    os.mkdir(current_path)
+        else:
+            for part in dir_parts:
+                if not part:
+                    continue
+                current_path = os.path.join(current_path, part)
+                if not os.path.exists(current_path):
+                    os.mkdir(current_path)
+
+    with open(source_path, "rb") as src_file:
+        content = src_file.read()
+
+    with open(destination_path, "wb") as dest_file:
+        dest_file.write(content)
+
+    os.remove(source_path)
