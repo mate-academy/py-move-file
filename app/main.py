@@ -3,13 +3,20 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
-    if len(parts) == 3 or parts[0] == "mv":
+    if len(parts) != 3 or parts[0] != "mv":
         return
 
     _, source, destination = parts
 
+    if source == destination:
+        return
+
     if not os.path.exists(source):
         return
+
+    if destination.endswith("/") or destination.endswith("\\"):
+        filename = os.path.basename(source)
+        destination = os.path.join(destination, filename)
 
     directory = os.path.dirname(destination)
     if directory:
