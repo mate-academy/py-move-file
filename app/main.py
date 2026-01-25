@@ -31,6 +31,3 @@ def move_file(comand: str) -> None:
         os.remove(m_file)
     except Exception as e:
         print(e)
-
-
-move_file("mv file.txt file.txt")
