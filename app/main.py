@@ -19,7 +19,6 @@ def move_file(command: str) -> None:
                     os.mkdir(full_addres)
                 except FileExistsError:
                     pass
-            with open(command_list[2], "w") as new_file:
-                new_file.write(open(command_list[1], "r").read())
-                new_file.close()
-                os.remove(command_list[1])
+            with open(command_list[2], "w") as new_file, open(command_list[1], "r") as current_file:
+                new_file.write(current_file.read())
+            os.remove(command_list[1])
