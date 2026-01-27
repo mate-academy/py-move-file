@@ -8,6 +8,9 @@ def move_file(command: str) -> None:
 
     _, source_path, destination_path = command_list
 
+    if destination_path.endswith("/"):
+        filename = os.path.basename(source_path)
+        destination_path = os.path.join(destination_path, filename)
     directory = os.path.dirname(destination_path)
     if directory and not os.path.exists(directory):
         os.makedirs(directory)
