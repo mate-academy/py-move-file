@@ -1,25 +1,27 @@
-from pathlib import Path
+import os
 
 
 def move_file(command: str) -> str | None:
-    command_parts = command.split(" ")
-    if len(command_parts) != 3:
-        raise ValueError(
-            "Command should be in the format 'mv source destination'"
+    parts = command.split(" ")
+
+    if len(parts) != 3 or parts[0] != "mv":
+        return None
+
+    _, source_path, destination_path = parts
+
+    if os.path.isdir(destination_path) or destination_path.endswith("/"):
+        destination_path = os.path.join(
+            destination_path, os.path.basename(source_path)
         )
 
-    source_path = Path(command_parts[1])
-    destination_path = Path(command_parts[2])
+    directory = os.path.dirname(destination_path)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
 
-    if destination_path.is_dir() or destination_path.name.endswith("/"):
-        destination_path = destination_path / source_path.name
-
-    destination_path.parent.mkdir(parents=True, exist_ok=True)
-
-    if destination_path == source_path:
+    if source_path == destination_path:
         return "The source and destination are the same file."
 
-    if not source_path.exists():
-        raise FileNotFoundError
+    if not os.path.exists(source_path):
+        raise FileNotFoundError(f"File {source_path} not found")
 
-    source_path.rename(destination_path)
+    os.rename(source_path, destination_path)
