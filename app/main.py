@@ -5,12 +5,15 @@ def move_file(command: str) -> None:
     parts_of_command = command.split()
 
     if len(parts_of_command) == 3 and parts_of_command[0] == "mv":
-        (instruction, file_in, file_out) = parts_of_command
+        (instruction, source_file, dest_file) = parts_of_command
 
-        if "/" in file_out:
-            os.makedirs(os.path.dirname(file_out), exist_ok=True)
+        if dest_file.endswith("/"):
+            dest_file += source_file
 
-        with open(file_out, "w") as f1, open(file_in, "r") as f2:
-            f1.write(f2.read())
+        if "/" in dest_file:
+            os.makedirs(os.path.dirname(dest_file), exist_ok=True)
 
-        os.remove(file_in)
+        with open(dest_file, "w") as file1, open(source_file, "r") as file2:
+            file1.write(file2.read())
+
+        os.remove(source_file)
