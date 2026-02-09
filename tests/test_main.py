@@ -17,7 +17,7 @@ def create_file(filename: str = "file.txt") -> str:
 
 
 def test_file_renamed(create_file: callable) -> None:
-    move_file("mv file.txt file.txt")
+    move_file("mv file.txt file1.txt")
 
     assert os.path.exists("file.txt") is False
     with open("file1.txt", "r") as file_with_content:
