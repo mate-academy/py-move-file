@@ -18,8 +18,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid command format. Use: mv source destination")
 
-    src: str = parts[1]
-    dst: str = parts[2]
+    _, src, dst = parts
 
     if not os.path.isfile(src):
         raise FileNotFoundError(f"Source file '{src}' not found.")
