@@ -1,43 +1,43 @@
-from os import mkdir, remove
+import os
 
 
 def move_file(command: str) -> None:
 
     parts = command.split()
-    instr = parts[0]
-    src = parts[1]
-    dst = parts[2]
-    sorce_file_name = src.split("/")[-1]
 
-    if instr == "mv":
-        if len(parts) == 3:
-            if dst.endswith("/"):
-                final_dst = dst + sorce_file_name
-                create_dir(dst)
-                with open(src, "r") as souce:
-                    with open(final_dst, "w") as dest:
-                        dest.write(souce.read())
-                remove(src)
-            else:
-                create_dir(dst)
-                with open(src, "r") as souce:
-                    with open(dst, "w") as dest:
-                        dest.write(souce.read())
-                remove(src)
+    if len(parts) == 3 and parts[0] == "mv":
+        src, final_dst = parts[1], parts[2]
+        sorce_file_name = os.path.basename(src)
+
+        if final_dst.endswith(os.sep):
+            final_dst = os.path.join(final_dst, sorce_file_name)
+            create_dir(final_dst)
+            with open(src, "r") as sorce:
+                with open(final_dst, "w") as dest:
+                    dest.write(sorce.read())
+            os.remove(src)
+        else:
+            create_dir(final_dst)
+            with open(src, "r") as sorce:
+                with open(final_dst, "w") as dest:
+                    dest.write(sorce.read())
+            os.remove(src)
 
 
-def create_dir(dst: str) -> None:
+def create_dir(final_dst: str) -> None:
 
-    paths = dst.split("/")[0:-1]
+    paths = os.path.dirname(final_dst)
+    paths = os.path.normpath(paths)
+    paths = paths.split(os.sep)
     current = ""
     for path in paths:
-        if not path:
+        if path in ("", "."):
             continue
         if not current:
             current = path
         elif current:
-            current += "/" + path
+            current = os.path.join(current, path)
         try:
-            mkdir(current)
+            os.mkdir(current)
         except (FileExistsError):
             continue
