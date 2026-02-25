@@ -3,9 +3,9 @@ import os
 
 def move_file(command: str) -> None:
     lines = command.split()
-    if lines[0] != "mv":
-        raise ValueError
     if len(lines) != 3:
+        raise ValueError
+    if lines[0] != "mv":
         raise ValueError
     _, src, dst = lines
     if dst.endswith("/"):
