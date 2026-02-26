@@ -1,8 +1,6 @@
 import os
 import shutil
-
 import pytest
-
 from app.main import move_file
 
 
