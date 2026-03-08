@@ -7,31 +7,21 @@ def move_file(command: str) -> None:
     if len(files) != 3 or files[0] != "mv":
         return
 
-    first_file = files[1]
-    second_file = files[2]
+    _, first_file, second_file = files
+    target_dir = ""
 
     try:
         if second_file[-1] == "/":
-            directories = second_file.split("/")
-            directories = [directory for directory in directories if directory]
-            current_path = ""
-
-            for directory in directories:
-                current_path = os.path.join(current_path, directory)
-                if not os.path.exists(current_path):
-                    os.mkdir(current_path)
-
-            second_file = os.path.join(current_path, first_file)
+            target_dir = second_file
 
         elif "/" in second_file and second_file[-1] != "/":
-            directories = second_file.split("/")
-            directories = directories[:-1]
-            current_path = ""
+            target_dir = os.path.dirname(second_file)
 
-            for directory in directories:
-                current_path = os.path.join(current_path, directory)
-                if not os.path.exists(current_path):
-                    os.mkdir(current_path)
+        else:
+            target_dir = None
+
+        if target_dir:
+            os.makedirs(target_dir, exist_ok=True)
 
         with (open(first_file, "r") as file_in,
               open(second_file, "w") as file_out):
