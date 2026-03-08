@@ -11,51 +11,34 @@ def move_file(command: str) -> None:
     second_file = files[2]
 
     try:
-        if "/" not in second_file:
-            with (open(first_file, "r") as file_in,
-                  open(second_file, "w") as file_out):
-
-                file_out.write(file_in.read())
-
-            os.remove(first_file)
-
         if second_file[-1] == "/":
             directories = second_file.split("/")
             directories = [directory for directory in directories if directory]
-            second_file = second_file + first_file
             current_path = ""
 
             for directory in directories:
-                current_path = current_path + directory
+                current_path = os.path.join(current_path, directory)
                 if not os.path.exists(current_path):
                     os.mkdir(current_path)
-                current_path = current_path + "/"
 
-            with (open(first_file, "r") as file_in,
-                  open(second_file, "w") as file_out):
+            second_file = os.path.join(current_path, first_file)
 
-                file_out.write(file_in.read())
-
-            os.remove(first_file)
-
-        if "/" in second_file and "." in second_file:
+        elif "/" in second_file and second_file[-1] != "/":
             directories = second_file.split("/")
-            directories = [directory for directory in directories
-                           if "." not in directory]
-
+            directories = directories[:-1]
             current_path = ""
 
             for directory in directories:
-                current_path = current_path + directory
+                current_path = os.path.join(current_path, directory)
                 if not os.path.exists(current_path):
                     os.mkdir(current_path)
-                current_path = current_path + "/"
 
-            with (open(first_file, "r") as file_in,
-                  open(second_file, "w") as file_out):
-                file_out.write(file_in.read())
+        with (open(first_file, "r") as file_in,
+              open(second_file, "w") as file_out):
 
-            os.remove(first_file)
+            file_out.write(file_in.read())
+
+        os.remove(first_file)
 
     except FileNotFoundError:
         return
