@@ -13,20 +13,32 @@ def move_file(command: str) -> None:
       directory.
     - Intermediate directories in the destination path are created as needed.
     """
+    parts_command = command.split()
 
-    parts = command.split()
-    if len(parts) != 3 or parts[0] != "mv":
+    _, source, destination = parts_command
+
+    if len(parts_command) != 3 or parts_command[0] != "mv":
         raise ValueError("Command must be in the form: mv <src> <dst>")
 
-    _, src, dst = parts
+    if source == destination:
+        return
 
-    if dst.endswith(os.path.sep) or dst.endswith("/"):
+    try:
+        with open(source, "r") as src_file:
+            content = src_file.read()
+
+    except FileNotFoundError:
+        return
+
+    if destination.endswith(os.path.sep) or destination.endswith("/"):
         # Treat destination as a directory.
-        dst = os.path.join(dst, os.path.basename(src))
+        destination = os.path.join(destination, os.path.basename(source))
 
-    dst_dir = os.path.dirname(dst)
+    dst_dir = os.path.dirname(destination)
     if dst_dir and not os.path.exists(dst_dir):
         os.makedirs(dst_dir, exist_ok=True)
 
+    with open(destination, "w") as dest_file:
+        dest_file.write(content)
     # Move (rename) the file.
-    os.replace(src, dst)
+    os.remove(source)
