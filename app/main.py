@@ -15,9 +15,12 @@ def move_file(command: str) -> None:
     """
     parts_command = command.split()
 
-    cp, source, destination = parts_command
+    if len(parts_command) != 3:
+        return
 
-    if cp != "cp":
+    mv, source, destination = parts_command
+
+    if mv != "mv":
         return
 
     if source == destination:
