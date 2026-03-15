@@ -15,10 +15,10 @@ def move_file(command: str) -> None:
     """
     parts_command = command.split()
 
-    _, source, destination = parts_command
+    cp, source, destination = parts_command
 
-    if len(parts_command) != 3 or parts_command[0] != "mv":
-        raise ValueError("Command must be in the form: mv <src> <dst>")
+    if cp != "cp":
+        return
 
     if source == destination:
         return
