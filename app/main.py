@@ -2,9 +2,9 @@ import os
 
 
 def move_file(command: str) -> None:
-    if len(command.split()) == 3:
+    try:
         mv, existing_file, new_file = command.split()
-    else:
+    except ValueError:
         return None
     if mv != "mv":
         return None
