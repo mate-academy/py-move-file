@@ -2,11 +2,14 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_split = command.split()
-    if len(command_split) != 3 or command_split[0] != "mv":
+    if len(command.split()) == 3:
+        mv, existing_file, new_file = command.split()
+    else:
         return None
-    existing_file = command_split[1]
-    new_file = command_split[2]
+    if mv != "mv":
+        return None
+    if new_file.endswith(("\\", "/")):
+        new_file = os.path.join(new_file, os.path.basename(existing_file))
     try:
         os.makedirs(os.path.dirname(new_file), exist_ok=True)
     except Exception:
