@@ -9,7 +9,8 @@ def move_file(command: str) -> None:
     else:
         return
     if "/" in command:
-        dir_path = "/".join(command_list[2].split("/")[:-1])
+        dir_path = os.path.dirname(destination)
         os.makedirs(dir_path, exist_ok=True)
     if command_name == "mv":
-        shutil.move(source, destination)
+        shutil.copy(source, destination)
+        os.remove(source)
