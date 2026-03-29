@@ -9,28 +9,19 @@ def move_file(command: str) -> None:
 
     _, source_path, destination_path = parts
 
-    with open(source_path, "r") as source_file:
+    with open(source_path, "r", encoding="utf-8") as source_file:
         content = source_file.read()
 
-    if destination_path.endswith("/"):
+    if destination_path.endswith("/") or destination_path.endswith("\\"):
         file_name = os.path.basename(source_path)
-        destination_path = destination_path + file_name
+        destination_path = os.path.join(destination_path, file_name)
 
     destination_dir = os.path.dirname(destination_path)
 
     if destination_dir:
-        current_path = ""
+        os.makedirs(destination_dir, exist_ok=True)
 
-        for directory in destination_dir.split("/"):
-            if current_path == "":
-                current_path = directory
-            else:
-                current_path = current_path + "/" + directory
-
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
-
-    with open(destination_path, "w") as destination_file:
+    with open(destination_path, "w", encoding="utf-8") as destination_file:
         destination_file.write(content)
 
     os.remove(source_path)
