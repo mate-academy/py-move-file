@@ -1,1 +1,17 @@
-# write your code here
+import os
+
+
+def move_file(command: str) -> None:
+    split_command = command.split()
+    if (len(split_command) == 3
+            and split_command[0] == "mv"
+            and split_command[1] != split_command[2]):
+        directories, file_name = os.path.split(split_command[2])
+        if directories:
+            os.makedirs(directories, exist_ok=True)
+
+        with (open(split_command[1], "r") as source,
+              open(split_command[2], "w") as destination):
+            destination.write(source.read())
+
+        os.remove(split_command[1])
