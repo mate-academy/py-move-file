@@ -2,10 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    if len(command) != 3:
+    comm = command.split()
+    if len(comm) != 3 or comm[0] != "mv":
         return
-    source, destination = command[1], command[2]
+    action, source, destination = comm
 
     if destination.endswith("/"):
         final = os.path.join(destination, os.path.basename(source))
