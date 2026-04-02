@@ -15,4 +15,11 @@ def move_file(command: str) -> None:
     parent = os.path.dirname(final)
     if parent:
         os.makedirs(parent, exist_ok=True)
-    os.replace(source, final)
+
+    with open(source, "r") as file_in:
+        content = file_in.read()
+
+    with open(final, "w") as file_out:
+        file_out.write(content)
+
+    os.remove(source)
