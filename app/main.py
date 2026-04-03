@@ -7,8 +7,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         return
 
-    source = parts[1]
-    dest = parts[2]
+    _, source, dest = parts
 
     file_name = os.path.basename(source)
 
