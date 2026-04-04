@@ -3,9 +3,11 @@ import os
 
 def move_file(command: str) -> None:
     input_tokens = command.split()
-    command_name, source, destination = input_tokens
+
     if len(input_tokens) != 3:
         return
+
+    command_name, source, destination = input_tokens
 
     if command_name != "mv":
         return
