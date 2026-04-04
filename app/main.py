@@ -3,27 +3,26 @@ import os
 
 def move_file(command: str) -> None:
     input_tokens = command.split()
+    command_name, source, destination = input_tokens
     if len(input_tokens) != 3:
         return
 
-    if input_tokens[0] != "mv":
+    if command_name != "mv":
         return
 
-    input_file_name = input_tokens[1]
-
-    if not os.path.isfile(input_file_name):
+    if not os.path.isfile(source):
         return
 
     content = None
 
-    with open(input_file_name, "rb") as file:
+    with open(source, "rb") as file:
         content = file.read()
 
-    path = os.path.dirname(input_tokens[2])
-    filename = os.path.basename(input_tokens[2])
+    path = os.path.dirname(destination)
+    filename = os.path.basename(destination)
 
     if filename == "":
-        filename = input_file_name
+        filename = source
 
     if path != "" and not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
@@ -36,4 +35,4 @@ def move_file(command: str) -> None:
     with open(out, "wb") as file:
         file.write(content)
 
-    os.remove(input_file_name)
+    os.remove(source)
