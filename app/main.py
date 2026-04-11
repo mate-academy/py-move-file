@@ -4,8 +4,12 @@ import os
 def move_file(command_line: str) -> None:
     commands = command_line.split(" ")
     if commands[0] == "mv" and len(commands) == 3:
-        src_path = commands[1]
-        dest_path = commands[2]
+        _, src_path, dest_path = commands
+
+        if dest_path.endswith(("/", os.sep)):
+            file_name = os.path.basename(src_path)
+            dest_path = os.path.join(dest_path, file_name)
+
         dir_path = os.path.dirname(dest_path)
         if dir_path:
             os.makedirs(dir_path, exist_ok=True)
