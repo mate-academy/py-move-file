@@ -27,4 +27,3 @@ def move_file(command: str) -> None:
 
     except FileNotFoundError:
         pass
-
