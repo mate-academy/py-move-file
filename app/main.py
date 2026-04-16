@@ -6,9 +6,7 @@ def move_file(command: str) -> None:
 
     if len(parts) != 3 or parts[0] != "mv":
         return
-
-    source = parts[1]
-    destination = parts[2]
+    _, source, destination = parts
 
     if source == destination:
         return
@@ -24,8 +22,7 @@ def move_file(command: str) -> None:
 
     try:
         with open(source, "r") as file_in, open(destination, "w") as file_out:
-            content = file_in.read()
-            file_out.write(content)
+            file_out.write(file_in.read())
         os.remove(source)
 
     except FileNotFoundError:
