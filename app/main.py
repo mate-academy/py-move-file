@@ -2,14 +2,28 @@ import os
 
 
 def move_file(command: str) -> None:
-    context = command.split(" ")
-    if len(context) != 3 or context[0] != "mv":
+    parts = command.split()
+    if len(parts) != 3:
         return None
-    if context[2].endswith("/"):
-        destination = context[2] + context[1].split("/")[-1]
+
+    action, source, target = parts
+
+    if action != "mv":
+        return None
+
+    if target.endswith("/"):
+        filename = os.path.basename(source)
+        destination = os.path.join(target, filename)
     else:
-        destination = context[2]
+        destination = target
+
     dir_path = os.path.dirname(destination)
     if dir_path:
         os.makedirs(dir_path, exist_ok=True)
-    os.rename(context[1], destination)
+
+    with open(source, "r") as f:
+        content = f.read()
+
+    with open(destination, "w") as g:
+        g.write(content)
+    os.remove(source)
