@@ -5,7 +5,7 @@ def move_file(command: str) -> None:
     _, source, destination = command.split()
 
     if destination.endswith("/"):
-        destination = destination + os.path.basename(source)
+        destination = os.path.join(destination, os.path.basename(source))
 
     dest_dir = os.path.dirname(destination)
     if dest_dir:
