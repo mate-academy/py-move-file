@@ -7,11 +7,15 @@ def move_file(command: str) -> None:
     except ValueError:
         return
 
+    if act != "mv":
+        return
+
+    if path.endswith("/"):
+        path = path + os.path.basename(source)
+
     dirs = os.path.dirname(path)
 
-    current_path = ""
-
-    if dirs and act == "mv":
+    if dirs:
         parts = dirs.split("/")
         current_path = ""
 
