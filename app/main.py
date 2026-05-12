@@ -8,8 +8,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError(f"Invalid command: {command}")
 
-    source = parts[1]
-    destination = parts[2]
+    _, source, destination = parts
 
     if destination.endswith("/"):
         directory = destination
@@ -19,7 +18,12 @@ def move_file(command: str) -> None:
         destination_path = destination
 
     if directory:
-        os.makedirs(directory, exist_ok=True)
+        path = ""
+        for part in directory.split("/"):
+            if part:
+                path = os.path.join(path, part) if path else part
+                if not os.path.exists(path):
+                    os.mkdir(path)
 
     shutil.copy2(source, destination_path)
     os.remove(source)
