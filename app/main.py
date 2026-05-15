@@ -11,6 +11,10 @@ def move_file(command: str) -> None:
     if cmd != "mv":
         return
 
+    if new_path.endswith("/") or new_path.endswith(os.sep):
+        filename = os.path.basename(old_path)
+        new_path = os.path.join(new_path, filename)
+
     new_directory = os.path.dirname(new_path)
     if new_directory and not os.path.isdir(new_directory):
         os.makedirs(new_directory, exist_ok=True)
