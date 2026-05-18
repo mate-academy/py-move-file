@@ -23,8 +23,17 @@ def move_file(command: str) -> None:
     final_destination = os.path.join(*destination_parts)
     destination_directory = os.path.dirname(final_destination)
 
-    if destination_directory and not os.path.exists(destination_directory):
-        os.makedirs(destination_directory)
+    if destination_directory:
+        normalized_directory = destination_directory.replace("\\", "/")
+        directory_parts = [
+            part for part in normalized_directory.split("/") if part
+        ]
+        current_path = ""
+
+        for directory_part in directory_parts:
+            current_path = os.path.join(current_path, directory_part)
+            if not os.path.exists(current_path):
+                os.mkdir(current_path)
 
     with open(source_path, "r") as source_file:
         source_content = source_file.read()
