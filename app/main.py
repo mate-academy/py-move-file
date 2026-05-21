@@ -5,10 +5,10 @@ def move_file(command: str) -> None:
     pars_command = command.split(" ")
 
     if pars_command[0] != "mv":
-        return "It`s not a command"
+        return
 
     if len(pars_command) != 3:
-        return "Incorect command"
+        return
 
     if "/" not in pars_command[2]:
         os.rename(pars_command[1], pars_command[2])
