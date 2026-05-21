@@ -1,20 +1,33 @@
 import os
-from shutil import move
 
 
 def move_file(command: str) -> None:
-    if "/" not in command:
-        _, old_name, new_name = command.split(" ")
-        os.rename(old_name, new_name)
+    pars_command = command.split(" ")
+
+    if pars_command[0] != "mv":
+        return "It`s not a command"
+
+    if len(pars_command) != 3:
+        return "Incorect command"
+
+    if "/" not in pars_command[2]:
+        os.rename(pars_command[1], pars_command[2])
         return
 
-    _, source_file, path = command.split(" ")
-    new_file = path.split("/")[-1]
-    path = path.replace(new_file, "")
+    source_file = pars_command[1]
+    path = pars_command[2].split("/")
+    new_file = path.pop()
+    full_path = os.path.join(*path)
 
-    try:
-        os.makedirs(path)
-    except FileExistsError:
-        print("The directory already exists: ", path)
+    content = ""
+    with open(source_file, "r") as file:
+        content = file.read()
 
-    move(source_file, path + new_file)
+    os.makedirs(full_path, exist_ok=True)
+
+    new_file_path = os.path.join(full_path, new_file)
+
+    with open(new_file_path, "w") as file:
+        file.write(content)
+
+    os.remove(source_file)
