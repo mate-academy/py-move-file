@@ -9,8 +9,11 @@ def move_file(command: str) -> None:
     if cmd != "mv":
         return
     path = destination.split("/")
-    new_file = path[-1]
-    path.pop(-1)
+    if path[-1] == "":
+        new_file = file_name
+    else:
+        new_file = path[-1]
+        path.pop(-1)
     current_path = ""
     for item in path:
         current_path = os.path.join(current_path, item)
