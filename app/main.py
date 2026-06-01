@@ -2,7 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
-    order, source, directory = command.split()
+    parts = command.split()
+    if len(parts) != 3:
+        return
+
+    order, source, directory = parts
+    if directory.endswith("/"):
+        directory += source
     path = directory.split("/")
     current_path: str = ""
 
@@ -17,7 +23,8 @@ def move_file(command: str) -> None:
         with open(directory, "w") as final:
             with open(source, "r") as s:
                 final.write(s.read())
-            os.remove(source)
+
+        os.remove(source)
     else:
         return
 
