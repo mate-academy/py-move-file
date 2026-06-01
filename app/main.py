@@ -6,13 +6,13 @@ def move_file(command: str) -> None:
     if len(parts) != 3:
         return
 
-    order, source, directory = parts
+    command_type, source, directory = parts
     if directory.endswith("/"):
         directory += source
     path = directory.split("/")
     current_path: str = ""
 
-    if order == "mv":
+    if command_type == "mv":
 
         for folder in path[:-1]:
             current_path = os.path.join(current_path, folder)
