@@ -11,13 +11,13 @@ def move_file(command: str) -> None:
 
     com = command[2].split("/")
     folder = com[:-1]
-    file = com[-1]
+    file_name = com[-1]
     path = ""
     for i in folder:
         path += i + "/"
         if not os.path.exists(path):
             os.mkdir(path)
-    path += file
+    path += file_name
 
     with (open(command[1], "r") as
           file_in, open(path, "w") as file_out):
