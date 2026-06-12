@@ -7,41 +7,32 @@ def move_file(command: str) -> None:
     if len(parts) != 3:
         return
 
-    _, source, destination = parts
+    cmd, source, destination = parts
 
-    # если пути совпадают — ничего не делаем
+    if cmd != "mv":
+        return
+
     if source == destination:
         return
 
-    # читаем содержимое файла
+    # читаем файл
     with open(source, "r", encoding="utf-8") as file:
         content = file.read()
 
-    # проверяем: это директория или файл
-    is_directory = destination.endswith("/")
+    # если путь заканчивается "/" → это директория
+    if destination.endswith("/"):
+        destination = os.path.join(destination, os.path.basename(source))
 
-    if is_directory:
-        return  # по условию работаем только с файлами
-
-    # выделяем путь и имя файла
+    # получаем директорию
     dir_path = os.path.dirname(destination)
-    file_name = os.path.basename(destination)
 
-    # создаём вложенные директории
+    # создаём папки (cross-platform)
     if dir_path:
-        path_parts = dir_path.split("/")
+        os.makedirs(dir_path, exist_ok=True)
 
-        current_path = ""
-        for part in path_parts:
-            current_path = os.path.join(current_path, part)
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
-
-    # записываем новый файл
-    new_path = os.path.join(dir_path, file_name) if dir_path else file_name
-
-    with open(new_path, "w", encoding="utf-8") as file:
+    # пишем новый файл
+    with open(destination, "w", encoding="utf-8") as file:
         file.write(content)
 
-    # удаляем исходный файл
+    # удаляем старый файл
     os.remove(source)
