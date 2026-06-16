@@ -2,10 +2,11 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split(" ")
-    if "/" in command[2]:
-        os.makedirs("/".join(command[2].split("/")[:-1]), exist_ok=True)
-    with open(command[2], "w") as f:
-        with open(command[1], "r") as o:
-            f.write(o.read())
-        os.remove(command[1])
+    _, file_name, path = command.split(" ")
+    folder = os.path.dirname(path)
+    if folder:
+        os.makedirs(folder, exist_ok=True)
+    with open(path, "w") as new_file:
+        with open(file_name, "r") as old_file:
+            new_file.write(old_file.read())
+        os.remove(file_name)
