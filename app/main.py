@@ -1,8 +1,7 @@
 import os
-with open("file.txt", "w") as o:
-    o.write("e")
 
-def move_file(command):
+
+def move_file(command: str) -> None:
     command = command.split(" ")
     if "/" in command[2]:
         os.makedirs("/".join(command[2].split("/")[:-1]), exist_ok=True)
