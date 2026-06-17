@@ -6,19 +6,19 @@ def move_file(command: str) -> None:
     if len(new_line) != 3 or new_line[0] != "mv":
         return
 
-    parts = new_line[2].split("/")
+    _, source, destination_str = new_line
+    parts = destination_str.split("/")
     list_dir = parts[:-1]
-    source = new_line[1]
     current_path = ""
     for item in list_dir:
-        current_path += item + "/"
+        current_path = os.path.join(current_path, item)
         if not os.path.exists(current_path):
             os.mkdir(current_path)
 
-    if new_line[2].endswith("/"):
-        destination = new_line[2] + source
+    if destination_str.endswith("/"):
+        destination = os.path.join(destination_str, os.path.basename(source))
     else:
-        destination = new_line[2]
+        destination = destination_str
 
     try:
         with open(source, "r") as file_in, open(destination, "w") as file_out:
