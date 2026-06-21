@@ -3,7 +3,7 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
-    if len(parts) < 3 or parts[0] != "mv":
+    if len(parts) != 3 or parts[0] != "mv":
         return
     source = parts[1]
     destination = parts[2]
@@ -24,8 +24,10 @@ def move_file(command: str) -> None:
             else:
                 current_path = part
 
-            if not os.path.exists(current_path):
+            try:
                 os.mkdir(current_path)
+            except FileExistsError:
+                pass
 
     with open(source, "r") as s:
         text = s.read()
@@ -34,14 +36,3 @@ def move_file(command: str) -> None:
         d.write(text)
 
     os.remove(source)
-
-
-
-
-
-
-
-
-
-
-
