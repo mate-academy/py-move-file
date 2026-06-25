@@ -6,18 +6,33 @@ def move_file(command: str) -> None:
     if len(cmd) != 3 or cmd[0] != "mv":
         return
 
-    src_file = cmd[1]
-    dst_file = cmd[2]
-    if src_file == dst_file:
+    src_path = cmd[1]
+    dst_path = cmd[2]
+    if src_path == dst_path:
         return
 
-    dst_dir = os.path.dirname(dst_file)
-    if dst_dir and not os.path.exists(dst_dir):
-        os.makedirs(dst_dir)
+    dst_dir = dst_path.split("/")[:-1]
+    dst_file = dst_path.split("/")[-1]
+
+    current_path = ""
+    for path in dst_dir:
+        if current_path:
+            current_path = os.path.join(current_path, path)
+        else:
+            current_path = path
+
+        try:
+            os.mkdir(current_path)
+        except FileExistsError:
+            pass
+
+    dst_file_path = (
+        os.path.join(current_path, dst_file)
+    ) if current_path else dst_file
 
     try:
-        with open(src_file, "r") as src, open(dst_file, "w") as dst:
+        with open(src_path, "r") as src, open(dst_file_path, "w") as dst:
             dst.write(src.read())
-        os.remove(src_file)
+        os.remove(src_path)
     except FileNotFoundError:
-        print(f"File {src_file} not found")
+        print(f"File {src_path} not found")
