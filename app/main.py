@@ -24,7 +24,7 @@ def move_file(command: str) -> None:
         try:
             os.mkdir(current_path)
         except FileExistsError:
-            pass
+            print(f"Directory {current_path} already exists")
 
     dst_file_path = (
         os.path.join(current_path, dst_file)
