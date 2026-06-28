@@ -10,18 +10,17 @@ def move_file(command: str) -> None:
     source = cmd[1]
     destination = cmd[2]
 
-    if not os.path.isfile(source):
-        return
-
     if destination.endswith("/"):
-        os.makedirs(destination, exist_ok=True)
-        destination = os.path.join(destination, os.path.basename(source))
+        dest_dir = destination.rstrip("/")
+        if not os.path.isdir(dest_dir):
+            os.makedirs(dest_dir)
+        destination = os.path.join(dest_dir, os.path.basename(source))
     else:
         directory = os.path.dirname(destination)
-        if directory:
-            os.makedirs(directory, exist_ok=True)
+        if directory and not os.path.isdir(directory):
+            os.makedirs(directory)
 
-    with open(source, "rb") as src, open(destination, "wb") as dst:
+    with open(source, "r") as src, open(destination, "w") as dst:
         dst.write(src.read())
 
     os.remove(source)
