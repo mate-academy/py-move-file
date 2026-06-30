@@ -12,8 +12,12 @@ def move_file(command: str) -> None:
     if action != "mv":
         return
 
-    directory_path = os.path.dirname(destination_file)
-    file_name = os.path.basename(destination_file)
+    if destination_file.endswith("/"):
+        directory_path = destination_file
+        file_name = os.path.basename(source_file)
+    else:
+        directory_path = os.path.dirname(destination_file)
+        file_name = os.path.basename(destination_file)
 
     if directory_path:
         os.makedirs(directory_path, exist_ok=True)
