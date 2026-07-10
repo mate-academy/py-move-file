@@ -10,15 +10,15 @@ def move_file(command: str) -> None:
     if cmd != "mv":
         return
 
-    if target[-1] == "/":
-        target = os.path.join(*target.split("/"),
-                              os.path.basename(source))
+    if "/" in target:
+        if target[-1] != "/":
+            basename = target.split("/")[-1]
+        else:
+            basename = source
 
-    path = ""
-    if len(target.split("/")) > 1:
-        path = os.path.join(*target.split("/")[:-1])
+        target = source.split("/")[:-1]
+        path = os.path.join(*target, basename)
 
-    if path and not os.path.exists(path):
         os.makedirs(path)
 
     with (open(source, "r") as source_file,
