@@ -8,8 +8,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         return
 
-    source = parts[1]
-    destination = parts[2]
+    _, source, destination = parts
 
     if destination.endswith("/"):
         destination = os.path.join(destination, os.path.basename(source))
@@ -19,6 +18,7 @@ def move_file(command: str) -> None:
         os.makedirs(destination_directory)
 
     try:
-        shutil.move(source, destination)
+        shutil.copy(source, destination)
+        os.remove(source)
     except FileNotFoundError:
         return
