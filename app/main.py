@@ -15,8 +15,8 @@ def move_file(command: str) -> None:
         destination = os.path.join(destination, os.path.basename(source))
 
     destination_directory = os.path.dirname(destination)
-    if destination_directory:
-        os.makedirs(destination_directory, exist_ok=True)
+    if destination_directory and not os.path.isdir(destination_directory):
+        os.makedirs(destination_directory)
 
     try:
         shutil.move(source, destination)
