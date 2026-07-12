@@ -21,8 +21,7 @@ def move_file(command: str) -> None:
             current_path = option
 
     if not os.path.exists(current_path):
-        if not os.path.exists(current_path):
-            os.makedirs(current_path)
+        os.makedirs(current_path)
 
     with open(file_origin, "r") as origin_file_object:
         content = origin_file_object.readlines()
