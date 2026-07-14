@@ -14,7 +14,10 @@ def move_file(command: str) -> None:
             for folder in path[:-1]:
                 current = os.path.join(current, folder)
                 if not os.path.isdir(current):
-                    os.mkdir(current)
+                    try:
+                        os.mkdir(current)
+                    except FileExistsError:
+                        pass
         current = os.path.join(current, path[-1])
 
         if os.path.exists(file_name) and file_name != current:
