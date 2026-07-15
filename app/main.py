@@ -2,10 +2,10 @@ import os
 
 
 def move_file(command: str) -> None:
-    splited = command.split(" ")
-    if len(splited) < 3 or "mv" not in command:
+    tokens = command.split(" ")
+    if len(tokens) < 3 and tokens[0] == "mv":
         return
-    _, source, destination = splited[0], splited[1], splited[2]
+    _, source, destination = tokens[0], tokens[1], tokens[2]
     if "/" not in destination:
         os.rename(source, destination)
     elif "/" in destination:
