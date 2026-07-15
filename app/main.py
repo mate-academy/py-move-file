@@ -3,7 +3,9 @@ import os
 
 def move_file(command: str) -> None:
     tokens = command.split(" ")
-    if len(tokens) < 3 and tokens[0] == "mv":
+    if len(tokens) != 3:
+        return
+    if tokens[0] != "mv":
         return
     _, source, destination = tokens[0], tokens[1], tokens[2]
     if "/" not in destination:
