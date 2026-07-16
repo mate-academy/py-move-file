@@ -2,13 +2,17 @@ import os
 
 
 def move_file(command: str) -> None:
-    _, source, destination = command.split()
+    parts = command.split()
+
+    if len(parts) != 3 or parts[0] != "mv":
+        raise ValueError(
+            "Invalid command"
+        )
+
+    _, source, destination = parts
 
     if destination.endswith("/"):
-        destination = (
-            destination
-            + os.path.basename(source)
-        )
+        destination += os.path.basename(source)
 
     directory = os.path.dirname(destination)
 
