@@ -2,19 +2,26 @@ import os
 
 
 def move_file(command: str) -> None:
-    command_parts = command.split()
+    parts = command.split()
+    if len(parts) != 3 or parts[0] != "mv":
+        raise ValueError("Command must be in the form: mv <source> <destination>")
 
-    if len(command_parts) != 3:
-        return
+    source = parts[1]
+    destination = parts[2]
 
-    if command_parts[0] != "mv":
-        return
+    if destination.endswith("/"):
+        target_path = os.path.join(destination.rstrip("/"), os.path.basename(source))
+    else:
+        target_path = destination
 
-    _, source_file_name, destination_path = command_parts
+    parent_directory = os.path.dirname(target_path)
+    if parent_directory:
+        os.makedirs(parent_directory, exist_ok=True)
 
-    destination_directory = os.path.dirname(destination_path)
+    with open(source, "r") as source_file:
+        content = source_file.read()
 
-    if destination_directory:
-        os.makedirs(destination_directory, exist_ok=True)
+    with open(target_path, "w") as destination_file:
+        destination_file.write(content)
 
-    os.rename(source_file_name, destination_path)
+    os.remove(source)
