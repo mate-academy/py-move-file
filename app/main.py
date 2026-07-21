@@ -5,8 +5,8 @@ def move_file(command: str) -> None:
     parts = command.split()
     if len(parts) != 3 or parts[0] != "mv":
         return
-    src = parts[1]
-    dst = parts[2]
+
+    _, src, dst = parts
 
     if not os.path.exists(src):
         return
