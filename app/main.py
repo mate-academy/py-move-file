@@ -4,27 +4,20 @@ import os
 def move_file(command: str) -> None:
     parts = command.split()
 
-    if len(parts) != 3:
+    if len(parts) != 3 or parts[0] != "mv":
         return
 
-    if parts[0] != "mv":
+    _, source_file, destination_file = parts
+
+    if source_file == destination_file:
         return
-
-    source_file = parts[1]
-    destination_file = parts[2]
-
-    if "/" not in destination_file:
-        try:
-            os.rename(source_file, destination_file)
-        except FileNotFoundError:
-            return
-        return
-
-    directory = "/".join(destination_file.split("/")[:-1])
 
     try:
-        if directory:
-            os.makedirs(directory, exist_ok=True)
+        if os.path.dirname(destination_file):
+            os.makedirs(
+                os.path.dirname(destination_file),
+                exist_ok=True,
+            )
 
         with open(source_file, "r") as file_in:
             content = file_in.read()
