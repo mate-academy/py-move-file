@@ -7,8 +7,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         raise ValueError("Invalid command")
 
-    source = parts[1]
-    destination = parts[2]
+    _, source, destination = parts
 
     if not os.path.isfile(source):
         raise FileNotFoundError(f"No such file: '{source}'")
