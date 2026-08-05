@@ -1,5 +1,4 @@
-from os import remove
-from pathlib import Path
+from os import remove, path, mkdir
 
 
 def move_file(command: str) -> None:
@@ -9,19 +8,27 @@ def move_file(command: str) -> None:
     if len(command) != 3 or command[0] != "mv":
         return
 
-    source = command[1]
-    dest = command[2]
+    _, source, dest = command
 
     if source == dest:
         return
 
     try:
-        path = Path("/".join(dest.split("/")[:-1]))
-        path.mkdir(parents=True, exist_ok=True)
+        dest_parts = dest.split("/")
+        dir_parts = dest_parts[:-1]
+        if dir_parts:
+            cur = dir_parts[0]
+            if cur != "" and not path.exists(cur):
+                mkdir(cur)
+            for part in dir_parts[1:]:
+                cur = path.join(cur, part)
+                if not path.exists(cur):
+                    mkdir(cur)
 
         with open(source, "r") as src_file, open(dest, "w") as dest_file:
             dest_file.write(src_file.read())
-            src_file.close()
-            remove(source)
+
+        remove(source)
+        
     except FileNotFoundError:
         return
