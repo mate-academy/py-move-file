@@ -29,6 +29,6 @@ def move_file(command: str) -> None:
             dest_file.write(src_file.read())
 
         remove(source)
-        
+
     except FileNotFoundError:
         return
