@@ -6,7 +6,9 @@ def move_file(command: str) -> None:
     parts = command.split()
 
     if len(parts) != 3 or parts[0] != "mv":
-        raise ValueError("Command must look like: mv <source> <destination>")
+        raise ValueError(
+            "Command must look like: mv <source> <destination>"
+        )
 
     source_path, destination_path = parts[1], parts[2]
     source_absolute_path = os.path.abspath(source_path)
