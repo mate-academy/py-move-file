@@ -1,19 +1,28 @@
-from os import makedirs, remove
-from os.path import basename, dirname
+from os import mkdir, remove
+from os.path import basename, dirname, join
 
 
 def move_file(command: str) -> None:
     result = command.split(" ")
-    source_file = result[1]
-    destination_file = result[2]
+    if len(result) != 3 or result[0] != "mv":
+        return
+    source_file, destination_file = result[1:]
 
     if destination_file.endswith("/"):
-        destination_file = destination_file + basename(source_file)
+        destination_file = join(destination_file, basename(source_file))
 
     directory = dirname(destination_file)
 
     if directory:
-        makedirs(directory, exist_ok=True)
+        current_directory = ""
+
+        for part in directory.split("/"):
+            current_directory = join(current_directory, part)
+
+            try:
+                mkdir(current_directory)
+            except FileExistsError:
+                pass
 
     with open(source_file, "r") as source:
         content = source.read()
