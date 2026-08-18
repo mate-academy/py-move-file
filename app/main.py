@@ -10,13 +10,23 @@ def move_file(command: str) -> None:
             if path_to.endswith(".txt"):
                 if "/" in path_to:
                     os.makedirs(os.path.dirname(path_to), exist_ok=True)
-                with (open(file_to_copy) as file_from,
-                      open(path_to, "w") as file_to):
-                    file_to.write(file_from.read())
+                try:
+                    with (open(file_to_copy) as file_from,
+                          open(path_to, "w") as file_to):
+                        file_to.write(file_from.read())
+                except FileNotFoundError:
+                    print(f"File {file_to_copy} not found")
+                    return
                 os.remove(file_to_copy)
                 return
             os.makedirs(path_to, exist_ok=True)
-            with (open(file_to_copy) as file_from,
-                  open(path_to + file_to_copy, "w") as file_to):
-                file_to.write(file_from.read())
+            try:
+                with (open(file_to_copy)
+                      as file_from,
+                      open(os.path.join(path_to, file_to_copy), "w")
+                      as file_to):
+                    file_to.write(file_from.read())
+            except FileNotFoundError:
+                print(f"File {file_to_copy} not found")
+                return
             os.remove(file_to_copy)
