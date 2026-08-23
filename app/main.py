@@ -20,6 +20,9 @@ def move_file(command: str) -> None:
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
 
+    if source == destination:
+        return
+
     with (
         open(source, "r") as source_file,
         open(destination, "w") as destination_file
