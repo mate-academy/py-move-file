@@ -4,7 +4,7 @@ import shutil
 
 def move_file(command: str) -> None:
     parts = command.split()
-    if not (parts[0] == 'mv' and len(parts) == 3):
+    if not (parts[0] == "mv" and len(parts) == 3):
         raise ValueError("Invalid command")
     _, source, destination = parts
     if destination.endswith("/"):
