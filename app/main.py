@@ -14,8 +14,6 @@ def move_file(command: str) -> None:
         destination = os.path.join(destination, filename)
     dir_path = os.path.dirname(destination)
     if dir_path:
-        if os.path.isfile(dir_path):
-            os.remove(dir_path)
         parts_dir = dir_path.split("/")
         for i in range(len(parts_dir)):
             path = "/".join(parts_dir[:i + 1])
