@@ -3,8 +3,14 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.strip().split()
+    if len(parts) != 3 or parts[0] != "mv":
+        return
+
     src = parts[1]
     dest = parts[2]
+
+    if not os.path.exists(src):
+        return
 
     if dest.endswith("/") or dest.endswith("\\"):
         dest_dir = dest.rstrip("/\\")
@@ -17,8 +23,11 @@ def move_file(command: str) -> None:
         current_path = ""
         for folder in dest_dir.replace("\\", "/").split("/"):
             if folder:
-                current_path = os.path.join(current_path, folder) \
-                    if current_path else folder
+                current_path = (
+                    os.path.join(current_path, folder)
+                    if current_path
+                    else folder
+                )
                 if not os.path.exists(current_path):
                     os.mkdir(current_path)
 
