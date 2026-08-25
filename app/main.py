@@ -3,10 +3,9 @@ import os
 
 def move_file(command: str) -> None:
     split_command = command.split(" ")
-    if len(split_command) < 3 or split_command[0] != "mv":
+    if len(split_command) != 3 or split_command[0] != "mv":
         return
-    source = split_command[1]
-    destination = split_command[2]
+    source, destination = split_command[1], split_command[2]
     destination = destination.split("/")
     if destination[-1] == "":
         destination.pop(-1)
@@ -26,7 +25,7 @@ def move_file(command: str) -> None:
                 os.remove(source)
                 return
         if i == destination[-1]:
-            if not os.path.isdir(os.path.join(path, i)):
+            if not os.path.exists(os.path.join(path, i)):
                 path = os.path.join(path, i)
                 os.mkdir(path)
             path = os.path.join(path, source)
@@ -34,9 +33,9 @@ def move_file(command: str) -> None:
                 f.write(open(source).read())
                 os.remove(source)
                 return
-        if not os.path.isdir(os.path.join(path, i)) and i != destination[-1]:
+        if not os.path.exists(os.path.join(path, i)) and i != destination[-1]:
             path = os.path.join(path, i)
             os.mkdir(path)
             continue
-        if os.path.isdir(os.path.join(path, i)):
+        if os.path.exists(os.path.join(path, i)):
             path = os.path.join(path, i)
