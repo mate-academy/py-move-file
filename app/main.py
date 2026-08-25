@@ -4,17 +4,23 @@ import shutil
 
 def move_file(command: str) -> None:
     parts = command.split()
-    source = parts[1]
-    destination = parts[2]
+    if len(parts) != 3 or parts[0] != "mv":
+        return
+    _, source, destination = parts
+
     filename = os.path.basename(source)
+
     if destination.endswith("/"):
-        destination = destination + filename
-
+        destination = os.path.join(destination, filename)
     dir_path = os.path.dirname(destination)
-
     if dir_path:
         if os.path.isfile(dir_path):
             os.remove(dir_path)
-        os.makedirs(dir_path, exist_ok=True)
+        parts_dir = dir_path.split("/")
+        for i in range(len(parts_dir)):
+            path = "/".join(parts_dir[:i + 1])
+            if not os.path.isdir(path):
+                os.mkdir(path)
 
-    shutil.move(source, destination)
+    shutil.copy(source, destination)
+    os.remove(source)
