@@ -4,7 +4,7 @@ import os
 def move_file(command: str) -> None:
     command_parts = command.split(" ")
 
-    if len(command_parts) < 3 or command_parts[0] != "mv":
+    if len(command_parts) != 3 or command_parts[0] != "mv":
         return
 
     linux_command, source_file, destination_path = command_parts
@@ -16,7 +16,7 @@ def move_file(command: str) -> None:
     if destination_path[-1] == "/":
         os.makedirs(destination_path[:-1], exist_ok=True)
         with open(source_file, "r") as source_f, open(
-            f"{destination_path}{source_file}", "w"
+            os.path.join(destination_path, source_file), "w"
         ) as destination_f:
             destination_f.write(source_f.read())
         os.remove(source_file)
