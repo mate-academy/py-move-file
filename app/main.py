@@ -12,35 +12,21 @@ def move_file(command: str) -> None:
 
     command_name, source_file_name, destination_path = parts
 
-    if destination_path.endswith("/"):
-        no_slash_destination_path = destination_path.rstrip("/")
-        directories = no_slash_destination_path.split("/")
-        current_path = ""
-
-        for directory in directories:
-            current_path = os.path.join(current_path, directory)
-
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
+    if destination_path.endswith(("/", "\\")):
+        no_slash_destination_path = destination_path.rstrip("/\\")
+        os.makedirs(no_slash_destination_path, exist_ok=True)
 
         destination_file_path = os.path.join(
-            current_path,
+            no_slash_destination_path,
             source_file_name
         )
     else:
         destination_directory = os.path.dirname(destination_path)
-        directories = destination_directory.split("/")
-        current_path = ""
-        if destination_directory:
-            for directory in directories:
-                current_path = os.path.join(current_path, directory)
-                if not os.path.exists(current_path):
-                    os.mkdir(current_path)
 
-        destination_file_path = os.path.join(
-            current_path,
-            os.path.basename(destination_path)
-        )
+        if destination_directory:
+            os.makedirs(destination_directory, exist_ok=True)
+
+        destination_file_path = destination_path
 
     with (
         open(source_file_name, "r") as source_file,
