@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 def move_file(command: str) -> None:
@@ -12,7 +13,7 @@ def move_file(command: str) -> None:
     destination = splitted[2]
 
     if destination.endswith("/"):
-        destination = destination + source
+        os.path.join(destination, source)
 
     splitted_destination = destination.split("/")
 
@@ -20,9 +21,7 @@ def move_file(command: str) -> None:
 
     parts = destination_str.split("/")
     for i in range(len(parts)):
-        print("|||||||||||||||||||||||||||||||||")
         part = "/".join(parts[: i + 1])
-        print("part ---- -- - - - ", part)
         try:
             os.mkdir(part)
         except FileNotFoundError:
@@ -30,7 +29,5 @@ def move_file(command: str) -> None:
         except FileExistsError:
             pass
 
-    if os.path.isdir("/dir"):
-        print("The directory exists!")
-
-    os.rename(source, destination)
+    shutil.copy2(source, destination)
+    os.remove(source)
