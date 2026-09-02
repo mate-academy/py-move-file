@@ -11,9 +11,17 @@ def move_file(command: str) -> None:
         return
 
     new_file_path = split_command[2]
-    dir_name = os.path.dirname(new_file_path)
-    if dir_name:
-        os.makedirs(dir_name, exist_ok=True)
+    if new_file_path.endswith("/"):
+        new_file_path += original_file_name
+    dir_path = os.path.dirname(new_file_path)
+    if dir_path:
+        formed_path = ""
+        for folder in dir_path.split("/"):
+            try:
+                formed_path = os.path.join(formed_path, folder)
+                os.mkdir(formed_path)
+            except FileExistsError:
+                continue
 
     with (open(original_file_name) as original_file,
           open(new_file_path, "w") as new_file):
