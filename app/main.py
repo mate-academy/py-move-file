@@ -15,6 +15,9 @@ def move_file(command: str) -> None:
 
     _, source, destination = parts
 
+    if not os.path.isfile(source):
+        return
+
     if destination.endswith("/"):
         os.makedirs(destination, exist_ok=True)
 
