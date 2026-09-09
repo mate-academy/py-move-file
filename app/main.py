@@ -17,7 +17,9 @@ def move_file(command: str) -> None:
 
     if destination.endswith("/"):
         os.makedirs(destination, exist_ok=True)
-        destination += source.split("/")[-1]
+
+        filename = os.path.basename(source)
+        destination = os.path.join(destination, filename)
     else:
         folder = os.path.dirname(destination)
 
