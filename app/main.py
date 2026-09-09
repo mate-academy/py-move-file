@@ -24,10 +24,10 @@ def move_file(command: str) -> None:
         if folder:
             os.makedirs(folder, exist_ok=True)
 
-    with open(source, 'r') as file:
+    with open(source, "r") as file:
         content = file.read()
 
-    with open(destination, 'w') as file:
+    with open(destination, "w") as file:
         file.write(content)
 
     os.remove(source)
