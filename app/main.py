@@ -1,23 +1,28 @@
 import os
 
-from pathlib import Path
-
 
 def move_file(command: str) -> None:
-    command_parts = command.split()
-    if len(command_parts) == 3 and command_parts[0] == "mv":
-        _, source_file_name, destination_file_name = command_parts
-        source = Path(source_file_name)
-        destination = Path(destination_file_name)
-        if not source.is_file():
-            return
+    parts = command.split()
+    if len(parts) != 3:
+        return
 
-        if destination_file_name.endswith("/"):
-            destination.mkdir(parents=True, exist_ok=True)
-            destination = Path(os.path.join(destination_file_name, source.name))
-        else:
-            destination.parent.mkdir(parents=True, exist_ok=True)
+    command_name, source, destination = parts
+    if command_name != "mv" or not os.path.isfile(source):
+        return
 
-        with open(source, "r") as source_file, open(destination, "w") as destination_file:
-            destination_file.write(source_file.read())
-            os.remove(source)
+    directory_path = (destination if destination.endswith("/")
+                      else os.path.dirname(destination))
+    if directory_path:
+        current_path = ""
+        for directory_name in directory_path.split(os.sep):
+            current_path = os.path.join(current_path, directory_name)
+            if not os.path.exists(current_path):
+                os.mkdir(current_path)
+
+    if destination.endswith("/"):
+        destination = os.path.join(destination, os.path.basename(source))
+
+    with (open(source, "r") as source_file,
+          open(destination, "w") as destination_file):
+        destination_file.write(source_file.read())
+    os.remove(source)
