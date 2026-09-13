@@ -2,9 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    action, source, destination = command.split()
-    if action != "mv":
-        raise ValueError("Only 'mv' command is supported")
+    tokens = command.split()
+
+    if len(tokens) != 3 or tokens[0] != "mv":
+        raise ValueError("Command must be in format: mv <source> <destination>")
+
+    action, source, destination = tokens
 
     if destination.endswith("/"):
         folder = destination
