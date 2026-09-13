@@ -2,12 +2,13 @@ import os
 
 
 def move_file(command: str) -> None:
-    command = command.split()
-    source = command[1]
-    destination = command[2]
+    action, source, destination = command.split()
+    if action != "mv":
+        raise ValueError("Only 'mv' command is supported")
+
     if destination.endswith("/"):
         folder = destination
-        filename = source
+        filename = os.path.basename(source)
     else:
         folder, filename = os.path.split(destination)
     if folder:
