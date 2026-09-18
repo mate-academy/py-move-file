@@ -1,26 +1,34 @@
 import os
-import shutil
 
 
 def move_file(command: str) -> None:
-    command = command.split(" ")
-    filename = command[1]
-    directory = command[2].split("/")
-    new_filename = directory.pop(-1)
-    if not new_filename:
-        new_filename = filename
-    if directory:
-        destination = "/".join(directory + [new_filename])
-        path_to_create = "/".join(directory)
-        if os.path.isfile(path_to_create):
-            os.remove(path_to_create)
-        os.makedirs(path_to_create, exist_ok=True)
-    else:
-        destination = new_filename
-        if os.path.isdir(destination):
-            destination = os.path.join(destination, filename)
-    if os.path.isdir(destination):
-        destination = os.path.join(destination, filename)
-    if os.path.isfile(destination):
-        os.remove(destination)
-    shutil.move(filename, destination)
+    tokens = command.split(" ")
+    required_command = tokens[0]
+    if required_command == "mv" and len(tokens) == 3:
+        filename = tokens[1]
+        if "/" in tokens[2]:
+            path = tokens[2].split("/")
+            is_file = "." in path[-1]
+            dir_parts = path[:-1] if is_file else path
+            current = ""
+            for part in dir_parts:
+                current = os.path.join(current, part)
+                try:
+                    os.mkdir(current)
+                except FileExistsError:
+                    pass
+
+            if is_file:
+                file_path = os.path.join(*path)
+                with open(file_path, "w") as new_file, \
+                        open(filename, "r") as old_file:
+                    data = old_file.read()
+                    new_file.write(data)
+                os.remove(filename)
+        else:
+            new_filename = tokens[2]
+            with open(filename, "r") as old_filename, \
+                    open(new_filename, "w") as f:
+                data = old_filename.read()
+                f.write(data)
+            os.remove(filename)
