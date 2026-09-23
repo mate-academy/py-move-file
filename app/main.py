@@ -6,8 +6,7 @@ def move_file(command: str) -> None:
     if len(parts) != 3 or parts[0] != "mv":
         return
 
-    source = parts[1]
-    destination = parts[2]
+    _, source, destination = parts
 
     if not os.path.exists(source):
         return
@@ -15,12 +14,11 @@ def move_file(command: str) -> None:
     if destination.endswith("/"):
         destination = os.path.join(destination, os.path.basename(source))
 
-    directories = destination.split("/")[:-1]
+    destination = os.path.normpath(destination)
+    directories = destination.split(os.sep)[:-1]
     current_path = ""
-
     for directory in directories:
         current_path = os.path.join(current_path, directory)
-
         if not os.path.exists(current_path):
             os.mkdir(current_path)
 
