@@ -4,8 +4,10 @@ import os
 def move_file(command: str) -> None:
     parts = command.split()
 
-    source = parts[1]
-    destination = parts[2]
+    if len(parts) != 3 or parts[0] != "mv":
+        raise ValueError("Invalid command")
+
+    _, source, destination = parts
 
     if destination.endswith("/"):
         os.makedirs(destination, exist_ok=True)
