@@ -16,8 +16,15 @@ def move_file(command: str) -> None:
         )
 
     destination_dir = os.path.dirname(destination_path)
-    if destination_dir:
-        os.makedirs(destination_dir, exist_ok=True)
+    current_path = ""
+    for directory_name in destination_dir.split("/"):
+        if not directory_name:
+            continue
+        current_path = os.path.join(current_path, directory_name)
+        try:
+            os.mkdir(current_path)
+        except FileExistsError:
+            pass
 
     with (
         open(source_path, "r") as source_file,
