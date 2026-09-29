@@ -1,6 +1,6 @@
 # Move file
 
-- Read [the guideline](https://github.com/mate-academy/py-task-guideline/blob/main/README.md) before start
+- Read [the guideline](https://github.com/mate-academy/py-task-guideline/blob/main/README.md) before starting.
 
 Write a function `move_file` that will move a file from one location to another. 
 Function takes `command`, this is very similar to Linux mv command: 
@@ -30,3 +30,6 @@ open("file.txt")
 But to create `os.mkdir("first/second")`, `first` directory needs to exist.
 Function should work with different directory depth.
 Use `os.remove()` to remove the file.
+
+
+### Note: Check your code using this [checklist](checklist.md) before pushing your solution.
