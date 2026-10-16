@@ -16,6 +16,8 @@ def move_file(command: str) -> None:
         path = os.path.join(path, directory)
         if not os.path.exists(path):
             os.mkdir(path)
+    if destination[-1] == "":
+        destination[-1] = os.path.basename(source)
     full_path = os.path.join(path, destination[-1])
     with open(source, "r") as file_in, open(full_path, "w") as file_out:
         content = file_in.read()
