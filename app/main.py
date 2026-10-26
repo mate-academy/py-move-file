@@ -17,6 +17,19 @@ def move_file(command: str) -> None:
 
     destination_directory = os.path.dirname(destination_path)
     if destination_directory:
-        os.makedirs(destination_directory, exist_ok=True)
+        normalized_directory = os.path.normpath(destination_directory)
+        drive, directory_path = os.path.splitdrive(normalized_directory)
+        directory_parts = directory_path.split(os.sep)
+        directory_prefix = os.sep if directory_path.startswith(os.sep) else ""
+        directory_path = drive + directory_prefix
 
-    shutil.move(source_file_path, destination_path)
+        for directory_name in directory_parts:
+            if not directory_name:
+                continue
+
+            directory_path = os.path.join(directory_path, directory_name)
+            if not os.path.exists(directory_path):
+                os.mkdir(directory_path)
+
+    shutil.copy2(source_file_path, destination_path)
+    os.remove(source_file_path)
