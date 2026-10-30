@@ -25,21 +25,17 @@ def move_file(command: str) -> None:
         else:
             directories = path_parts[:-1]
 
-        current_path = ""
-        for directory in directories:
-            if not directory:
-                continue
+      current_path = ""
 
-            current_path = (
-                directory
-                if not current_path
-                else f"{current_path}/{directory}"
-            )
+for directory in directories:
+    if not directory:
+        continue
 
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
+    current_path = (
+        directory
+        if not current_path
+        else os.path.join(current_path, directory)
+    )
 
-    with open(destination_path, "w") as file:
-        file.write(content)
-
-    os.remove(source_path)
+    if not os.path.exists(current_path):
+        os.mkdir(current_path)
