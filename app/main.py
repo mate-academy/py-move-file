@@ -25,6 +25,7 @@ def move_file(command: str) -> None:
                 continue
             current_dir = os.path.join(current_dir, directory) \
                 if current_dir else directory
+
             try:
                 os.mkdir(current_dir)
             except FileExistsError:
