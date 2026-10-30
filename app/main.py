@@ -18,7 +18,16 @@ def move_file(command: str) -> None:
 
     path = os.path.dirname(destination)
     if path:
-        os.makedirs(path, exist_ok=True)
+        directories = path.split("/")
+        current_dir = ""
+        for directory in directories:
+            if not directory:
+                continue
+            current_dir = os.path.join(current_dir, directory) if current_dir else directory
+            try:
+                os.mkdir(current_dir)
+            except FileExistsError:
+                pass
 
     with open(source, "r") as root, open(destination, "w") as dest_path:
         dest_path.write(root.read())
