@@ -1,4 +1,6 @@
 import os
+import shutil
+from pathlib import Path
 
 
 def move_file(command: str) -> None:
@@ -13,7 +15,12 @@ def move_file(command: str) -> None:
             full_path = os.path.join(full_path, source_file)
         file_path = os.path.dirname(full_path)
         if file_path:
-            os.makedirs(file_path, exist_ok=True)
-        os.rename(source_file, full_path)
+            current_path = ""
+            for directory in Path(file_path).parts:
+                current_path = os.path.join(current_path, directory)
+                if not os.path.exists(current_path):
+                    os.mkdir(current_path)
+        shutil.copy2(source_file, full_path)
+        os.remove(source_file)
     except FileNotFoundError:
         pass
