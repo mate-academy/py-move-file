@@ -13,8 +13,8 @@ def move_file(command: str) -> None:
             os.rename(file_in, file_out)
             return
 
-        if directory == file_out:
-            file_out = directory + file_in
+        if file_out[-1] == "/":
+            file_out = os.path.join(directory, file_in)
 
         if directory:
             os.makedirs(directory, exist_ok=True)
