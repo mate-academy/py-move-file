@@ -1,4 +1,4 @@
-from os import mkdir, remove
+from os import mkdir, remove, path
 
 
 def move_file(command: str) -> None:
@@ -9,11 +9,16 @@ def move_file(command: str) -> None:
 
     _, source_file_name, dest_file_path = command_list
 
+    if dest_file_path.endswith("/"):
+        dest_file_path = path.join(dest_file_path,
+                                   path.basename(source_file_name))
+
     dir_path = dest_file_path.split("/")[:-1]
 
     for i in range(len(dir_path)):
         try:
-            mkdir("/".join(dir_path[:i + 1]))
+            dest_path = path.join(*dir_path[:i + 1])
+            mkdir(dest_path)
         except FileExistsError:
             continue
 
