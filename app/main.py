@@ -14,7 +14,11 @@ def move_file(command: str) -> None:
 
     directory = os.path.dirname(destination)
     if directory:
-        os.makedirs(directory, exist_ok=True)
+        path = ""
+        for folder in directory.split("/"):
+            path = os.path.join(path, folder)
+            if not os.path.exists(path):
+                os.mkdir(path)
 
     with open(source, "rb") as src, open(destination, "wb") as dst:
         dst.write(src.read())
