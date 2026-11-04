@@ -6,8 +6,7 @@ def move_file(command: str) -> None:
     if len(command_list) != 3 or command_list[0] != "mv":
         return
 
-    source = command_list[1]
-    destination = command_list[2]
+    _, source, destination = command_list
 
     with open(source, "r") as f:
         content = f.read()
@@ -15,10 +14,18 @@ def move_file(command: str) -> None:
     if destination.endswith("/"):
         destination = os.path.join(destination, os.path.basename(source))
 
-    directory, filename = os.path.split(destination)
+    directory = os.path.dirname(destination)
 
     if directory:
-        os.makedirs(directory, exist_ok=True)
+        directories = directory.split("/")
+
+        current_path = ""
+
+        for folder in directories:
+            current_path = os.path.join(current_path, folder)
+
+            if not os.path.isdir(current_path):
+                os.mkdir(current_path)
 
     with open(destination, "w") as f:
         f.write(content)
