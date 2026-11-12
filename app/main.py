@@ -19,6 +19,7 @@ def move_file(command: str) -> None:
     if directory_list != "":
         os.makedirs(directory_list, exist_ok=True)
     if file_name == "":
-        new_file = os.path.join(directory_list, old_file)
+        new_file = os.path.join(directory_list,
+                                os.path.split(old_file)[1])
     with open(new_file, "w") as new_file_object:
         new_file_object.write(old_file_content)
