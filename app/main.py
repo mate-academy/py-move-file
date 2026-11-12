@@ -18,6 +18,7 @@ def move_file(command: str) -> None:
                 else:
                     result_file = new_file
                     result_dir = os.path.dirname(new_file)
+
                 if result_dir:
                     os.makedirs(result_dir, exist_ok=True)
                 with open(result_file, "w") as file_out:
