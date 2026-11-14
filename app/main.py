@@ -22,7 +22,7 @@ def move_file(command: str) -> None:
     if directory:
         os.makedirs(directory, exist_ok=True)
 
-    with open(source, "r") as file_in, open(destination, "w") as file_out:
+    with open(source, "rb") as file_in, open(destination, "wb") as file_out:
         file_out.write(file_in.read())
 
     os.remove(source)
