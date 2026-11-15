@@ -2,7 +2,12 @@ import os
 
 
 def move_file(command: str) -> None:
-    _, source, destination = command.split()
+    command_parts = command.split()
+
+    if len(command_parts) != 3 or command_parts[0] != "mv":
+        return
+
+    _, source, destination = command_parts
 
     if destination.endswith("/"):
         destination += os.path.basename(source)
