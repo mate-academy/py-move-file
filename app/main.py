@@ -15,11 +15,14 @@ def move_file(command: str) -> None:
                 os.mkdir(full_path)
             for dir_file in range(1, (len(split_dir) - 1)):
                 full_path = os.path.join(full_path, split_dir[dir_file])
-                # full_path = full_path + "/" + split_dir[dir_file]
-                # print(full_path)
                 if not os.path.exists(full_path):
                     os.mkdir(full_path)
+        if split_command[2].endswith("/"):
+            file2_path = os.path.join(full_path, split_command[1])
+        else:
+            file2_path = os.path.join(full_path, split_dir[-1])
+
         with (open(split_command[1], "r") as file,
-              open(os.path.join(full_path, split_dir[-1]), "w") as file2):
+              open(file2_path, "w") as file2):
             file2.write(file.read())
         os.remove(split_command[1])
