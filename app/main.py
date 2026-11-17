@@ -3,8 +3,13 @@ import os
 
 def move_file(command: str) -> None:
     parts = command.split()
-    old_file = parts[1]
-    new_file = parts[2]
+
+    if len(parts) != 3 or parts[0] != "mv":
+        return
+
+    if parts[1].startswith("-") or parts[2].startswith("-"):
+        return
+    action, old_file, new_file = parts
 
     if new_file.endswith("/"):
         new_file += os.path.basename(old_file)
@@ -13,7 +18,7 @@ def move_file(command: str) -> None:
     path = ""
 
     for element in elements[:-1]:
-        path += f"{element}/"
+        path = os.path.join(path, element)
         if not os.path.exists(path):
             os.mkdir(path)
 
