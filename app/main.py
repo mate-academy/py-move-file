@@ -13,14 +13,9 @@ def move_file(command: str) -> None:
 
     if new_file.endswith("/"):
         new_file += os.path.basename(old_file)
-
-    elements = new_file.split("/")
-    path = ""
-
-    for element in elements[:-1]:
-        path = os.path.join(path, element)
-        if not os.path.exists(path):
-            os.mkdir(path)
+    directory = os.path.dirname(new_file)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
 
     if os.path.abspath(old_file) == os.path.abspath(new_file):
         return
