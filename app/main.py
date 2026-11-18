@@ -2,22 +2,23 @@ import os
 
 
 def move_file(command: str) -> None:
-    com = command.split()
+    command_parts = command.split()
 
-    if len(com) == 3 and com[0] == "mv":
-        _, second , third = com[0], com[1], com[2]
+    if len(command_parts) != 3 and command_parts[0] == "mv":
+        return
+    source_path, destination_path = command_parts[1], command_parts[2]
+    if source_path == destination_path or not os.path.exists(source_path):
+        return
+    destination_dir, destination_name = os.path.split(destination_path)
+    if destination_dir:
+        os.makedirs(destination_dir, exist_ok=True)
+        final_destination = os.path.join(destination_dir, destination_name)
+    else:
+        final_destination = destination_name
+    with (
+        open(source_path, "r") as source_file,
+        open(final_destination, "w") as destination_file,
+    ):
+        destination_file.write(source_file.read())
 
-        current_path = ""
-        if third.endswith("/"):
-            third += second.split("/")[-1]
-        if second == third:
-            return
-        folders = third.split("/")[:-1]
-        for folder in folders:
-            current_path = os.path.join(current_path, folder)
-            if not os.path.exists(current_path):
-                os.mkdir(current_path)
-        with open(third, "w") as f:
-            with open(second, "r") as p:
-                f.write(p.read())
-        os.remove(second)
+    os.remove(source_path)
