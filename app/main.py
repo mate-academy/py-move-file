@@ -15,19 +15,28 @@ def move_file(command: str) -> None:
     if not os.path.isfile(file_name):
         return
 
-    if destination.find("/") != -1:
-        depth = 0
-        for i in range(destination.count("/")):
-            depth += destination[depth:].find("/")
-            if not os.path.isdir(destination[:depth]):
-                os.mkdir(destination[:depth])
-            depth += 1
-        if destination[-1] == "/":
-            destination = destination + file_name
+    if destination.endswith("/"):
+        destination = os.path.join(
+            destination,
+            os.path.basename(file_name)
+        )
+
+    if os.path.abspath(file_name) == os.path.abspath(destination):
+        return
+
+    directory = os.path.dirname(destination)
+
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+
     try:
-        with (open(destination, "wb") as destination_file,
-              open(file_name, "rb") as source_file):
+        with (
+            open(file_name, "rb") as source_file,
+            open(destination, "wb") as destination_file,
+        ):
             destination_file.write(source_file.read())
+
         os.remove(file_name)
+
     except FileNotFoundError:
         pass
