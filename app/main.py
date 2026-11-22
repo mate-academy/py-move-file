@@ -26,7 +26,13 @@ def move_file(command: str) -> None:
     if beginning == destination:
         return None
 
-    current_dir = ""
+    if os.path.isabs(current_path):
+        current_dir = "/"
+    else:
+        current_dir = ""
+
+    if current_dir == "/":
+        list_of_directories.pop(0)
 
     for directory in list_of_directories:
         current_dir = os.path.join(current_dir, directory)
