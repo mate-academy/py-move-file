@@ -12,7 +12,7 @@ def move_file(command: str) -> None | str:
 
     path_to_file = full_path.split("/")
     if full_path.endswith("/"):
-        new_file = old_file
+        new_file = path.basename(old_file)
     else:
         new_file = path_to_file[-1]
         path_to_file = path_to_file[:-1]
@@ -31,4 +31,4 @@ def move_file(command: str) -> None | str:
         open(new_path, "w") as copied_file
     ):
         copied_file.write(orig_file.read())
-        remove(old_file)
+    remove(old_file)
