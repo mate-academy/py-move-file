@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 
 def move_file(command: str) -> None:
@@ -8,7 +9,9 @@ def move_file(command: str) -> None:
     path_of_source_file = new_command[1]
     path_of_destiny = new_command[2]
 
-    if path_of_destiny.endswith("/"):
+    if path_of_destiny.endswith(os.sep) or (
+            os.altsep and path_of_destiny.endswith(os.altsep)
+    ):
         name_start = os.path.basename(path_of_source_file)
         way = os.path.join(path_of_destiny, name_start)
     else:
@@ -16,25 +19,20 @@ def move_file(command: str) -> None:
 
     current_path = os.path.dirname(way)
 
-    if current_path:
-        list_of_directories = current_path.split("/")
-    else:
-        list_of_directories = []
+    path = Path(current_path)
+    anchor = path.anchor
+    parts = path.parts
+
     beginning = os.path.abspath(path_of_source_file)
     destination = os.path.abspath(way)
 
     if beginning == destination:
         return None
 
-    if os.path.isabs(current_path):
-        current_dir = "/"
-    else:
-        current_dir = ""
+    current_dir = anchor
+    new_parts = parts[1:] if anchor else parts
 
-    if current_dir == "/":
-        list_of_directories.pop(0)
-
-    for directory in list_of_directories:
+    for directory in new_parts:
         current_dir = os.path.join(current_dir, directory)
 
         if not os.path.exists(current_dir):
