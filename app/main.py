@@ -27,8 +27,8 @@ def move_file(command: str) -> None:
         os.makedirs(target_dir, exist_ok=True)
 
     with (
-        open(source_path, "r", encoding="utf-8") as source_file,
-        open(target_path, "w", encoding="utf-8") as target_file,
+        open(source_path, "rb") as source_file,
+        open(target_path, "wb") as target_file,
     ):
         target_file.write(source_file.read())
 
